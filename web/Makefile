@@ -1,5 +1,7 @@
 run:
 
+# *** Dependencies ***
+
 # Créer un virtual env
 venv/bin/activate:
 	python3 -m venv venv/
@@ -14,3 +16,10 @@ venv/install: venv/bin/activate requirements.txt
 .PHONY: commit-dependencies
 commit-dependencies: venv/bin/activate
 	. venv/bin/activate && pip freeze >requirements.txt
+
+# *** Coding style ***
+
+# Vérifie que le code respecte le coding style
+.PHONY: lint
+lint: venv/install
+	. venv/bin/activate && pycodestyle --show-source --show-pep8 --statistics --benchmark --max-line-length=120 . --exclude=venv/
