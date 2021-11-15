@@ -1,0 +1,8 @@
+
+telegram:
+  image: registry.gitlab.com/clovis-ai/dotfiles:latest
+  script:
+    - git changelog --format telegram-html --incoming >chlog
+    - announce-telegram chlog "$CHAT_IDS"
+  only:
+    - main
