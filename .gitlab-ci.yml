@@ -7,9 +7,22 @@ telegram:
   only:
     - main
 
-web-lint:
+web/lint:
   image: python:latest
   script:
     - make web/lint
   only:
     - merge_requests
+
+web-ui/build:
+  image: node:alpine
+  script:
+    - cd web-ui
+    - yarn
+    - yarn build
+  only:
+    - merge_requests
+    - main
+  artifacts:
+    paths:
+      - web-ui/dist
