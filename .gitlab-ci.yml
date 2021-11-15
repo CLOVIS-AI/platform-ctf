@@ -10,7 +10,6 @@ telegram:
 web-lint:
   image: python:latest
   script:
-    - cd web
-    - make lint
+    - make web/lint
   only:
     - merge_requests
