@@ -6,3 +6,11 @@ telegram:
     - announce-telegram chlog "$CHAT_IDS"
   only:
     - main
+
+web-lint:
+  image: python:latest
+  script:
+    - cd web
+    - make lint
+  only:
+    - merge_requests
