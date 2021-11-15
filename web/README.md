@@ -3,5 +3,6 @@
 ## Développement
 
 ```shell
-# Open the 
+# Vérifier le coding style
+$ make lint
 ```
