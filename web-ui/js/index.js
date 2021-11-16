@@ -1,6 +1,6 @@
 import $ from "jquery"
 import {start_challenge, status_challenge, stop_challenge} from "./challenge";
-
+import "bootswatch/dist/darkly/bootstrap.min.css"
 /* Global variables used in this file (must be defined in the calling page):
  *      SERVER_TIME
  *      CHALLENGE_ID
@@ -10,8 +10,7 @@ export const server_time = SERVER_TIME
 export const challenge_id = CHALLENGE_ID
 export const start_duration = START_DURATION
 
-export let interval = null
-export let timedelta = server_time_delta(server_time)
+const timedelta = server_time_delta(server_time)
 export let last_check_minutes = 0
 
 const start_button = $("start-btn")
@@ -213,7 +212,6 @@ export function handle_timer(end_time) {
     if (timeLeft < 0) {
         set_time_button_visible(false);
         update_timer_div(true, "00m 00s", "red");
-        clearInterval(interval);
         stop_challenge("timeout");
         return;
     }
