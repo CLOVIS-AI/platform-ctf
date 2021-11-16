@@ -27,12 +27,16 @@ web/lint: web/venv/install
 
 # *** *** JavaScript interface *** ***
 
-node=docker run --pull always --rm --mount type=bind,source="$(shell pwd)/web-ui",target=/app node:alpine
+node=docker run --rm --mount type=bind,source="$(shell pwd)/web-ui",target=/app node:alpine
 
-web-ui/node_modules: web-ui/package.json
+/tmp/node_pull:
+	docker pull node:alpine
+	touch /tmp/node_pull
+
+web-ui/node_modules: /tmp/node_pull web-ui/package.json
 	$(node) sh -c 'cd /app && yarn --color=always'
 
-web-ui/dist: web-ui web-ui/node_modules
+web-ui/dist: /tmp/node_pull web-ui web-ui/node_modules
 	$(node) sh -c 'cd /app && yarn --color=always build'
 
 web/static: web-ui/dist
