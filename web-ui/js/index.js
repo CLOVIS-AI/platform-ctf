@@ -1,4 +1,3 @@
-import $ from "jquery"
 import {start_challenge, status_challenge, stop_challenge} from "./challenge";
 import "bootswatch/dist/darkly/bootstrap.min.css"
 /* Global variables used in this file (must be defined in the calling page):
@@ -13,9 +12,9 @@ export const start_duration = START_DURATION
 const timedelta = server_time_delta(server_time)
 export let last_check_minutes = 0
 
-const start_button = $("start-btn")
-const stop_button = $("stop-btn")
-const challenge_timer = $("#chal-timer")
+const start_button = document.querySelector("#start-btn")
+const stop_button = document.querySelector("#stop-btn")
+const challenge_timer = document.querySelector("#chal-timer")
 
 /**
  * Update which buttons are enabled or disabled.
@@ -30,13 +29,13 @@ const challenge_timer = $("#chal-timer")
  * @param {boolean|null} visible_time
  */
 function update_buttons(enable_start = null, enable_stop = null, visible_time = null) {
-    if (enable_start != null)
+    if (enable_start !== null)
         start_button.disabled = !enable_start
 
-    if (enable_stop != null)
+    if (enable_stop !== null)
         stop_button.disabled = !enable_stop
 
-    if (visible_time != null)
+    if (visible_time !== null)
         set_time_button_visible(visible_time)
 }
 
@@ -51,99 +50,90 @@ function display_status(handle_buttons, show_spinner = false, message) {
     if (handle_buttons)
         update_buttons(false, false, false)
 
-    $("#challenge-status").html(
-        '<div class="alert alert-primary">'+message+' Please wait for the end of this process by <a href="/challenge/' +
+    document.querySelector("#challenge-status").innerHTML =
+        '<div class="alert alert-primary">' + message + ' Please wait for the end of this process by <a href="/challenge/' +
         challenge_id +
-        '"> refreshing the page</a> regularly. '+(show_spinner ? '&nbsp;<i class="fa fa-spinner fa-spin"></i>' : '')+'</div>'
-    );
+        '"> refreshing the page</a> regularly. ' + (show_spinner ? '&nbsp;<i class="fa fa-spinner fa-spin"></i>' : '') + '</div>'
 }
 
 export function show_instance_status(data, handle_buttons = true) {
     // If the ongoing challenge is not the one on the current page
-    if (data.challenge != null && data.challenge !== challenge_id) {
+    if (data.challenge !== null && data.challenge !== challenge_id) {
         if (data.status === "started" || data.status === "starting") {
             if (handle_buttons)
                 update_buttons(false, false, false)
-
-            $("#challenge-status").html(
+            document.querySelector("#challenge-status").innerHTML =
                 '<div class="alert alert-danger">Another instance is already running. Please go to <a href="/challenge/' +
                 data.challenge +
                 '">the challenge page</a> to stop the previous instance before starting a new one.</div>'
-            );
         } else if (data.status === "stopping") {
             display_status(handle_buttons, false, "Another instance is currently stopping.")
         }
     }
 
     // If this is the page of the ongoing challenge
-    else if (data.challenge != null && data.challenge === challenge_id) {
+    else if (data.challenge !== null && data.challenge === challenge_id) {
         if (data.status === "started") {
             if (handle_buttons)
                 update_buttons(false, true, null)
 
-            $("#challenge-status").html(
+            document.querySelector("#challenge-status").innerHTML =
                 '<div class="alert alert-success">' + data.message + "</div>"
-            );
         } else if (data.status === "error") {
             if (handle_buttons)
                 update_buttons(true, false, false)
 
-            if (data.message != null) {
-                $("#challenge-status").html(
+            if (data.message !== null) {
+                document.querySelector("#challenge-status").innerHTML =
                     '<div class="alert alert-danger">' + data.message + "</div>"
-                );
             } else {
-                $("#challenge-status").html(
+                document.querySelector("#challenge-status").innerHTML =
                     '<div class="alert alert-danger">Something went wrong.</div>'
-                );
             }
         } else if (data.status === "stopped") {
             if (handle_buttons)
                 update_buttons(true, false, false)
 
-            if (data.message != null) {
-                $("#challenge-status").html(
+            if (data.message !== null) {
+                document.querySelector("#challenge-status").innerHTML =
                     '<div class="alert alert-danger">' + data.message + "</div>"
-                );
             }
         } else if (data.status === "stopping") {
             if (handle_buttons)
                 update_buttons(false, false, false)
 
-            $("#challenge-status").html(
+            document.querySelector("#challenge-status").innerHTML =
                 '<div class="alert alert-primary">The resources of the challenge are currently being deprovisioned. Please wait for the end of this process by <a href="/challenge/' +
                 challenge_id +
                 '"> refreshing the page</a>  regularly &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
-            );
         } else if (data.status === "starting") {
             display_status(handle_buttons, true, "The resources of the challenge are currently being provisioned.")
 
             if (handle_buttons)
                 update_buttons(false, false, false)
 
-            $("#challenge-status").html(
+            document.querySelector("#challenge-status").innerHTML =
                 '<div class="alert alert-primary">The resources of the challenge are currently being provisioned. Please wait for the end of this process by <a href="/challenge/' +
                 challenge_id +
                 '"> refreshing the page</a>  regularly </div>'
-            );
         }
     }
 }
 
-function extend_time() {
-    $.ajax({
-        url: "/challenge/" + challenge_id,
+async function extend_time() {
+    const formData = new FormData();
+    formData.append('action', 'extend');
+    const response = await fetch("/challenge", {
         method: "POST",
-        data: {action: "extend"},
-        success: function (data) {
-            if (data.status === "extended") {
-                status_challenge();
-            }
-        },
-        error: function (data) {
-            alert("Time not extended : error (?)");
+        body: formData
+    })
+    if (response.ok) {
+        const data = await response.json()
+        if (data.status === "extended") {
+            return status_challenge()
         }
-    });
+    }
+    alert("Time not extended : error (?)")
 }
 
 /**
@@ -152,17 +142,16 @@ function extend_time() {
  * @param {boolean} visible
  */
 export function set_time_button_visible(visible) {
-    if (visible && !$("#extend-btn").length) {
+    const extendBtn = document.querySelector("#extend-btn")
+    if (visible && extendBtn) {
         // The button does not exists and needs to be created
-        $("#chal-btn-group").append(
+        document.querySelector("#chal-btn-group").append(
             "<button id='extend-btn' class='btn btn-primary shadow-none' title='Add one hour before expiration'>Extend time</button>"
         );
-        $("#extend-btn").click(function () {
-            extend_time();
-        });
-    } else if (!visible && $("#extend-btn").length) {
+        extendBtn.addEventListener("click", extend_time)
+    } else if (!visible && extendBtn) {
         // The button does exists and needs to be removed
-        $("#extend-btn").remove();
+        extendBtn.remove();
     }
 }
 
@@ -200,32 +189,13 @@ export function server_time_delta(server_time) {
 }
 
 /**
- * @param {string} end_time
+ * Formats a time in French format
+ * @param hours
+ * @param minutes
+ * @param seconds
+ * @returns {string}
  */
-export function handle_timer(end_time) {
-    const endTime = Date.parse(end_time) / 1000;
-
-    let now = new Date().getSeconds();
-
-    const timeLeft = endTime - now + timedelta;
-
-    if (timeLeft < 0) {
-        set_time_button_visible(false);
-        update_timer_div(true, "00m 00s", "red");
-        stop_challenge("timeout");
-        return;
-    }
-
-    let color = "grey";
-    if (timeLeft < 300) color = "red";
-    else if (timeLeft < 600) color = "yellow";
-
-    const days = Math.floor(timeLeft / 86400);
-    const hours = Math.floor((timeLeft - days * 86400) / 3600);
-    let minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60);
-    let seconds = Math.floor(timeLeft - days * 86400 - hours * 3600 - minutes * 60);
-    const saved_minutes = seconds === 0 ? minutes : -1;
-
+function get_formatted_time(hours, minutes, seconds){
     let text = "";
     if (hours > 0) {
         text = hours + "h ";
@@ -239,6 +209,38 @@ export function handle_timer(end_time) {
     }
     text = text + seconds + "s";
 
+    return text
+}
+
+/**
+ * @param {string} end_time
+ */
+export async function handle_timer(end_time) {
+    const endTime = Date.parse(end_time) / 1000;
+
+    let now = new Date().getSeconds();
+
+    const timeLeft = endTime - now + timedelta;
+
+    if (timeLeft < 0) {
+        set_time_button_visible(false);
+        update_timer_div(true, "00m 00s", "red");
+        await stop_challenge("timeout");
+        return;
+    }
+
+    let color = "grey";
+    if (timeLeft < 300) color = "red";
+    else if (timeLeft < 600) color = "yellow";
+
+    const days = Math.floor(timeLeft / 86400);
+    const hours = Math.floor((timeLeft - days * 86400) / 3600);
+    let minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60);
+    let seconds = Math.floor(timeLeft - days * 86400 - hours * 3600 - minutes * 60);
+    const saved_minutes = seconds === 0 ? minutes : -1;
+
+    const text = get_formatted_time(hours, minutes, seconds)
+
     set_time_button_visible(timeLeft < 3600)
     update_timer_div(true, text, color);
 
@@ -246,10 +248,10 @@ export function handle_timer(end_time) {
     // the remaining time or detect that the instance has been stopped
     if (saved_minutes !== -1 && saved_minutes !== last_check_minutes) {
         last_check_minutes = saved_minutes;
-        status_challenge();
+        await status_challenge();
     }
 }
 
 start_button.click(start_challenge);
 stop_button.click(stop_challenge);
-status_challenge();
+status_challenge().catch(e => console.error(e));
