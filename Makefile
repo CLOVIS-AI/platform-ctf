@@ -49,6 +49,14 @@ web/venv/docker: web/static web/requirements.txt web web/venv/bin/activate
 	docker build -t ctf-platform:latest web
 	touch web/venv/docker
 
+.PHONY: start
+start: web/venv/docker
+	docker-compose up -d
+
+.PHONY: stop
+stop:
+	docker-compose down
+
 # *** *** Cleanup *** ***
 
 .PHONY: web/clean
