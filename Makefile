@@ -1,5 +1,6 @@
 
-run:
+.PHONY: build
+build: web/venv/docker
 
 # *** *** Python dependencies *** ***
 
@@ -42,6 +43,12 @@ web-ui/dist: /tmp/node_pull web-ui web-ui/node_modules
 web/static: web-ui/dist
 	cp -r web-ui/dist web/static
 
+# *** *** Server image *** ***
+
+web/venv/docker: web/static web/requirements.txt web web/venv/bin/activate
+	docker build -t ctf-platform:latest web
+	touch web/venv/docker
+
 # *** *** Cleanup *** ***
 
 .PHONY: web/clean
@@ -50,7 +57,8 @@ web/clean:
 
 .PHONY: web-ui/clean
 web-ui/clean:
-	sudo rm -r web-ui/node_modules web-ui/dist
+	sudo rm -rf web-ui/node_modules web-ui/dist
 
 .PHONY: clean
 clean: web/clean web-ui/clean
+	@echo "To cleanup Docker files, you might want to run 'docker system prune'"
