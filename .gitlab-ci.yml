@@ -1,4 +1,8 @@
 
+variables:
+  WEB_IMAGE: "$CI_REGISTRY_IMAGE/web:build-$CI_PIPELINE_IID"
+  WEB_IMAGE_MAIN: "$CI_REGISTRY_IMAGE/web:latest"
+
 telegram:
   image: registry.gitlab.com/clovis-ai/dotfiles:latest
   script:
@@ -26,3 +30,46 @@ web-ui/build:
   artifacts:
     paths:
       - web-ui/dist
+
+.docker-build:
+  image: docker:19.03
+  services:
+    - docker:dind
+  before_script:
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+  tags:
+    - docker
+
+.docker-latest:
+  extends: .docker-build
+  variables:
+    GIT_STRATEGY: none
+
+web/docker:
+  extends: [ .docker-build ]
+  script:
+    - cd web
+    - docker pull $WEB_IMAGE_MAIN || true
+    - >
+      docker build
+      --pull
+      --cache-from $WEB_IMAGE_MAIN
+      --tag $WEB_IMAGE
+      -f Dockerfile
+      .
+    - docker push $WEB_IMAGE
+  only:
+    - merge_requests
+    - main
+
+web/docker-latest:
+  extends: [ .docker-latest ]
+  variables:
+    GIT_STRATEGY: none
+  needs: [ web/docker ]
+  script:
+    - docker pull $WEB_IMAGE
+    - docker tag $WEB_IMAGE $WEB_IMAGE_MAIN
+    - docker push $WEB_IMAGE_MAIN
+  only:
+    - main
