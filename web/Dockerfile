@@ -5,6 +5,8 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+CMD [ "/app/start.sh" ]
+
 # Dependencies:
 # - terraform: remote VM management
 # - gcc, make…: compile Python dependencies
