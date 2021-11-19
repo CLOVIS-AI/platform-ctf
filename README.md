@@ -25,6 +25,9 @@ $ make
 # Nettoyer les fichiers générés
 $ make clean
 
+# Vérifier le coding style Python
+$ make web/lint
+
 # Forcer la création de l'image Docker
 $ rm web/venv/docker; make web/venv/docker
 
