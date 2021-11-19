@@ -1,2 +1,5 @@
 # Ignore the virtual environment
 /venv/
+
+# Do not commit the environment configuration
+secret.properties

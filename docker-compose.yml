@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+
+  server:
+    image: ctf-platform:latest
+    volumes:
+      - ./data/database.db:/app/database.db
+      - ./data/logs:/app/logs
+    env_file: web/secret.properties
