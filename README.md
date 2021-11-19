@@ -2,6 +2,12 @@
 
 Ce dépôt contient le code de la plateforme CTF de la filière RSR de l'ENSEIRB-MATMECA.
 
+Pour configurer la plateforme :
+```shell
+$ cp web/secret.exemple.properties web/secret.properties
+```
+Puis modifier `secret.properties`. Ne jamais inclure ce fichier dans le dépôt.
+
 Pour exécuter la plateforme, on peut utiliser les commandes :
 ```shell
 # Démarrer la plateforme
