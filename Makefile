@@ -43,9 +43,12 @@ web-ui/dist: /tmp/node_pull web-ui web-ui/node_modules
 web/static: web-ui/dist
 	cp -r web-ui/dist web/static
 
+web/static/images: web-ui/images
+	cp -r web-ui/images web/static/images
+
 # *** *** Server image *** ***
 
-web/venv/docker: web/static web/requirements.txt web web/venv/bin/activate
+web/venv/docker: web/static web/static/images web/requirements.txt web web/venv/bin/activate
 	docker build -t ctf-platform:latest web
 	touch web/venv/docker
 
