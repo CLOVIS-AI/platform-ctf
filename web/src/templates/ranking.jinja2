@@ -1,0 +1,48 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    Hall of fame
+{% endblock %}
+
+{% block content %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class='alert alert-{{ category }}'>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <br/>
+    {% if users_to_display %}
+        <table class='table table-striped table-bordered'>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for challenger in hall_of_fame %}
+                {% if challenger.points_sum and challenger.points_sum > 0 %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ challenger.username }}</td>
+                        <td>
+                            {{ challenger.points_sum }}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No user to display. Please come back later, or win some points to be the first challenger on this hall of
+            fame!</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block extended_js %}
+{% endblock %}
