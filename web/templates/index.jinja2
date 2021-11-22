@@ -1,0 +1,41 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class='alert alert-{{ category }}'>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class='card'>
+        <div class="card-header">
+            <h3><i class="fas fa-child"></i> Welcome </h3>
+        </div>
+        <div class="card-body">
+            <p class='text-primary'>A couple tips to stop feeling completely lost !</p>
+            <br>
+            <p>This website hosts a variety of cyber-security challenges to help you train on all sorts of
+                vulnerabilities: web, system, reverse…</p>
+            <p>The challenges are sorted by their category and are sorted in two formats:</p>
+            <ul>
+                <li><a href='/challenges'>Independent challenges </a>, without any order</li>
+                <li><a href='/scenarios'>Scenarios </a>, which provide a story and progress through a number of
+                    challenges
+                </li>
+            </ul>
+            <p>Most of the challenges are tied to a virtual machine launched in our infrastructure. Once you finish a
+                challenge, you win points.</p>
+            <p>Points are <strong>good</strong>. Get more points. Check your progress <a href='/status'>here</a>. Best
+                players are shown <a href='/ranking'> here</a>. <small>Phew</small>.</p>
+
+            <p class='text-primary'>To get started, feel check to <a href='/register'>register</a>, and remember to
+                have fun! </p>
+        </div>
+    </div>
+{% endblock %}
