@@ -1,0 +1,15 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    <h1 class="text-center">404 Not found</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <img class='mx-auto d-block img-fluid' src="{{ url_for('static', filename='images/404_throw.gif') }}"
+             alt="Responsive image">
+        <hr>
+        <p class="text-center"> Looks like the developer broke the site again. Feel free to contact them at <strong>devnull@lolol.fr</strong>
+        </p>
+    </div>
+{% endblock %}

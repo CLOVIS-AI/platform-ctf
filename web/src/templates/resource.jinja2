@@ -1,0 +1,62 @@
+{% if challenge.resource.type == "file" %}
+    <a class='btn btn-primary text-white' href="/challenge/{{ challenge.id }}/static/{{ challenge.resource.args }}"
+       title="Download ressources for the challenge" download>Download</a>
+{% else %}
+    <div class="row">
+        <div class="btn-group col" id="chal-btn-group">
+            <!-- TODO: remove code duplication here, see #24 -->
+            {% if current_user.instance.status == 'started' and current_user.instance.resource.challenge.id == challenge.id %}
+                <!-- The start button is disabled -->
+                <button id='start-btn' class='btn btn-primary shadow-none' disabled title="Start the challenge">
+                    Start
+                </button>
+                <button id='stop-btn' class="btn btn-danger shadow-none" title="Stop the challenge">
+                    Stop
+                </button>
+            {% elif (current_user.instance.status == 'started' and current_user.instance.resource.challenge.id != challenge.id)
+            or current_user.instance.status == 'starting'
+            or current_user.instance.status == 'stopping' %}
+                <!-- Both buttons are disabled -->
+                <button id='start-btn' class='btn btn-primary shadow-none' disabled title="Start the challenge">
+                    Start
+                </button>
+                <button id='stop-btn' class="btn btn-danger shadow-none" disabled title="Stop the challenge">
+                    Stop
+                </button>
+            {% else %}
+                <!-- The stop button is disabled -->
+                <button id='start-btn' class='btn btn-primary shadow-none' title="Start the challenge">
+                    Start
+                </button>
+                <button id='stop-btn' class="btn btn-danger shadow-none" disabled title="Stop the challenge">
+                    Stop
+                </button>
+            {% endif %}
+        </div>
+        {% if not challenge.resource.is_vpn_needed %}
+            <div class="col col-2 text-right">
+                <p class='h5'><span
+                        class="badge badge-secondary {% if current_user.instance.status != 'started' %}d-none{% endif %}"
+                        id="chal-timer"></span></p>
+            </div>
+        {% else %}
+            <div class="col col text-left">
+                <p class='h5' style="margin:0;">
+                    <span style="margin-top:7px; margin-left:100px;"
+                          class="badge badge-secondary {% if current_user.instance.status != 'started' %}d-none{% endif %}"
+                          id="chal-timer"></span>
+                </p>
+            </div>
+            <div class="col col-3 text-right">
+                <a href='/user/vpn/download' download=''>
+                    <button id='download-vpn-btn' class='btn btn-info' title="Download your connection pack">Download
+                        VPN
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    <br><br>
+    <div id="challenge-status">
+    </div>
+{% endif %}

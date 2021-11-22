@@ -1,0 +1,86 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block content %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class='alert alert-{{ category }}'>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class='card'>
+                <div class="card-header">
+                    <h3 class="card-title">VPN settings</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Current VPN status</h5>
+                    <ul>
+                        <li>Connection pack generated : <b>{% if vpn.is_configured %}yes{% else %}no{% endif %}</b></li>
+                        <li>Expires in : <b>{% if vpn.is_configured %}{{ vpn.expires_in }}{% else %}N/A{% endif %}</b>
+                        </li>
+                    </ul>
+
+                    <h5>Download your connection pack</h5>
+                    <a class="btn btn-primary text-white{% if not vpn.is_configured %} disabled{% endif %}"
+                       href="/user/vpn/download" title="Download your connection pack" download="">Download</a>
+
+                    <h5>{% if vpn.is_configured %}Re-g{% else %}G{% endif %}enerate your connection pack</h5>
+                    <form action="" method="post" novalidate>
+                        {{ generate_vpn_configuration_form.hidden_tag() }}
+                        <p>{{ generate_vpn_configuration_form.vpn_config_generate_submit(class_="btn btn-primary text-white") }}</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Change password</h3>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" novalidate>
+                        {{ pw_change_form.hidden_tag() }}
+                        <p>
+                            {{ pw_change_form.old_password.label }}<br>
+                            {{ pw_change_form.old_password(size=32) }}
+                        </p>
+                        <p>
+                            {{ pw_change_form.password.label }}<br>
+                            {{ pw_change_form.password(size=32) }}
+                        </p>
+                        <p>
+                            {{ pw_change_form.password_confirm.label }}<br>
+                            {{ pw_change_form.password_confirm(size=32) }}
+                        </p>
+                        <p>{{ pw_change_form.pw_change_submit(class_="btn btn-primary text-white") }}</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Reset progress</h3>
+        </div>
+        <div class="card-body">
+            <p> All your completed challenges will be erased, there is no turning back !</p>
+            <form action="" method="post" novalidate>
+                {{ reset_progress_form.hidden_tag() }}
+                <p>
+                    {{ reset_progress_form.username.label }}<br>
+                    {{ reset_progress_form.username(size=32) }}
+                </p>
+                {{ reset_progress_form.pr_reset_submit(class_="btn btn-danger text-white") }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

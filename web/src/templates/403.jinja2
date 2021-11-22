@@ -1,0 +1,15 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    <h1 class="text-center">403 Unauthorized access</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <img class='mx-auto d-block img-fluid' src="{{ url_for('static', filename='images/403_cop.jpeg') }}"
+             alt="Responsive image">
+        <hr>
+        <p class="text-center"> "Hello there! We were called for an intrusion. Someone tried to get in a no-access zone,
+            do you will believe that? Have you seen them?</p>
+    </div>
+{% endblock %}

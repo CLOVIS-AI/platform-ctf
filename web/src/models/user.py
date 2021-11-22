@@ -6,12 +6,13 @@ from datetime import datetime, timedelta
 import paramiko
 from flask import current_app
 from flask_login import UserMixin
-from extensions import db, login
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.sql import func
 from sqlalchemy.types import Boolean, DateTime, Integer, String
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from ..extensions import db, login
 
 
 class User(UserMixin, db.Model):

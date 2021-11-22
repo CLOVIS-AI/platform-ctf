@@ -7,8 +7,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import Integer, String
 
-from extensions import db
 from .challenge_validation import ChallengeValidation
+from ..extensions import db
 
 DEFAULT_VALID_SCRIPT_RETURN_CODE = 42
 
