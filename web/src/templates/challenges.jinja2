@@ -1,0 +1,39 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block content %}
+    <div class="accordion" id="accordion">
+        {% for category in data %}
+            <div class="card">
+                <div class="card-header" id="{{ category }}-header">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target='#{{ category }}'
+                                aria-controls="{{ category }}">
+                            <i class="fas fa-bookmark"></i> {{ category }}
+                        </button>
+                    </h5>
+                </div>
+                <div id="{{ category }}" class="collapse show" aria-labelledby='{{ category }}-header'>
+                    <div class="card-body">
+                        {% for challenge in data[category] %}
+                            <li class="list-group-item">
+                                <a href='/challenge/{{ challenge.id }}'>
+                                    {{ challenge.name }}
+                                    <span class="badge {% if current_user.is_authenticated and challenge.current_user_points == challenge.points %}badge-success{% elif current_user.is_authenticated and challenge.current_user_points > 0 %}badge-info{% else %}badge-secondary{% endif %} float-right">
+                                        {% if current_user.is_authenticated %}{{ challenge.current_user_points }}
+                                            /{% endif %}{{ challenge.points }}
+                                    </span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+
+{% endblock %}
