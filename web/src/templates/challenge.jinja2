@@ -1,0 +1,69 @@
+{% extends "base.jinja2" %}
+
+{% block title %}
+    {{ challenge.name }}
+{% endblock %}
+
+{% block content %}
+    <base href="/challenge/{{ challenge.id }}/" target="_self">
+    <div class="card">
+        <div class='card-body'>
+            {{ challenge.description | safe }} <br><br>
+            {% if current_user.is_authenticated %}
+                {% with resource=challenge.resource %}
+                    {% include "resource.jinja2" %}
+                {% endwith %}
+                <div id="progress-bar"
+                     style="padding: 10px 40px 40px; width: 100%; height: 8px; position: relative;"
+                     hidden></div>
+            {% else %}
+                <div class="alert alert-danger">You need to authenticate to start a challenge.</div>
+            {% endif %}
+        </div>
+    </div>
+    {% if current_user.is_authenticated %}
+        {% if challenge.sections %}
+            <div class="accordion" id="section-accordion" role="tablist">
+                {% for section in challenge.sections %}
+                    {% if section.title %}
+                        {% include "section.jinja2" %}
+                    {% else %}
+                        {% for step in section.steps %}
+                            {% include "step.jinja2" %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <br/><br/>
+    <div class="card">
+        <div class='card-body'>
+            <div class="text-center">Created by <span class="text-primary"><b>{{ challenge.author }}</b></span></div>
+        </div>
+    </div>
+    <br/><br/><br/>
+{% endblock %}
+
+
+{% block extended_js %}
+    {% if challenge.resource %}
+        <script>
+            const SERVER_TIME = '{{ server_time }}';
+            const CHALLENGE_ID = {{ challenge.id }};
+            const START_DURATION = {% if challenge.resource.start_duration != None %}
+                {{ challenge.resource.start_duration * 1000 }} {% else %} 0 {% endif %};
+            const CSRF_TOKEN = "{{ csrf_token() }}";
+
+            <!-- TODO: rewrite without jQuery, see #25 -->
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", CSRF_TOKEN);
+                    }
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}
