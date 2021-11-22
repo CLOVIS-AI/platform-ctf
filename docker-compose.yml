@@ -4,6 +4,8 @@ services:
 
   server:
     image: ctf-platform:latest
+    ports:
+      - "8080:8000"
     volumes:
       - ./data/database.db:/app/database.db
       - ./data/logs:/app/logs
