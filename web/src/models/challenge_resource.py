@@ -2,8 +2,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import ForeignKey, Column
 from sqlalchemy.types import Integer, String, Boolean
 
-from extensions import db
 from .resource_instance import ResourceInstance
+from ..extensions import db
 
 
 class ChallengeResource(db.Model):

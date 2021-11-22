@@ -40,15 +40,15 @@ web-ui/node_modules: /tmp/node_pull web-ui/package.json
 web-ui/dist: /tmp/node_pull web-ui web-ui/node_modules
 	$(node) sh -c 'cd /app && yarn --color=always build'
 
-web/static: web-ui/dist
-	cp -r web-ui/dist web/static
+web/src/static: web-ui/dist
+	cp -r web-ui/dist web/src/static
 
-web/static/images: web-ui/images
-	cp -r web-ui/images web/static/images
+web/src/static/images: web-ui/images
+	cp -r web-ui/images web/src/static/images
 
 # *** *** Server image *** ***
 
-web/venv/docker: web/static web/static/images web/requirements.txt web web/venv/bin/activate
+web/venv/docker: web/src/static web/src/static/images web/requirements.txt web web/venv/bin/activate web/src
 	docker build -t ctf-platform:latest web
 	touch web/venv/docker
 

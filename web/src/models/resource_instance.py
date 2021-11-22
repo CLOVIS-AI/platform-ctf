@@ -8,8 +8,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import DateTime, Integer, String
 
-from extensions import db
-from terraform_client import TerraformClient, TerraformError
+from ..extensions import db
+from ..terraform_client import TerraformClient, TerraformError
 
 
 class ResourceInstance(db.Model):

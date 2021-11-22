@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String
 
-from extensions import db
+from ..extensions import db
 
 
 class Challenge(db.Model):

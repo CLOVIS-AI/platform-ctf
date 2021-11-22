@@ -2,7 +2,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import ForeignKey, Column
 from sqlalchemy.types import Integer
 
-from extensions import db
+from ..extensions import db
 
 
 class ChallengeValidation(db.Model):

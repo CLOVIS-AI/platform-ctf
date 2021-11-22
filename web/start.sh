@@ -43,4 +43,4 @@ exec gunicorn \
 	--log-level="$server_log_level" \
 	--log-file="$server_log_file" \
 	--timeout="$server_timeout" \
-	autoapp:app
+	app:app
