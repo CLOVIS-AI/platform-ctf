@@ -22,10 +22,16 @@ class ChallengeStep(db.Model):
     section_id = Column(Integer,
                         ForeignKey("challenge_section.id"),
                         nullable=True)
+
     description = Column(String(120))
+    """Challenge description and hints, in HTML."""
+
     points = Column(Integer, default=0)
+
     order = Column(Integer, default=0)
+
     validation_type = Column(String(32))
+
     validation_arg = Column(String(128))
 
     validations = relationship("ChallengeValidation", back_populates="step")
