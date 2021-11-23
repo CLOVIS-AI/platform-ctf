@@ -4,7 +4,7 @@ Ce dépôt contient le code de la plateforme CTF de la filière RSR de l'ENSEIRB
 
 Pour configurer la plateforme :
 ```shell
-$ cp web/secret.exemple.properties web/secret.properties
+$ cp web/secret.example.properties web/secret.properties
 ```
 Puis modifier `secret.properties`. Ne jamais inclure ce fichier dans le dépôt.
 
