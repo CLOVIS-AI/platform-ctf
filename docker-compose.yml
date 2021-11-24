@@ -7,6 +7,6 @@ services:
     ports:
       - "8080:8000"
     volumes:
-      - ./data/database.db:/app/database.db
+      - ./data/storage:/app/data
       - ./data/logs:/app/logs
     env_file: web/secret.properties
