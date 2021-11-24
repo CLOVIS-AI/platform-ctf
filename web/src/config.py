@@ -33,6 +33,10 @@ class Config(object):
     VPN_PORT = os.environ.get("ssh_vpn_port") or ""
     VPN_USER = os.environ.get("ssh_vpn_user") or ""
 
+    DOCKER_HOSTNAME = os.environ.get("ssh_docker_hostname") or ""
+    DOCKER_PORT = os.environ.get("ssh_docker_port") or ""
+    DOCKER_USER = os.environ.get("ssh_docker_user") or ""
+
     ALLOW_REGISTRATION = os.environ.get("server_allows_registration") == "yes"
     ALLOW_LOGIN_THROUGH_LOCAL_FORM = os.environ.get("server_allows_direct_login") == "yes"
     ALLOW_CAS_INTEGRATION = os.environ.get("server_cas_integration") == "yes"
