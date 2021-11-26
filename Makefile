@@ -60,6 +60,10 @@ start: web/venv/docker
 stop:
 	docker-compose down
 
+.PHONY: cli
+cli: start
+	docker-compose exec server bash
+
 # *** *** Cleanup *** ***
 
 .PHONY: web/clean

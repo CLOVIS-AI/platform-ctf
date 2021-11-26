@@ -40,3 +40,5 @@ $ make web/venv/install
 # Forcer le téléchargement des dépendances Python
 $ rm web/venv/install; make web/venv/install
 ```
+
+[Documentation de la CLI de la plateforme](web/src/commands/README.md)
