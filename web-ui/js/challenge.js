@@ -9,6 +9,31 @@ import ProgressBar from "progressbar.js";
 let interval = null
 let timedelta = 0
 
+/**
+ * Fetches the API with a formData body {action: value} and CSRF token header and calls onSuccess and onError functions depending on the status of the response
+ * @param value
+ * @param onSuccess
+ * @param onError
+ * @returns {Promise<*>}
+ */
+export async function fetchAPI(value, onSuccess, onError) {
+	const formData = new FormData()
+	formData.append('action', value)
+	const headers = new Headers()
+	headers.append("X-CSRFToken", csrf_token)
+	const response = await fetch("/challenge/" + challenge_id, {
+		method: "POST",
+		headers,
+		body: formData
+	})
+	if (response.ok) {
+		const data = await response.json()
+		return await onSuccess(data)
+	} else {
+		return await onError(response)
+	}
+}
+
 export async function start_challenge() {
     document.querySelector("#challenge-status").innerHTML =
         '<div class="alert alert-primary">The resources of the challenge are currently being provisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
