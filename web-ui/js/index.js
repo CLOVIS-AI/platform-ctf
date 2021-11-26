@@ -8,6 +8,7 @@ import "bootswatch/dist/darkly/bootstrap.min.css"
 export const server_time = SERVER_TIME
 export const challenge_id = CHALLENGE_ID
 export const start_duration = START_DURATION
+export const csrf_token = CSRF_TOKEN
 
 const timedelta = server_time_delta(server_time)
 export let last_check_minutes = 0
@@ -157,23 +158,23 @@ export function set_time_button_visible(visible) {
 
 export function update_timer_div(visible, text = "", color = "grey") {
     if (!visible) {
-        if (!challenge_timer.hasClass("d-none")) {
-            challenge_timer.addClass("d-none");
+        if (!challenge_timer.classList.contains("d-none")) {
+            challenge_timer.classList.contains("d-none");
         }
         return;
     }
 
-    if (visible && challenge_timer.hasClass("d-none")) {
-        challenge_timer.removeClass("d-none");
+    if (visible && challenge_timer.classList.contains("d-none")) {
+        challenge_timer.classList.remove("d-none");
     }
 
-    challenge_timer.removeClass("badge-secondary");
-    challenge_timer.removeClass("badge-warning");
-    challenge_timer.removeClass("badge-danger");
+    challenge_timer.classList.remove("badge-secondary");
+    challenge_timer.classList.remove("badge-warning");
+    challenge_timer.classList.remove("badge-danger");
 
-    if (color === "grey") challenge_timer.addClass("badge-secondary");
-    if (color === "yellow") challenge_timer.addClass("badge-warning");
-    if (color === "red") challenge_timer.addClass("badge-danger");
+    if (color === "grey") challenge_timer.classList.add("badge-secondary");
+    if (color === "yellow") challenge_timer.classList.add("badge-warning");
+    if (color === "red") challenge_timer.classList.add("badge-danger");
 
     challenge_timer.text(text);
 }
