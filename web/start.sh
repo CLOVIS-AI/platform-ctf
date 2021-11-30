@@ -35,7 +35,23 @@ fi
 [[ -n $ssh_docker_public_key ]] && echo "$ssh_docker_public_key" | base64 -d >>/root/.ssh/known_hosts
 #endregion
 
-#TODO: migrations, once they're migrated
+#region Migrations
+# The database is created only the first time.
+if [ ! -f "$database_file" ] && [ ! -d "$server_migrations" ]; then
+    flask db init -d "$server_migrations"
+fi
+
+# Apply the migrations
+flask db migrate -d "$server_migrations"
+flask db upgrade -d "$server_migrations"
+
+flask challenge import --all || true
+flask user create -u "$admin_user" -p "$admin_password" -m "$admin_email" --admin
+flask crontab add
+#endregion
+
+# Start the cron daemon
+/usr/sbin/crond
 
 exec gunicorn \
 	-w "$server_workers" \

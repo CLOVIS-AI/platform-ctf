@@ -1,10 +1,11 @@
-from abc import ABC
-
 from flask_table import Table, Col, BoolCol, DateCol, ButtonCol, DatetimeCol, LinkCol
 from flask_wtf.csrf import generate_csrf
 
 
-class ChallengeTable(Table, ABC):
+# Flask doesn't declare its metaclasses correctly, so PyCharm doesn't understand the declaration here
+# See https://youtrack.jetbrains.com/issue/PY-16132
+# noinspection PyAbstractClass
+class ChallengeTable(Table):
     name = LinkCol("Name", "main.challenge", attr="name", url_kwargs={"challenge_id": "id"})
     category = Col("Category")
     author = Col("Author")
@@ -22,7 +23,10 @@ def get_user_table():
 
     csrf_token = generate_csrf()
 
-    class UserTable(Table, ABC):
+    # Flask doesn't declare its metaclasses correctly, so PyCharm doesn't understand the declaration here
+    # See https://youtrack.jetbrains.com/issue/PY-16132
+    # noinspection PyAbstractClass
+    class UserTable(Table):
         username = Col("Username")
         account_creation_date = DateCol("Date de création", date_format="long")
         is_admin = ButtonCol(
@@ -61,7 +65,10 @@ def get_instance_table():
 
     csrf_token = generate_csrf()
 
-    class InstanceTable(Table, ABC):
+    # Flask doesn't declare its metaclasses correctly, so PyCharm doesn't understand the declaration here
+    # See https://youtrack.jetbrains.com/issue/PY-16132
+    # noinspection PyAbstractClass
+    class InstanceTable(Table):
         user = Col("User")
         status = Col("Status")
         name = Col("Challenge", attr="resource.challenge.name")

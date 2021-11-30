@@ -4,7 +4,7 @@ import click
 from flask.cli import AppGroup
 
 from ..config import Config
-from ..docker_client import stopContainer, getAllRunningContainersIds
+from ..docker_client import stop_container, get_all_running_container_ids
 from ..models import ResourceInstance
 from ..vcenter_client import getAllRunning, deleteAllClones
 
@@ -170,7 +170,7 @@ def clean_inconsistent_instances():
     for inst in inconsistencies["not_in_db"]["docker"]:
         print(f"- cleaning {inst}…")
         try:
-            stopContainer(inst)
+            stop_container(inst)
             print(f"Successfully killed {inst}")
             count += 1
         except (Exception,):
@@ -236,7 +236,7 @@ def get_inconsistencies():
     db_running = ResourceInstance.query.filter(
         ResourceInstance.status != "stopped"
     ).all()
-    docker_running = getAllRunningContainersIds()
+    docker_running = get_all_running_container_ids()
     vm_running = getAllRunning()
 
     for vm_instance in vm_running:
