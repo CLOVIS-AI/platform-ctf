@@ -68,7 +68,7 @@ cli: start
 
 .PHONY: web/clean
 web/clean:
-	rm -rf web/static web/venv
+	rm -rf web/src/static web/venv
 
 .PHONY: web-ui/clean
 web-ui/clean:
@@ -76,4 +76,5 @@ web-ui/clean:
 
 .PHONY: clean
 clean: web/clean web-ui/clean
+	sudo rm -rf data
 	@echo "To cleanup Docker files, you might want to run 'docker system prune'"
