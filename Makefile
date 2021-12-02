@@ -35,25 +35,31 @@ node=docker run --rm --mount type=bind,source="$(shell pwd)/web-ui",target=/app 
 	touch /tmp/node_pull
 
 web-ui/node_modules: /tmp/node_pull web-ui/package.json
-	$(node) sh -c 'cd /app && yarn --color=always'
+	$(node) sh -c 'cd /app && yarn --color=always && touch node_modules'
 
-web-ui/dist: /tmp/node_pull web-ui web-ui/node_modules
+js_sources=$(shell find web-ui/js)
+css_sources=$(shell find web-ui/css)
+web-ui/dist: /tmp/node_pull web-ui/node_modules $(js_sources) $(css_sources)
 	$(node) sh -c 'cd /app && yarn --color=always build'
 
-web/src/static: web-ui/dist
+ui_dist=$(shell find web-ui/dist -type f)
+web/src/static: web-ui/dist $(ui_dist)
 	cp -r web-ui/dist web/src/static
+	touch "$@"
 
-web/src/static/images: web-ui/images
+images_dist=$(shell find web-ui/images -type f)
+web/src/static/images: $(images_dist)
 	cp -r web-ui/images web/src/static/images
 
 # *** *** Server image *** ***
 
-web/venv/docker: web/src/static web/src/static/images web/requirements.txt web web/venv/bin/activate web/src
+web_sources=$(shell find web/src -type f)
+web/venv/docker: web/requirements.txt web/app.py web/start.sh web/venv/bin/activate web/src/static web/src/static/images web/Dockerfile $(web_sources)
 	docker build -t ctf-platform:latest web
 	touch web/venv/docker
 
 .PHONY: start
-start: web/venv/docker
+start: web/venv/docker web/secret.properties
 	docker-compose up -d
 
 .PHONY: stop
@@ -68,7 +74,7 @@ cli: start
 
 .PHONY: web/clean
 web/clean:
-	rm -rf web/static web/venv
+	rm -rf web/src/static web/venv
 
 .PHONY: web-ui/clean
 web-ui/clean:
@@ -76,4 +82,5 @@ web-ui/clean:
 
 .PHONY: clean
 clean: web/clean web-ui/clean
+	sudo rm -rf data
 	@echo "To cleanup Docker files, you might want to run 'docker system prune'"

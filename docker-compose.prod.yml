@@ -1,0 +1,7 @@
+version: "3.3"
+
+services:
+
+  server:
+    image: registry.gitlab.com/rsr22/plateforme-ctf/web:latest
+    restart: always
