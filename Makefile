@@ -35,7 +35,7 @@ node=docker run --rm --mount type=bind,source="$(shell pwd)/web-ui",target=/app 
 	touch /tmp/node_pull
 
 web-ui/node_modules: /tmp/node_pull web-ui/package.json
-	$(node) sh -c 'cd /app && yarn --color=always'
+	$(node) sh -c 'cd /app && yarn --color=always && touch node_modules'
 
 web-ui/dist: /tmp/node_pull web-ui web-ui/node_modules
 	$(node) sh -c 'cd /app && yarn --color=always build'
