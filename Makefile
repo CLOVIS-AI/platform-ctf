@@ -37,11 +37,15 @@ node=docker run --rm --mount type=bind,source="$(shell pwd)/web-ui",target=/app 
 web-ui/node_modules: /tmp/node_pull web-ui/package.json
 	$(node) sh -c 'cd /app && yarn --color=always && touch node_modules'
 
-web-ui/dist: /tmp/node_pull web-ui web-ui/node_modules
+js_sources=$(shell find web-ui/js)
+css_sources=$(shell find web-ui/css)
+web-ui/dist: /tmp/node_pull web-ui/node_modules $(js_sources) $(css_sources)
 	$(node) sh -c 'cd /app && yarn --color=always build'
 
-web/src/static: web-ui/dist
+ui_dist=$(shell find web-ui/dist -type f)
+web/src/static: web-ui/dist $(ui_dist)
 	cp -r web-ui/dist web/src/static
+	touch "$@"
 
 web/src/static/images: web-ui/images
 	cp -r web-ui/images web/src/static/images
