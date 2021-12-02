@@ -47,7 +47,8 @@ web/src/static: web-ui/dist $(ui_dist)
 	cp -r web-ui/dist web/src/static
 	touch "$@"
 
-web/src/static/images: web-ui/images
+images_dist=$(shell find web-ui/images -type f)
+web/src/static/images: $(images_dist)
 	cp -r web-ui/images web/src/static/images
 
 # *** *** Server image *** ***
