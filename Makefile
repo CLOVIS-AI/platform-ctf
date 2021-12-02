@@ -53,7 +53,8 @@ web/src/static/images: $(images_dist)
 
 # *** *** Server image *** ***
 
-web/venv/docker: web/src/static web/src/static/images web/requirements.txt web web/venv/bin/activate web/src
+web_sources=$(shell find web/src -type f)
+web/venv/docker: web/requirements.txt web/app.py web/start.sh web/venv/bin/activate web/src/static web/src/static/images web/Dockerfile $(web_sources)
 	docker build -t ctf-platform:latest web
 	touch web/venv/docker
 
