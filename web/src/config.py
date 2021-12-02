@@ -33,6 +33,8 @@ class Config(object):
     VPN_PORT = os.environ.get("ssh_vpn_port") or ""
     VPN_USER = os.environ.get("ssh_vpn_user") or ""
 
+    SECRET_KEY = os.environ.get("server_secret_key") or ""
+
     DOCKER_HOSTNAME = os.environ.get("ssh_docker_hostname") or ""
     DOCKER_PORT = os.environ.get("ssh_docker_port") or ""
     DOCKER_USER = os.environ.get("ssh_docker_user") or ""
