@@ -59,7 +59,7 @@ web/venv/docker: web/requirements.txt web/app.py web/start.sh web/venv/bin/activ
 	touch web/venv/docker
 
 .PHONY: start
-start: web/venv/docker
+start: web/venv/docker web/secret.properties
 	docker-compose up -d
 
 .PHONY: stop
