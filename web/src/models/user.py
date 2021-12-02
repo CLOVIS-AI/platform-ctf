@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.sql import func
 from sqlalchemy.types import Boolean, DateTime, Integer, String
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask_bcrypt import check_password_hash, generate_password_hash
 
 from ..extensions import db, login
 
