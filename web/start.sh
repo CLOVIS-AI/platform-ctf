@@ -17,9 +17,6 @@ app=/app
 source $app/venv/bin/activate
 pip install -r $app/requirements.txt
 
-# Load the secret environment variables
-source $app/secret.properties
-
 #region SSH
 # If the private key is available, load it
 if [[ -n "$ssh_private_key" ]]
