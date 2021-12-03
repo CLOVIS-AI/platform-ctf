@@ -50,8 +50,12 @@ web-ui/build:
 
 web/docker:
   extends: [ .docker-build ]
-  needs: []
+  needs: [ web-ui/build ]
+  dependencies: [ web-ui/build ]
   script:
+    - mkdir -p web/src/static
+    - cp -r web-ui/dist/* web/src/static
+    - cp -r web-ui/images/ web/src/static/images
     - cd web
     - docker pull $WEB_IMAGE_MAIN || true
     - >
