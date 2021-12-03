@@ -1,0 +1,2 @@
+# Do not commit the data folder (logs, migrations, database)
+/data/
