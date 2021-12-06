@@ -95,10 +95,12 @@
     </div>
 </footer>
 
-<script src="{{ url_for('static', filename='vendor.js') }}"></script>
-<script src="{{ url_for('static', filename='index.js') }}"></script>
+{% block extended_js %}
 
-{% block extended_js %}{% endblock %}
+<script type="module" src="{{ url_for('static', filename='index.js') }}"></script>
+
+{% endblock %}
+
 </body>
 
 </html>
