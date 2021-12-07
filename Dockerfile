@@ -20,7 +20,7 @@ RUN apk add --no-cache \
 # Copy only the requirements file, because it doesn't change often
 # The other files will be copied later, because they change often and are not required to install dependencies
 # (which don't change often either)
-COPY requirements.txt /app/requirements.txt
+COPY web/requirements.txt /app/requirements.txt
 RUN cd /app \
  && python3 -m venv venv \
  && . venv/bin/activate \
@@ -28,4 +28,7 @@ RUN cd /app \
  && pip install -r requirements.txt
 
 # Copy all Python, templates, static files, etc
-COPY . /app
+COPY web /app
+
+# Include the challenges in the container
+COPY challenges /app/challenges
