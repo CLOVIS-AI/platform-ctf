@@ -1,0 +1,9 @@
+---
+documentation:
+  name: Payloads All The Things
+  short_name: payload_all_the_things
+  description:
+    Cheat Sheet pour du pentest d'applications Web
+  link:
+    https://github.com/swisskyrepo/PayloadsAllTheThings
+  category: Web Hacking
