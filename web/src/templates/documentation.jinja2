@@ -20,7 +20,9 @@
                     <div class="card-body">
                         {% for documentation in data[category] %}
                             <li class="list-group-item">
-                                <a href='{{ documentation.description }}'>
+                                {{ documentation.description }}
+                                <br>
+                                <a href='{{ documentation.link }}'>
                                     {{ documentation.name }}
                                 </a>
                             </li>

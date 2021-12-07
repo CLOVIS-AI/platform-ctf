@@ -13,5 +13,6 @@ class Documentation(db.Model):
     name = Column(String(120), nullable=False)
     short_name = Column(String(8), unique=True, nullable=False)
     description = Column(String(1024000), default="A compléter")
+    link = Column(String(1024), default="A compléter")
     category = Column(String(32), default="Misc")
     author = Column(String(64), default="Anonymous")
