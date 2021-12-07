@@ -9,6 +9,13 @@
           </resourceRoots>
         </entryData>
       </entry>
+      <entry url="file://$PROJECT_DIR$/challenges/training_platform">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/challenges/training_platform/static" />
+          </resourceRoots>
+        </entryData>
+      </entry>
     </contentEntries>
   </component>
 </project>
