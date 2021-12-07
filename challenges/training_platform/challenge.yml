@@ -1,0 +1,122 @@
+---
+challenge:
+  name: Introduction à la plateforme RSR
+  short_name: training_platform
+  author: Aeinot
+  description: |
+    <p>Ce module d'introduction a pour objectif de présenter les différents concepts de la plateforme RSR. Il vous est
+        offert
+        par la promo RSR 2020/2021 (même si le logo n'est pas à jour &#128530;).</p>
+  category: TRAINING
+
+resource:
+  type: terraform
+  args: |
+    La partie instantiable de ce TP est disponible à l'adresse
+    <a href='https://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>https://ctf.rsr.enseirb-matmeca.fr:{port}</a>
+  start_duration: 7
+
+sections:
+  - section:
+      title: Introduction
+      description: |
+        <p>
+            Le challenge que vous êtes en train de réaliser est un TP (ou entraînement). Il est donc divisé en sections,
+            qui
+            pourront contenir une ou plusieurs questions auxquelles vous devrez répondre.</p>
+        Le plan de ce TP est le suivant : <br/>
+        <ul>
+            <li>Introduction</li>
+            <li>Challenges, scénarios et entraînements</li>
+            <li>Types de ressources</li>
+        </ul>
+        Pour valider cette section, cliquez sur le bouton ci-dessous.
+
+  - section:
+      title: Challenges, scénarios et entraînements
+      description: |
+        <p>Dans le menu situé en haut de cette page, vous pouvez observer 3 catégories : challenges, scénarios et
+            entraînements.
+            Cette section va présenter les principales différences entre ces catégories.</p>
+
+        <h4>Challenges</h4>
+        <p>Les challenges sont divisés en différentes sous catégories : Web, Crypto, Stegano, Forensic, etc.
+            Il s'agit de petites épreuves, qui permettent en général d'exploiter un type précis de vulnérabilité
+            au sein de la sous-catégorie dont le challenge fait partie. Certains challenges sont composés de plusieurs
+            épreuves,
+            qui tournent toutes autour du même thème.</p>
+
+        <h4>Scénarios</h4>
+        <p>Les scénarios sont en général plus longs que les challenges. Ils peuvent mélanger plusieurs sous-catégories
+            et l'objectif est de progresser dans un système d'information en se laissant guider par une petite
+            histoire.</p>
+
+        <h4>Entraînements</h4>
+        <p>Contrairement aux challenges et aux scénarios, dans lesquels le joueur est livré à lui-même, les
+            entraînements
+            ont pour objectif de former le joueur à un thème spécifique. Ils sont donc, comme ce TP, divisés en
+            sections,
+            qui donnent au joueur les connaissances nécessaires pour répondre à des questions ou réaliser des exercices
+            pratiques.</p>
+
+        <br/>Pour chacune de ces catégories, des ressources peuvent être mises à disposition du joueur :
+        instance Docker, une ou plusieurs machines virtuelles, fichiers... Ces types de ressources seront présentés dans
+        la section suivante.
+    steps:
+      - description: |
+          Sous quel onglet se trouverait une épreuve qui nécessite d'obtenir une exécution de code sur un site web,
+          puis de réaliser une élévation de privilèges sur un système Linux pour obtenir un accès <code>root</code> ?
+        validation_type: string
+        validation_arg: Scenarios
+        points: 1
+
+  - section:
+      title: Types de ressources
+      description: |
+        <p>Dans chacune des épreuves, différents types de ressources peuvent-être mis à votre disposition.</p>
+
+        <h4>Fichier(s)</h4>
+        <p>Certains challenges (Crypto, Stegano, Reverse, etc.) peuvent nécessiter le téléchargement d'un fichier.<br/>
+            <u>Exemple :</u> téléchargez <a href="static/file.txt" download>ce fichier texte</a> pour répondre à la
+            première
+            question de cette section.</p><br/>
+
+        <h4>Instances dynamiques</h4>
+        <p>Pour résoudre une épreuve, il sera souvent nécessaire de démarrer une instance dynamique. Pour cela,
+            il suffit de cliquer sur le bouton "Start" situé en haut de la page du challenge, et d'attendre le
+            provisionnement
+            des ressources. La durée de vie de ces ressources est limitée à une heure, avec la possibilité d'ajouter une
+            heure supplémentaire à chaque fois que le timer passe sous la barre des 60 minutes. Chaque instance est
+            réservée à l'utilisateur qui l'a démarrée, c'est pourquoi il est indispensable d'arrêter une instance en
+            cours
+            d'exécution avant de pouvoir en lancer une nouvelle.<br/><br/>
+            
+            Les instances dynamiques sont divisées en deux catégories : les instances Docker et les machines virtuelles.
+        </p>
+
+        <h5>Instances Docker</h5>
+        <p>Les instances Docker sont présentées sous la forme <code>https://&lt;ip_ou_domaine&gt;:&lt;port&gt;</code>.
+            Leur temps de
+            démarrage est en général inférieur à 10 secondes. Attention : ces instances sont souvent basées sur
+            <a href="https://alpinelinux.org/" target="_blank">Alpine Linux</a>, les commandes Unix peuvent donc être
+            différentes de celles disponibles sur des distributions plus classiques.<br/>
+            <u>Exemple :</u> démarrez l'instance Docker associée à ce TP pour répondre à la seconde question de cette
+            section.
+        <div class="text-center"><img src='static/buttons.png' alt="boutons de lancement ou d'arrêt des challenges"/>
+            <br/>
+            <small>Cliquez sur le bouton bleu situé en haut de cette page pour démarrer l'instance dynamique</small>
+        </div>
+        </p>
+
+        <h5>Machines virtuelles (VM)</h5>
+        Dans certaines situations, une instance Docker n'est pas suffisante. L'épreuve peut donc nécessiter le démarrage
+        d'une ou plusieurs VM, ce qui peut durer plusieurs minutes.
+    steps:
+      - description: Quel est le flag contenu dans le fichier texte téléchargé ?
+        validation_type: string
+        validation_arg: flag{UnFlagAssezSimpleATrouver}
+        points: 2
+      - description: Quel est le flag affiché par le serveur web de l'instance Docker de ce TP ?
+        validation_type: string
+        validation_arg: flag{PasTropDurNonPlus}
+        points: 2
