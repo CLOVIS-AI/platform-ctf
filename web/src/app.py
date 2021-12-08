@@ -2,7 +2,7 @@ from flask import Flask
 from flask_wtf.csrf import CSRFProtect
 
 from .cas import CAS
-from .commands import challenge_cli, instance_cli, user_cli
+from .commands import challenge_cli, instance_cli, user_cli, documentation_cli
 from .config import ProductionConfig
 from .cronjobs import crontab
 from .extensions import db, login, migrate
@@ -50,6 +50,7 @@ def register_commands(app):
     app.cli.add_command(challenge_cli)
     app.cli.add_command(instance_cli)
     app.cli.add_command(user_cli)
+    app.cli.add_command(documentation_cli)
 
 
 def register_cas(app):
