@@ -5,3 +5,4 @@ from .challenge_step import ChallengeStep
 from .challenge_validation import ChallengeValidation
 from .resource_instance import ResourceInstance
 from .user import User
+from .documentation import Documentation
