@@ -12,7 +12,7 @@ from .extensions import db
 from .forms import (ChangePasswordForm, GenerateVpnConfigurationForm,
                     LoginForm, RegistrationForm, ResetProgressForm)
 from .models import (Challenge, ChallengeSection, ChallengeStep,
-                     ChallengeValidation, User)
+                     ChallengeValidation, User, Documentation)
 
 main_bp = Blueprint("main", __name__)
 
@@ -58,6 +58,31 @@ def challenges():
         data[challenge.category].append(challenge)
 
     return render_template("challenges.jinja2", data=data, page_challenges=True)
+
+
+@main_bp.route("/documentation")
+def documentation():
+    """
+    Documentation page.
+
+    .. http:get:: /documentation
+       Display all documentation, sorted by category
+
+    """
+    logout_if_banned()
+
+    data = {}
+
+    doc_list = (
+        db.session.query(Documentation)
+        .all()
+    )
+    for doc in doc_list:
+        if doc.category not in data:
+            data[doc.category] = []
+        data[doc.category].append(doc)
+
+    return render_template("documentation.jinja2", data=data, page_documentation=True)
 
 
 @main_bp.route("/scenarios", defaults={"category": "SCENARIO"})
