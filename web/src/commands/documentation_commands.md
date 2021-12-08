@@ -29,16 +29,3 @@ $ flask documentation delete --all
 $ flask documentation delete --documentation DOCUMENTATION_NAME
 ```
 
-#### Check
-
-```shell
-$ flask documentation check --all
-$ flask documentation check --documentation DOCUMENTATION_NAME
-```
-
-#### Build
-
-```shell
-$ flask documentation build --all
-$ flask documentation build --documentation DOCUMENTATION_NAME
-```

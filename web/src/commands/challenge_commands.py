@@ -2,7 +2,7 @@ from os import listdir, access, X_OK
 from os.path import join, isfile
 from random import randrange, choice
 from subprocess import CalledProcessError, check_call
-
+from .command_utils import safe_open_file, save_new_model, test_model_before_delete
 import click
 import yaml
 from flask import current_app
@@ -136,18 +136,14 @@ def reload_challenge_from_dir(challenge_short_name, challenge):
 
 
 def load_challenge_yaml_from_dir(challenge):
+    from src.commands.command_utils import safe_open_file
     description_file = join(
         current_app.config["CHALLENGE_DIR"], challenge, "challenge.yml"
     )
-
-    if not isfile(description_file):
-        raise Exception(f"File {description_file} does not exist.")
-
-    with open(description_file, "r") as stream:
-        try:
-            return yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            raise Exception(exc)
+    try:
+        return safe_open_file(description_file)
+    except Exception as e:
+        raise Exception(e)
 
 
 # endregion
@@ -172,6 +168,7 @@ def create_challenge_command(number):
 
 
 def create_random_challenge():
+    from src.commands.command_utils import save_new_model
     CATEGORIES = ["Reverse", "Crypto", "Web", "Pwn", "Forensic", "SCENARIO"]
 
     new_challenge = Challenge(
@@ -183,10 +180,7 @@ def create_random_challenge():
 
     new_challenge.sections = [create_random_section() for _ in range(2)]
     # Using the challenge id to uniquify the challenge name and short_name
-    new_challenge.save()
-    new_challenge.name = new_challenge.name.format(new_challenge.id)
-    new_challenge.short_name = new_challenge.short_name.format(new_challenge.id)
-    new_challenge.save()
+    save_new_model(new_challenge)
 
 
 def create_random_section():
@@ -213,17 +207,13 @@ def create_random_step():
 @click.option("-a", "--all", "_all", is_flag=True)
 @click.option("-c", "--challenge", "short_name")
 def delete_challenge_command(_all, short_name):
+    from src.commands.command_utils import test_model_before_delete
     if _all:
         delete_all_challenges()
     elif short_name:
-        challenge = (
-            Challenge.query.filter(Challenge.short_name == short_name).one_or_none()
-        )
-        if not challenge:
-            print(f"Challenge {short_name:40s}: not found")
-            return
-
-        delete_challenge(challenge)
+        challenge = test_model_before_delete("Challenge", short_name, Challenge)
+        if challenge:
+            delete_challenge(challenge)
 
 
 def delete_all_challenges():
