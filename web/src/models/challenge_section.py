@@ -7,7 +7,11 @@ from ..extensions import db
 
 
 class ChallengeSection(db.Model):
-    """Subsection of a challenge. Basic block containing instructions and possibly steps."""
+    """
+    A section of a challenge, with a title and a description.
+
+    A section is composed of multiple steps, which describe how the user can prove that they completed that section.
+    """
 
     id = Column(Integer, primary_key=True)
     title = Column(String(128))

@@ -14,8 +14,12 @@ DEFAULT_VALID_SCRIPT_RETURN_CODE = 42
 
 
 class ChallengeStep(db.Model):
-    """Step of a challenge. Basic bloc for asking a user for a flag and
-    validating it to receive some points.
+    """
+    A point where the user must prove that they validated a part of the challenge, for example by submitting a flag.
+
+    A user who completes a step is awarded points.
+
+    Steps are grouped into sections, which are grouped in challenges.
     """
 
     id = Column(Integer, primary_key=True)
