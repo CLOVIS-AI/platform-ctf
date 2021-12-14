@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/rsr-plateforme/plateforme-rsr">
+    <img src="web-ui/images/logo.png" alt="Logo" width="200" height="200">
+  </a>
+</p>
+
 # Plateforme CTF
 
 Ce dépôt contient le code de la plateforme CTF de la filière RSR de l'ENSEIRB-MATMECA.
