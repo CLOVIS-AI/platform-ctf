@@ -19,12 +19,16 @@ web/venv/install: web/venv/bin/activate web/requirements.txt
 web/commit-dependencies: web/venv/bin/activate
 	cd web; . venv/bin/activate; pip freeze >requirements.txt
 
-# *** *** Python Coding style *** ***
+# *** *** Python Code Quality *** ***
 
 # Vérifie que le code respecte le coding style
-.PHONY: lint
+.PHONY: web/lint
 web/lint: web/venv/install
 	cd web; . venv/bin/activate; pycodestyle --show-source --show-pep8 --statistics --benchmark --max-line-length=120 . --exclude=venv/
+
+.PHONY: web/test
+web/test: web/venv/install
+	cd web; . venv/bin/activate; pytest
 
 # *** *** JavaScript interface *** ***
 
