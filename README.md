@@ -11,3 +11,4 @@ La plateforme CTF est une plateforme d'entraînement à la cybersécurité, qui 
 - [Guide de développement](docs/development.md)
 - [Commandes d'administration](web/src/commands/README.md)
 - [Schéma de la base de données](docs/database.md)
+- [Structure des challenges](docs/challenge-structure.md)
