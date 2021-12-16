@@ -1,44 +1,14 @@
+<p align="center">
+  <a href="https://github.com/rsr-plateforme/plateforme-rsr">
+    <img src="web-ui/images/logo.png" alt="Logo" width="200" height="200">
+  </a>
+</p>
+
 # Plateforme CTF
 
-Ce dépôt contient le code de la plateforme CTF de la filière RSR de l'ENSEIRB-MATMECA.
+La plateforme CTF est une plateforme d'entraînement à la cybersécurité, qui contient des challenges individuels, des scénarios plus complexes et des entraînements, écrite par les étudiants de la filière RSR à l'ENSEIRB-MATMECA.
 
-Pour configurer la plateforme :
-```shell
-$ cp web/secret.example.properties web/secret.properties
-```
-Puis modifier `secret.properties`. Ne jamais inclure ce fichier dans le dépôt.
-
-Pour exécuter la plateforme, on peut utiliser les commandes :
-```shell
-# Démarrer la plateforme
-$ make start
-
-# Arrêter la plateforme
-$ make stop
-```
-
-Les commandes suivantes peuvent aussi être utiles :
-```shell
-# Créer l'image Docker de la plateforme sans l'exécuter
-$ make
-
-# Nettoyer les fichiers générés
-$ make clean
-
-# Vérifier le coding style Python
-$ make web/lint
-
-# Forcer la création de l'image Docker
-$ rm web/venv/docker; make web/venv/docker
-
-# Forcer le téléchargement de l'image Docker Alpine
-$ rm /tmp/node_pull; make /tmp/node_pull
-
-# Installer les dépendances Python localement (par exemple pour avoir l'auto-complétion dans PyCharm)
-$ make web/venv/install
-
-# Forcer le téléchargement des dépendances Python
-$ rm web/venv/install; make web/venv/install
-```
-
-[Documentation de la CLI de la plateforme](web/src/commands/README.md)
+- [Guide de développement](docs/development.md)
+- [Commandes d'administration](web/src/commands/README.md)
+- [Schéma de la base de données](docs/database.md)
+- [Structure des challenges](docs/challenge-structure.md)

@@ -7,7 +7,17 @@ from ..extensions import db
 
 
 class ChallengeResource(db.Model):
-    """Object which represent a generic resource that can be instantiated by a user."""
+    """
+    A physical resource that can be started by users.
+
+    The Resource class represents the resource itself, whereas the Instance class represents the usage of a
+    resource by a user.
+
+    Currently, there are two types of resources:
+    - Virtual machines,
+    - Docker containers.
+    """
+
     id = Column(Integer, primary_key=True)
     type = Column(String(64))
     args = Column(String(64), default="")

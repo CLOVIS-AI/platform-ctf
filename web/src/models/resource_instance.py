@@ -13,7 +13,9 @@ from ..terraform_client import TerraformClient, TerraformError
 
 
 class ResourceInstance(db.Model):
-    """Object that represent the instanciation of a ChallengeResource object."""
+    """
+    A physical resource that was started by a user.
+    """
 
     id = Column(Integer, primary_key=True)
     type = Column(String(64))

@@ -7,7 +7,13 @@ from ..extensions import db
 
 
 class Challenge(db.Model):
-    """Base Challenge class."""
+    """
+    Scenarios, challenges, documentation pages are all modeled by this class.
+
+    A challenge is split into sections, themselves split into steps.
+    Each section has a title, a description and one or more validation steps.
+    A step corresponds to a requested flag.
+    """
 
     id = Column(Integer, primary_key=True)
     name = Column(String(120), nullable=False)
