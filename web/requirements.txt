@@ -43,6 +43,7 @@ Pygments==2.10.0
 PyNaCl==1.4.0
 pyparsing==3.0.6
 pytest==6.2.5
+python-dotenv==0.19.2
 pytz==2021.3
 pyvim==3.0.2
 pyvmomi==7.0.3
