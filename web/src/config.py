@@ -1,5 +1,14 @@
 import os
 
+from flask.cli import load_dotenv
+
+config_file = "secret.properties"
+if os.path.isfile(config_file):
+    load_dotenv(config_file)
+else:
+    print(f"Could not load the '{config_file}' file. "
+          "You should either create it, or create the environment variables.")
+
 
 class Config(object):
     DEBUG = False
