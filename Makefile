@@ -6,7 +6,7 @@ build: web/venv/docker
 
 # Créer un virtual env
 web/venv/bin/activate:
-	cd web; python3 -m venv venv/
+	test -d venv || ( cd web; python3 -m venv venv/ )
 
 # Installer les dépendances
 # Pour forcer la mise à jour, il suffit de modifier le fichier requirements.txt ou de supprimer le marqueur 'venv/installed'
