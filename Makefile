@@ -12,7 +12,7 @@ web/venv/bin/activate:
 # Pour forcer la mise à jour, il suffit de modifier le fichier requirements.txt ou de supprimer le marqueur 'venv/installed'
 web/venv/install: web/venv/bin/activate web/requirements.txt
 	cd web; . venv/bin/activate; pip install -r requirements.txt
-	touch web/venv/installed  # marqueur pour éviter de télécharger les dépendances à chaque fois
+	touch web/venv/install  # marqueur pour éviter de télécharger les dépendances à chaque fois
 
 # Mettre à jour le fichier 'requirements.txt' après avoir fait un 'pip install' ou similaire
 .PHONY: web/commit-dependencies
