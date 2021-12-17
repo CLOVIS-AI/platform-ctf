@@ -10,7 +10,7 @@ from .routes import main_bp
 from .routes_admin import admin_bp
 
 
-def create_app(config_object=ProductionConfig):
+def create_app(config_object=ProductionConfig()):
     app = Flask(__name__)
 
     app.config.from_object(config_object)
