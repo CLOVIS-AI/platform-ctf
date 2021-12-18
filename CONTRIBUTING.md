@@ -100,6 +100,18 @@ Lors de la création d'une merge request, il faudra faire attention à choisir l
 Vous n'avez donc pas accès en écriture au dépôt GitLab.
 Pour pouvoir suggérer des modifications, il va donc vous falloir configurer une copie du dépôt vous appartenant, effectuer les modifications que vous souhaitez, puis les envoyer à la promotion RSR actuelle.
 
-<!-- TODO créer un fork personnel -->
-<!-- TODO cloner le dépôt, ajouter les différentes remotes -->
-<!-- TODO suivre la procédure normale -->
+Sur la page d'accueil du projet, vous pouvez utiliser le bouton “fork” pour créer une copie du projet sur laquelle vous avez tous les droits.
+Pour paramétrer les tests et/ou le déploiement automatisé sur votre copie, lisez le guide de déploiement. <!-- TODO in #78 -->
+
+Pour pouvoir accéder à la fois à vos propres branches ainsi qu'à celles du dépôt officiel, vous pouvez ajouter les deux dépôts à Git :
+```shell
+$ git clone git@gitlab.com:rsr22/plateforme-ctf.git  # ou https://gitlab.com/rsr22/plateforme-ctf.git
+$ cd plateforme-ctf
+$ git remote rename origin rsr22
+$ git remote add [votre nom] [URL de clone de votre dépôt]
+$ git fetch --all  # se connecter à toutes les remotes et télécharger les branches et commits
+```
+
+Vous pouvez ensuite suivre les étapes de développement suivies par les élèves, à l'exception de :
+- vous ne pouvez pas utiliser `origin`, il faut choisir entre une des deux disponibles
+- lors de la création d'une merge request, il faut choisir la branche de destination comme étant celle du dépôt vers lequel vous voulez envoyer la modification.
