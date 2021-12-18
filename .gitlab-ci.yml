@@ -11,6 +11,7 @@ telegram:
     - announce-telegram chlog "$CHAT_IDS"
   only:
     - main
+  allow_failure: true
 
 web/lint:
   image: python:latest
