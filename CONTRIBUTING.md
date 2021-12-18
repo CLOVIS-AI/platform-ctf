@@ -67,11 +67,33 @@ C'est aussi là que se passent les vérifications automatiques (tests unitaires,
 Pour en apprendre plus sur le merge requests, voir la [documentation GitLab](https://docs.gitlab.com/ee/user/project/merge_requests/getting_started.html).
 Quand la modification est acceptée par un mainteneur (typiquement, un délégué de la filière), il a la possibilité de la “merge”, ce qui lance automatiquement le déploiement sur le serveur.
 
-## Je suis un élève de la filière RSR d'une autre promotion
+## Je suis un élève d'une promotion RSR différente
 
-<!-- TODO créer un groupe pour la promotion -->
-<!-- TODO créer un fork du dépôt -->
-<!-- TODO suivre la procédure normale -->
+Pour les élèves d'une promotion passée, il n'est pas utile de créer un groupe de promotion.
+S'il s'agit de votre cas, vous pouvez suivre les étapes pour les contributions externes à RSR.
+
+Pour les promotions futures, il faut créer un groupe pour la promotion et mettre en place le déploiement automatique.
+
+### Configuration initiale
+
+Les étapes sont les suivantes :
+- [Créer un groupe GitLab](https://docs.gitlab.com/ee/user/group/) pour la promotion
+- Ajouter les membres de la promotion au groupe en leur donnant le rôle “developer”
+- Copier le dépôt en appuyant sur le bouton “fork” (en haut à droite de la page d'accueil du projet), puis en sélectionnant le groupe créé dans les étapes précédentes
+
+Les paramètres suivants peuvent être intéressants à changer, dans la page de la copie du projet, appartenant au nouveau groupe :
+- Settings » General » Visibility : si la copie est publique ou non
+- Settings » General » Merge Requests » Merge checks : activer “Pipelines must succeed” et “All discussions must be resolved”
+- Settings » General » Merge Requests Approval : activer “Merge request results” et “Merge train”
+- Settings » Repository » Protected branches : personne n'a le droit de push sur `main` (il est obligatoire de créer une merge request et donc de valider les tests unitaires etc). À décider si uniquement les maintainers (les délégués) ou les developers (tous élèves) ont le droit de merge (eg. accepter une merge request).
+
+Pour activer les tests et le déploiement automatisé, lire le guide de déploiement. <!-- TODO in #78 -->
+
+### Développement
+
+Quand le groupe a été créé et paramétré, vous pouvez suivre le processus décrit plus haut pour contribuer à la plateforme en tant qu'un élève de la promotion actuelle.
+
+Lors de la création d'une merge request, il faudra faire attention à choisir la destination des modifications : il faut choisir le nouveau groupe, et non l'ancien.
 
 ## Je ne suis pas un élève de la filière RSR
 
