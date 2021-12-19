@@ -16,7 +16,7 @@
                         class="badge badge-secondary p-6">{{ step.points }}</span></div>{% endif %}
         </div>
         <div class='card-body'>
-            <form action="javascript:void(0);" id="form-{{ step.id }}" onsubmit="submit_step({{ step.id }}, this)">
+            <form id="form-{{ step.id }}" class="step-submission" data-step_id="{{ step.id }}">
                 <div class="form-group row">
                     <div class="col-10">
                         <input type="text" class="form-control" id="flag-{{ step.id }}" name="flag-{{ step.id }}"
