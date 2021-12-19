@@ -9,6 +9,7 @@ import ProgressBar from "progressbar.js"
 let interval = null
 let timedelta = 0
 
+const csrf_token = document.querySelector("base")?.dataset.csrf_token
 /**
  * Fetches the API with a formData body {action: value} and CSRF token header and calls onSuccess and onError functions depending on the status of the response
  * @param value
