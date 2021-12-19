@@ -151,5 +151,42 @@ export async function stop_challenge(action = "stop") {
 	await fetchChallengeAPI(action, onSuccess, onError)
 }
 
-	await fetchAPI(action, onSuccess, onError)
+export async function submit_step(step_id, form) {
+	const flag = form[0].value
+
+	const onSuccess = data => {
+		if (data.status === "failed") {
+			alert("Wrong flag!")
+		} else if (data.status === "success") {
+			const step_card = form.parentElement
+			step_card.hidden = true
+			step_card.parentElement.classList.add("bg-success")
+			step_card.parentElement.classList.add("text-white")
+
+			const step_parent = form.parentElement.parentElement.parentElement
+			if (step_parent.classList.contains("card-body")) {
+				// This step is inside a section
+				let is_completed = true
+				step_parent.querySelectorAll(".card").forEach(element => {
+					if (!element.classList.contains("bg-success")) {
+						is_completed = false
+					}
+				})
+
+				if (is_completed) {
+					step_parent.parentElement.classList.add("section-completed")
+					const icon = step_parent.parentElement.parentElement.parentElement.querySelector(".task-dropdown-icon svg")
+					icon.classList.remove("fa-circle")
+					icon.classList.remove("text-secondary")
+					icon.classList.add("fa-check-circle")
+					icon.classList.add("text-success")
+				}
+			}
+		}
+	}
+
+	const onError = response => {
+		console.error(response)
+	}
+	await fetchFlagAPI(flag, step_id, onSuccess, onError)
 }
