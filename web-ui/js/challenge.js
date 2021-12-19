@@ -106,7 +106,7 @@ export async function start_challenge() {
 }
 
 export async function status_challenge() {
-	const onSuccess = async data => {
+	const onSuccess = async /**ChallengeData*/data => {
 		timedelta = server_time_delta(data.server_time)
 		show_instance_status(data)
 		if (data.challenge !== null && data.challenge === challenge_id && data.status === "started") {
