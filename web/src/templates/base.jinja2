@@ -52,20 +52,16 @@
                                 </div>
                             {% endif %}
                             <div class="col">
-                                <div class="btn-group dropleft">
-                                    <button class="btn btn-secondary dropdown-toggle" type='button'
-                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">{{ current_user.username }}<span class="caret"></span>
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby='dropdownMenuButton'>
-                                        <a class="dropdown-item {% if settings %} active {% endif %}"
-                                           href="/user/settings">Settings</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/user/nightmode">{% if current_user.night_mode %}
-                                            Light mode{% else %}Night mode{% endif %}</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/logout">Logout</a>
-                                    </div>
+                                <div class="dropdown">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">{{ current_user.username }}<span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby='dropdownMenuLink'>
+                                       <li> <a class="dropdown-item {% if settings %} active {% endif %}"
+                                           href="/user/settings">Settings</a></li>
+                                       <li><a class="dropdown-item" href="/user/nightmode">{% if current_user.night_mode %}
+                                            Light mode{% else %}Night mode{% endif %}</a></li>
+                                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
