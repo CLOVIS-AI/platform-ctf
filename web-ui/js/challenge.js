@@ -11,21 +11,21 @@ let timedelta = 0
 
 const csrf_token = document.querySelector("base")?.dataset.csrf_token
 /**
- * Fetches the API with a formData body {action: value} and CSRF token header and calls onSuccess and onError functions depending on the status of the response
+ * Fetches the API with a formData body {key: value} and CSRF token header and calls onSuccess and onError functions depending on the status of the response
+ * @param key
  * @param value
+ * @param path
  * @param onSuccess
  * @param onError
  * @returns {Promise<*>}
  */
-export async function fetchAPI(value, onSuccess, onError) {
+export async function fetchAPI(key, value, path, onSuccess, onError) {
 	const formData = new FormData()
-	formData.append('action', value)
+	formData.append(key, value)
 	const headers = new Headers()
 	headers.append("X-CSRFToken", csrf_token)
-	const response = await fetch("/challenge/" + challenge_id, {
-		method: "POST",
-		headers,
-		body: formData
+	const response = await fetch(path, {
+		method: "POST", headers, body: formData
 	})
 	if (response.ok) {
 		const data = await response.json()
@@ -33,6 +33,29 @@ export async function fetchAPI(value, onSuccess, onError) {
 	} else {
 		return await onError(response)
 	}
+}
+
+/**
+ * Fetches the /challenge route of the API with a formData body {"action": value}
+ * @param value
+ * @param onSuccess
+ * @param onError
+ * @returns {Promise<*>}
+ */
+export async function fetchChallengeAPI(value, onSuccess, onError) {
+	return await fetchAPI("action", value, "/challenge/" + challenge_id, onSuccess, onError)
+}
+
+/**
+ * Fetches the /submit route of the API with a formData body {"flag": flag}
+ * @param flag
+ * @param step_id
+ * @param onSuccess
+ * @param onError
+ * @returns {Promise<*>}
+ */
+export async function fetchFlagAPI(flag, step_id, onSuccess, onError) {
+	return await fetchAPI("flag", flag, "/submit/" + step_id, onSuccess, onError)
 }
 
 export async function start_challenge() {
@@ -117,7 +140,7 @@ export async function start_challenge() {
 		}
 	}
 
-	await fetchAPI("start", onSuccess, onError)
+	await fetchChallengeAPI("start", onSuccess, onError)
 }
 
 export async function status_challenge() {
@@ -145,7 +168,7 @@ export async function status_challenge() {
 			'<div class="alert alert-danger">Failed to retrieve challenge status.</div>'
 	}
 
-	await fetchAPI("status", onSuccess, onError)
+	await fetchChallengeAPI("status", onSuccess, onError)
 }
 
 export async function stop_challenge(action = "stop") {
@@ -167,9 +190,11 @@ export async function stop_challenge(action = "stop") {
 	const onError = () => {
 		document.querySelector("#stop-btn").disabled = false
 		document.querySelector("#start-btn").disabled = true
-		document.querySelector("#challenge-status").innerHTML =
-			'<div class="alert alert-danger">Something went wrong.</div>'
+		document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-danger">Something went wrong.</div>'
 	}
+
+	await fetchChallengeAPI(action, onSuccess, onError)
+}
 
 	await fetchAPI(action, onSuccess, onError)
 }
