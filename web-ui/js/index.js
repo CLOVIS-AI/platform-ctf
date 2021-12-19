@@ -1,11 +1,11 @@
-import {start_challenge, status_challenge, stop_challenge, submit_step} from "./challenge"
+import {start_challenge, status_challenge, stop_challenge, submit_step, timedelta} from "./challenge"
 import "bootswatch/dist/darkly/bootstrap.min.css"
 import "bootstrap"
 import "../css/index.css"
 import "@fortawesome/fontawesome-free/css/all.css"
 import "@fortawesome/fontawesome-free/js/all.js"
 
-const timedelta = server_time_delta(server_time)
+export const challenge_id = parseInt(window.location.href.split("/").reverse()[0])
 export let last_check_minutes = 0
 
 const start_button = document.querySelector("#start-btn")
@@ -227,6 +227,21 @@ export async function handle_timer(end_time) {
 	}
 }
 
-start_button.click(start_challenge);
-stop_button.click(stop_challenge);
-status_challenge().catch(e => console.error(e));
+/**
+ * Adds an event listener on all step submission forms of the page
+ */
+function register_flag_input() {
+	document.querySelectorAll(".step-submission").forEach(form => {
+		form.addEventListener("submit", async e => {
+			e.preventDefault()
+			await submit_step(form.dataset.step_id, form)
+		})
+	})
+}
+
+if (challenge_id > 0) {
+	register_flag_input()
+	start_button.addEventListener("click", start_challenge)
+	stop_button.addEventListener("click", stop_challenge)
+	status_challenge().catch(e => console.error(e))
+}
