@@ -1,15 +1,18 @@
 import {
-	set_time_button_visible,
 	challenge_id,
+	handle_timer,
 	server_time_delta,
-	show_instance_status, handle_timer, update_timer_div, start_duration, csrf_token
+	set_time_button_visible,
+	show_instance_status,
+	update_timer_div
 } from "./index"
-import ProgressBar from "progressbar.js"
+import {ChallengeData} from "./types"
 
 let interval = null
-let timedelta = 0
+export let timedelta = 0
 
 const csrf_token = document.querySelector("base")?.dataset.csrf_token
+
 /**
  * Fetches the API with a formData body {key: value} and CSRF token header and calls onSuccess and onError functions depending on the status of the response
  * @param key
@@ -106,11 +109,7 @@ export async function status_challenge() {
 	const onSuccess = async data => {
 		timedelta = server_time_delta(data.server_time)
 		show_instance_status(data)
-		if (
-			data.challenge != null &&
-			data.challenge === challenge_id &&
-			data.status === "started"
-		) {
+		if (data.challenge !== null && data.challenge === challenge_id && data.status === "started") {
 			clearInterval(interval)
 			await handle_timer(data.expiration)
 			interval = setInterval(function () {
@@ -123,16 +122,14 @@ export async function status_challenge() {
 	}
 
 	const onError = () => {
-		document.querySelector("#challenge-status").innerHTML =
-			'<div class="alert alert-danger">Failed to retrieve challenge status.</div>'
+		document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-danger">Failed to retrieve challenge status.</div>'
 	}
 
 	await fetchChallengeAPI("status", onSuccess, onError)
 }
 
 export async function stop_challenge(action = "stop") {
-	document.querySelector("#challenge-status").innerHTML =
-		'<div class="alert alert-primary">The resources of the challenge are currently being unprovisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
+	document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-primary">The resources of the challenge are currently being unprovisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
 	document.querySelector("#stop-btn").disabled = true
 	document.querySelector("#start-btn").disabled = true
 	set_time_button_visible(false)
@@ -140,8 +137,7 @@ export async function stop_challenge(action = "stop") {
 	clearInterval(interval)
 
 	const onSuccess = data => {
-		document.querySelector("#challenge-status").innerHTML =
-			'<div class="alert alert-success">The resources of the challenge have been successfully unprovisioned.</div>'
+		document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-success">The resources of the challenge have been successfully unprovisioned.</div>'
 		show_instance_status(data)
 		document.querySelector("#start-btn").disabled = false
 	}

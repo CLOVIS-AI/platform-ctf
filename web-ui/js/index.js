@@ -1,14 +1,9 @@
-import {start_challenge, status_challenge, stop_challenge} from "./challenge";
+import {start_challenge, status_challenge, stop_challenge, submit_step} from "./challenge"
 import "bootswatch/dist/darkly/bootstrap.min.css"
-/* Global variables used in this file (must be defined in the calling page):
- *      SERVER_TIME
- *      CHALLENGE_ID
- *      START_DURATION
- */
-export const server_time = SERVER_TIME
-export const challenge_id = CHALLENGE_ID
-export const start_duration = START_DURATION
-export const csrf_token = CSRF_TOKEN
+import "bootstrap"
+import "../css/index.css"
+import "@fortawesome/fontawesome-free/css/all.css"
+import "@fortawesome/fontawesome-free/js/all.js"
 
 const timedelta = server_time_delta(server_time)
 export let last_check_minutes = 0
