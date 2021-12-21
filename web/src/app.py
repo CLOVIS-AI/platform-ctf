@@ -13,7 +13,8 @@ from .routes_admin import admin_bp
 def create_app(config_object=ProductionConfig()):
     app = Flask(__name__)
 
-    app.config.from_object(config_object)
+    app.config.from_object(config_object)  # config["VAR"]
+    app.configuration = config_object      # configuration.VAR
 
     register_extensions(app)
     register_blueprints(app)
