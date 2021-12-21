@@ -6,7 +6,7 @@ from .config import Config
 
 config = Config()
 
-try:
+if config.DOCKER_USER is not "" and config.DOCKER_HOSTNAME is not "" and config.DOCKER_PORT is not "":
     client = DockerClient(base_url=f"ssh://{config.DOCKER_USER}@{config.DOCKER_HOSTNAME}:{config.DOCKER_PORT}")
 
     # region The Docker client is properly configured
@@ -64,7 +64,7 @@ try:
         return inst_ids
 
     # endregion
-except OSError:
+else:
     # region The docker client is not configured, implement all actions as NO-OPs
     print("The docker client has not been configured. This server will not attempt to connect to it.", file=sys.stderr)
 
