@@ -28,7 +28,7 @@ web/lint: web/venv/install
 
 .PHONY: web/test
 web/test: web/venv/install
-	cd web; . venv/bin/activate; pytest
+	cd web; . venv/bin/activate; pytest --junitxml=tests.xml
 
 # *** *** JavaScript interface *** ***
 

@@ -23,12 +23,16 @@ web/lint:
 
 web/test:
   image: python:latest
-  needs: []
+  needs: [ ]
   script:
     - cp web/secret.example.properties web/secret.properties
     - make web/test
   only:
     - merge_requests
+  artifacts:
+    when: always
+    reports:
+      junit: web/tests.xml
 
 web-ui/build:
   image: node:alpine

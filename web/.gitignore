@@ -6,3 +6,6 @@
 
 # Do not commit the environment configuration
 secret.properties
+
+# Test results
+tests.xml
