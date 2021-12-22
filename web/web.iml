@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/src/static" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.8 RSR" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python CTF" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

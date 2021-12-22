@@ -33,6 +33,22 @@ $ make start
 $ make stop
 ```
 
+## Configuration pour IntelliJ
+
+Ce projet contient à la fois du Python et du JavaScript.
+PyCharm ne permet pas actuellement de créer des projets contenant plusieurs modules.
+Nous recommandons donc d'utiliser IntelliJ Ultimate.
+
+Après avoir ouvert le projet dans IntelliJ, il faut exécuter la commande suivante :
+```shell
+$ make web-ui/node_modules web/venv/install
+```
+Cela va créer l'environnement virtuel Python, y télécharger les dépendances, ainsi que télécharger les dépendances JavaScript.
+De cette manière, IntelliJ va pouvoir indexer les bibliothèques pour améliorer l'auto-complétion.
+
+Il faut ensuite [se connecter à une SDK Python](https://www.jetbrains.com/help/idea/creating-virtual-environment.html) de type “virtual env”, en choisissant le dossier `web/venv` et en l'appelant “Python CTF”.
+Il est alors possible d'utiliser les *run configurations* pour exécuter les différentes commandes du projet, utiliser le debugger, etc.
+
 ## Autres commandes utiles
 
 ```shell

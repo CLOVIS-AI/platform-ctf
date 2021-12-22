@@ -1,0 +1,1 @@
+from .mock_challenge_resource import MockChallengeResource

@@ -6,25 +6,29 @@ build: web/venv/docker
 
 # Créer un virtual env
 web/venv/bin/activate:
-	cd web; python3 -m venv venv/
+	test -d venv || ( cd web; python3 -m venv venv/ )
 
 # Installer les dépendances
 # Pour forcer la mise à jour, il suffit de modifier le fichier requirements.txt ou de supprimer le marqueur 'venv/installed'
 web/venv/install: web/venv/bin/activate web/requirements.txt
 	cd web; . venv/bin/activate; pip install -r requirements.txt
-	touch web/venv/installed  # marqueur pour éviter de télécharger les dépendances à chaque fois
+	touch web/venv/install  # marqueur pour éviter de télécharger les dépendances à chaque fois
 
 # Mettre à jour le fichier 'requirements.txt' après avoir fait un 'pip install' ou similaire
 .PHONY: web/commit-dependencies
 web/commit-dependencies: web/venv/bin/activate
 	cd web; . venv/bin/activate; pip freeze >requirements.txt
 
-# *** *** Python Coding style *** ***
+# *** *** Python Code Quality *** ***
 
 # Vérifie que le code respecte le coding style
-.PHONY: lint
+.PHONY: web/lint
 web/lint: web/venv/install
 	cd web; . venv/bin/activate; pycodestyle --show-source --show-pep8 --statistics --benchmark --max-line-length=120 . --exclude=venv/
+
+.PHONY: web/test
+web/test: web/venv/install
+	cd web; . venv/bin/activate; pytest --junitxml=tests.xml
 
 # *** *** JavaScript interface *** ***
 
