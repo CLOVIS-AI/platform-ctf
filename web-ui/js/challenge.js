@@ -1,30 +1,34 @@
 import {
-	set_time_button_visible,
 	challenge_id,
+	handle_timer,
 	server_time_delta,
-	show_instance_status, handle_timer, update_timer_div, start_duration, csrf_token
+	set_time_button_visible,
+	show_instance_status,
+	update_timer_div
 } from "./index"
-import ProgressBar from "progressbar.js"
+import {ChallengeData} from "./types"
 
 let interval = null
-let timedelta = 0
+export let timedelta = 0
+
+const csrf_token = document.querySelector("base")?.dataset.csrf_token
 
 /**
- * Fetches the API with a formData body {action: value} and CSRF token header and calls onSuccess and onError functions depending on the status of the response
+ * Fetches the API with a formData body {key: value} and CSRF token header and calls onSuccess and onError functions depending on the status of the response
+ * @param key
  * @param value
+ * @param path
  * @param onSuccess
  * @param onError
  * @returns {Promise<*>}
  */
-export async function fetchAPI(value, onSuccess, onError) {
+export async function fetchAPI(key, value, path, onSuccess, onError) {
 	const formData = new FormData()
-	formData.append('action', value)
+	formData.append(key, value)
 	const headers = new Headers()
 	headers.append("X-CSRFToken", csrf_token)
-	const response = await fetch("/challenge/" + challenge_id, {
-		method: "POST",
-		headers,
-		body: formData
+	const response = await fetch(path, {
+		method: "POST", headers, body: formData
 	})
 	if (response.ok) {
 		const data = await response.json()
@@ -34,60 +38,50 @@ export async function fetchAPI(value, onSuccess, onError) {
 	}
 }
 
+/**
+ * Fetches the /challenge route of the API with a formData body {"action": value}
+ * @param value
+ * @param onSuccess
+ * @param onError
+ * @returns {Promise<*>}
+ */
+export async function fetchChallengeAPI(value, onSuccess, onError) {
+	return await fetchAPI("action", value, "/challenge/" + challenge_id, onSuccess, onError)
+}
+
+/**
+ * Fetches the /submit route of the API with a formData body {"flag": flag}
+ * @param flag
+ * @param step_id
+ * @param onSuccess
+ * @param onError
+ * @returns {Promise<*>}
+ */
+export async function fetchFlagAPI(flag, step_id, onSuccess, onError) {
+	return await fetchAPI("flag", flag, "/submit/" + step_id, onSuccess, onError)
+}
+
 export async function start_challenge() {
-	document.querySelector("#challenge-status").innerHTML =
-		'<div class="alert alert-primary">The resources of the challenge are currently being provisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
+	document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-primary">The resources of the challenge are currently being provisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
 
 	// Progress bar
 	document.querySelector("#progress-bar").hidden = false
-	const bar = new ProgressBar.Path("#progress-bar", {
-		strokeWidth: 2,
-		easing: "linear",
-		duration: start_duration,
-		color: "#78d7fa",
-		trailColor: "#eee",
-		trailWidth: 1,
-		svgStyle: {width: "100%", height: "100%"},
-		from: {color: "#87dfff"},
-		step: (state, bar) => {
-			bar.path.setAttribute("stroke", state.color)
-		}
-	})
-
 	document.querySelector("#start-btn").disabled = true
-	bar.animate(0.9, function () {
-		bar.animate(1, {duration: 20000, easing: "linear"})
-	})
-
 	const onSuccess = data => {
-		if (data.status === "started" && data.challenge === CHALLENGE_ID) {
-			bar.stop()
-			bar.animate(
-				1,
-				{duration: 500, to: {width: 1, color: "#63e047"}},
-				function () {
-					show_instance_status(data)
-					const progress_bar = document.querySelector("#progress-bar")
-					progress_bar.hidden = true
-					progress_bar.innerHTML = ""
-					handle_timer(data.expiration)
-					interval = setInterval(function () {
-						handle_timer(data.expiration)
-					}, 1000)
-				}
-			)
+		if (data.status === "started" && data.challenge === challenge_id) {
+			show_instance_status(data)
+			const progress_bar = document.querySelector("#progress-bar")
+			progress_bar.hidden = true
+			progress_bar.innerHTML = ""
+			handle_timer(data.expiration)
+			interval = setInterval(function () {
+				handle_timer(data.expiration)
+			}, 1000)
 		} else {
 			show_instance_status(data, false)
-			bar.stop()
-			bar.animate(
-				1,
-				{duration: 500, to: {width: 1, color: "#E74C3C"}},
-				function () {
-					const progress_bar = document.querySelector("#progress-bar")
-					progress_bar.hidden = true
-					progress_bar.innerHTML = ""
-				}
-			)
+			const progress_bar = document.querySelector("#progress-bar")
+			progress_bar.hidden = true
+			progress_bar.innerHTML = ""
 		}
 	}
 
@@ -95,39 +89,27 @@ export async function start_challenge() {
 		try {
 			const data = await response.json()
 			if (data.status === "unauthentified") {
-				document.querySelector("#challenge-status").innerHTML =
-					'<div class="alert alert-danger">You need to be authenticated to start a challenge.</div>'
+				document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-danger">You need to be authenticated to start a challenge.</div>'
 			} else {
 				show_instance_status(data, false)
-				bar.stop()
-				bar.animate(
-					1,
-					{duration: 500, to: {width: 1, color: "#E74C3C"}},
-					function () {
-						document.querySelector("#start-btn").disabled = false
-						const progress_bar = document.querySelector("#progress-bar")
-						progress_bar.hidden = true
-						progress_bar.innerHTML = ""
-					}
-				)
+				document.querySelector("#start-btn").disabled = false
+				const progress_bar = document.querySelector("#progress-bar")
+				progress_bar.hidden = true
+				progress_bar.innerHTML = ""
 			}
 		} catch (e) {
 			console.error(e)
 		}
 	}
 
-	await fetchAPI("start", onSuccess, onError)
+	await fetchChallengeAPI("start", onSuccess, onError)
 }
 
 export async function status_challenge() {
-	const onSuccess = async data => {
+	const onSuccess = async /**ChallengeData*/data => {
 		timedelta = server_time_delta(data.server_time)
 		show_instance_status(data)
-		if (
-			data.challenge != null &&
-			data.challenge === challenge_id &&
-			data.status === "started"
-		) {
+		if (data.challenge !== null && data.challenge === challenge_id && data.status === "started") {
 			clearInterval(interval)
 			await handle_timer(data.expiration)
 			interval = setInterval(function () {
@@ -140,16 +122,14 @@ export async function status_challenge() {
 	}
 
 	const onError = () => {
-		document.querySelector("#challenge-status").innerHTML =
-			'<div class="alert alert-danger">Failed to retrieve challenge status.</div>'
+		document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-danger">Failed to retrieve challenge status.</div>'
 	}
 
-	await fetchAPI("status", onSuccess, onError)
+	await fetchChallengeAPI("status", onSuccess, onError)
 }
 
 export async function stop_challenge(action = "stop") {
-	document.querySelector("#challenge-status").innerHTML =
-		'<div class="alert alert-primary">The resources of the challenge are currently being unprovisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
+	document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-primary">The resources of the challenge are currently being unprovisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
 	document.querySelector("#stop-btn").disabled = true
 	document.querySelector("#start-btn").disabled = true
 	set_time_button_visible(false)
@@ -157,8 +137,7 @@ export async function stop_challenge(action = "stop") {
 	clearInterval(interval)
 
 	const onSuccess = data => {
-		document.querySelector("#challenge-status").innerHTML =
-			'<div class="alert alert-success">The resources of the challenge have been successfully unprovisioned.</div>'
+		document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-success">The resources of the challenge have been successfully unprovisioned.</div>'
 		show_instance_status(data)
 		document.querySelector("#start-btn").disabled = false
 	}
@@ -166,9 +145,48 @@ export async function stop_challenge(action = "stop") {
 	const onError = () => {
 		document.querySelector("#stop-btn").disabled = false
 		document.querySelector("#start-btn").disabled = true
-		document.querySelector("#challenge-status").innerHTML =
-			'<div class="alert alert-danger">Something went wrong.</div>'
+		document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-danger">Something went wrong.</div>'
 	}
 
-	await fetchAPI(action, onSuccess, onError)
+	await fetchChallengeAPI(action, onSuccess, onError)
+}
+
+export async function submit_step(step_id, form) {
+	const flag = form[0].value
+
+	const onSuccess = data => {
+		if (data.status === "failed") {
+			alert("Wrong flag!")
+		} else if (data.status === "success") {
+			const step_card = form.parentElement
+			step_card.hidden = true
+			step_card.parentElement.classList.add("bg-success")
+			step_card.parentElement.classList.add("text-white")
+
+			const step_parent = form.parentElement.parentElement.parentElement
+			if (step_parent.classList.contains("card-body")) {
+				// This step is inside a section
+				let is_completed = true
+				step_parent.querySelectorAll(".card").forEach(element => {
+					if (!element.classList.contains("bg-success")) {
+						is_completed = false
+					}
+				})
+
+				if (is_completed) {
+					step_parent.parentElement.classList.add("section-completed")
+					const icon = step_parent.parentElement.parentElement.parentElement.querySelector(".task-dropdown-icon svg")
+					icon.classList.remove("fa-circle")
+					icon.classList.remove("text-secondary")
+					icon.classList.add("fa-check-circle")
+					icon.classList.add("text-success")
+				}
+			}
+		}
+	}
+
+	const onError = response => {
+		console.error(response)
+	}
+	await fetchFlagAPI(flag, step_id, onSuccess, onError)
 }

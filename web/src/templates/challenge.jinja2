@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <base href="/challenge/{{ challenge.id }}/" target="_self">
+    <base href="/challenge/{{ challenge.id }}/" target="_self" data-csrf_token="{{ csrf_token() }}">
     <div class="card">
         <div class='card-body'>
             {{ challenge.description | safe }} <br><br>
@@ -44,17 +44,4 @@
         </div>
     </div>
     <br/><br/><br/>
-{% endblock %}
-
-
-{% block extended_js %}
-    {% if challenge.resource %}
-        <script>
-            const SERVER_TIME = '{{ server_time }}';
-            const CHALLENGE_ID = {{ challenge.id }};
-            const START_DURATION = {% if challenge.resource.start_duration != None %}
-                {{ challenge.resource.start_duration * 1000 }} {% else %} 0 {% endif %};
-            const CSRF_TOKEN = "{{ csrf_token() }}";
-        </script>
-    {% endif %}
 {% endblock %}
