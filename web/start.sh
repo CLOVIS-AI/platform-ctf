@@ -29,7 +29,7 @@ then
 fi
 
 [[ -n $ssh_vpn_public_key ]] && echo "$ssh_vpn_public_key" | base64 -d >>/root/.ssh/known_hosts
-[[ -n $ssh_docker_public_key ]] && echo "$ssh_docker_public_key" | base64 -d >>/root/.ssh/known_hosts
+[[ -n $ssh_docker_fingerprint ]] && echo "$ssh_docker_fingerprint" | base64 -d >>/root/.ssh/known_hosts
 #endregion
 
 #region Migrations
