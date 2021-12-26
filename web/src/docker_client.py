@@ -6,7 +6,7 @@ from .config import Config
 
 config = Config()
 
-if config.DOCKER_USER is not "" and config.DOCKER_HOSTNAME is not "" and config.DOCKER_PORT is not "":
+if config.DOCKER_USER != "" and config.DOCKER_HOSTNAME != "" and config.DOCKER_PORT != "":
     client = DockerClient(base_url=f"ssh://{config.DOCKER_USER}@{config.DOCKER_HOSTNAME}:{config.DOCKER_PORT}")
 
     # region The Docker client is properly configured
