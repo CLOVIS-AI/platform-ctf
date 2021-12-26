@@ -2,8 +2,8 @@ import {start_challenge, status_challenge, stop_challenge, submit_step, timedelt
 import "bootswatch/dist/darkly/bootstrap.min.css"
 import "bootstrap"
 import "../css/index.css"
-import "@fortawesome/fontawesome-free/css/all.css"
-import "@fortawesome/fontawesome-free/js/all.js"
+import "@fortawesome/fontawesome-free/js/fontawesome"
+import "@fortawesome/fontawesome-free/js/regular"
 
 export const challenge_id = parseInt(window.location.href.split("/").reverse()[0])
 export let last_check_minutes = 0
