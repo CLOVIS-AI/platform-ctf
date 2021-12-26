@@ -148,7 +148,7 @@ export async function stop_challenge(action = "stop") {
 		document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-danger">Something went wrong.</div>'
 	}
 
-	await fetchChallengeAPI(action, onSuccess, onError)
+	await fetchChallengeAPI("stop", onSuccess, onError)
 }
 
 export async function submit_step(step_id, form) {
