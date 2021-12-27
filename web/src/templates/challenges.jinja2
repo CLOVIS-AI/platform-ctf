@@ -20,9 +20,9 @@
                     <div class="card-body">
                         {% for challenge in data[category] %}
                             <li class="list-group-item">
-                                <a href='/challenge/{{ challenge.id }}'>
+                                <a href='/challenge/{{ challenge.id }}' class="d-flex justify-content-between text-decoration-none">
                                     {{ challenge.name }}
-                                    <span class="badge {% if current_user.is_authenticated and challenge.current_user_points == challenge.points %}badge-success{% elif current_user.is_authenticated and challenge.current_user_points > 0 %}badge-info{% else %}badge-secondary{% endif %} float-right">
+                                    <span class="badge {% if current_user.is_authenticated and challenge.current_user_points == challenge.points %}bg-success{% elif current_user.is_authenticated and challenge.current_user_points > 0 %}bg-info{% else %}bg-secondary{% endif %}">
                                         {% if current_user.is_authenticated %}{{ challenge.current_user_points }}
                                             /{% endif %}{{ challenge.points }}
                                     </span>

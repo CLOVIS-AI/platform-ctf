@@ -5,15 +5,17 @@
             This section has been completed
         </div>
     {% elif step.validated() %}
-        <div class='card-header bg-success text-white'>
-            {{ step.description | safe }} <span class="badge badge-secondary float-right p-6">{{ step.points }}</span>
+        <div class='card-header bg-success text-white d-flex justify-content-between'>
+            <div class='card-header-left'>{{ step.description | safe }}</div>
+            <div class="d-flex align-items-end"><span
+                    class="badge bg-secondary p-6">{{ step.points }}</span></div>
         </div>
     {% else %}
-        <div class='card-header' style="position: relative;">
+        <div class='card-header d-flex justify-content-between'>
             <div class='card-header-left'>{{ step.description | safe }}</div>
             {% if not step.validation_type == "fakevalidation" %}
-                <div class="float-right cards-header-right"><span
-                        class="badge badge-secondary p-6">{{ step.points }}</span></div>{% endif %}
+                <div class="d-flex align-items-end"><span
+                        class="badge bg-secondary p-6">{{ step.points }}</span></div>{% endif %}
         </div>
         <div class='card-body'>
             <form id="form-{{ step.id }}" class="step-submission" data-step_id="{{ step.id }}">

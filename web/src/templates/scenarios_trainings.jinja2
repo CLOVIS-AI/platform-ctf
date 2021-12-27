@@ -9,9 +9,9 @@
     <div class="card">
         {% for challenge in challenges %}
             <li class="list-group-item">
-                <a href='/challenge/{{ challenge.id }}'>
+                <a href='/challenge/{{ challenge.id }}' class="d-flex justify-content-between text-decoration-none">
                     {{ challenge.name }} <span
-                        class="badge {% if current_user.is_authenticated and current_user.get_points_for_challenge(challenge) == challenge.points %}badge-success{% elif current_user.is_authenticated and current_user.get_points_for_challenge(challenge) > 0 %}badge-info{% else %}badge-secondary{% endif %} float-right">
+                        class="badge {% if current_user.is_authenticated and current_user.get_points_for_challenge(challenge) == challenge.points %}bg-success{% elif current_user.is_authenticated and current_user.get_points_for_challenge(challenge) > 0 %}bg-info{% else %}bg-secondary{% endif %}">
                 {% if current_user.is_authenticated %}{{ current_user.get_points_for_challenge(challenge) }}
                     /{% endif %}{{ challenge.points }}
             </span>
