@@ -28,7 +28,7 @@ then
 	ssh-keygen -f /root/.ssh/id_rsa -y >/root/.ssh/id_rsa.pub  # Generate a public key from the private key
 fi
 
-[[ -n $ssh_vpn_public_key ]] && echo "$ssh_vpn_public_key" | base64 -d >>/root/.ssh/known_hosts
+[[ -n $ssh_vpn_fingerprint ]] && echo "$ssh_vpn_fingerprint" | base64 -d >>/root/.ssh/known_hosts
 [[ -n $ssh_docker_fingerprint ]] && echo "$ssh_docker_fingerprint" | base64 -d >>/root/.ssh/known_hosts
 #endregion
 
