@@ -10,6 +10,8 @@ from ..vcenter_client import getAllRunning, deleteAllClones
 
 instance_cli = AppGroup("instance")
 
+config = Config()
+
 
 # region List instances
 
@@ -240,20 +242,20 @@ def get_inconsistencies():
     vm_running = getAllRunning()
 
     for vm_instance in vm_running:
-        if Config.MIN_VM_INSTANCE_ID <= vm_instance <= Config.MAX_VM_INSTANCE_ID:
+        if config.MIN_VM_INSTANCE_ID <= vm_instance <= config.MAX_VM_INSTANCE_ID:
             if vm_instance not in db_running:
                 print(f"Inconsistency found! {vm_instance}")
                 inconsistencies["not_in_db"]["vm"].append(vm_instance)
 
     for docker_instance in docker_running:
-        if Config.MIN_VM_INSTANCE_ID <= docker_instance <= Config.MAX_VM_INSTANCE_ID:
+        if config.MIN_VM_INSTANCE_ID <= docker_instance <= config.MAX_VM_INSTANCE_ID:
             if docker_running not in db_running:
                 print(f"Inconsistency found! {docker_instance}")
                 inconsistencies["not_in_db"]["docker"].append(docker_instance)
 
     for running in db_running:
         found = False
-        if Config.MIN_VM_INSTANCE_ID <= running.number <= Config.MAX_VM_INSTANCE_ID:
+        if config.MIN_VM_INSTANCE_ID <= running.number <= config.MAX_VM_INSTANCE_ID:
             if running in docker_running:
                 found = True
             if running in vm_running:
