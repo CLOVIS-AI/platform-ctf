@@ -1,0 +1,37 @@
+challenge:
+  name: Scenario using Active Directory Network
+  short_name: zero_logon
+  author: Psaladin
+  description: |
+    <div class="text-center">
+      <img src="static/zero_logon.jpg" class="img-fluid rounded mx-auto d-block"><br>
+      <h5>Ce scénario vous plonge au sein d'un réseau de machine Windows de type Active Directory</h5>
+    </div>
+    <p><b style="color:red;">Le VPN est nécessaire pour effectuer ce scénario.<br><br></b>
+
+    Vous avez réussi à vous introduire au sein d'un réseau de machines Windows, réussisez à mettre la main sur le fichier<br/>
+    C:\flag.jpg présent au sein de la machine cliente du domaine. Les dernières mises à jour de Impacket ont été installées sur la machine.
+    Les identifiants de la machine kali sont : rsr/kali, celle-ci est active via SSH et RDP. Si le RDP ne fonctionne pas, utilisez la commande <br>kill -9 -1</br>
+    via le SSH.
+  category: SCENARIO
+
+resource:
+  type: terraform
+  args: "Vous pouvez accéder à {ip_pfsense} pour vous connecter à la machine attaquante. Les ports ssh et rdp sont ouverts."
+  start_duration: 180
+  is_vpn_needed: yes
+
+steps:
+  - description: | 
+      <p>Réussissez à obtenir le flag présent sur la machine controlleur de domaine dans le dossier C:\. </p>
+      <button onclick="alert('Indice 1 : Attention au nom du scénario')" type="submit"> Indice 1 </button>
+      <button onclick="alert('Indice 2 : nmblookup')" type="submit"> Indice 2 </button>
+    validation_type: string
+    validation_arg: flag{ZeroLogonIsPowerfull}
+    points: 700
+  - description: |
+      <p> Réussissez à obtenir le flag présent sur la machine cliente C:\. Attention, ils'agit d'une image.</p>
+      <button onclick="alert('Indice 3 : xfreerdp')" type="submit"> Indice 1 </button>
+    validation_type: string
+    validation_arg: flag{DomainAdmin>ALL}
+    points: 700
