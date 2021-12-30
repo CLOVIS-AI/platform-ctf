@@ -14,3 +14,4 @@ See the documentation of the different subcommands:
 - [challenge](challenge_commands.md)
 - [instance](instance_commands.md)
 - [user](user_commands.md)
+- [documentation](documentation_commands.md)

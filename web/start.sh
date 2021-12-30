@@ -43,6 +43,7 @@ flask db migrate -d "$server_migrations"
 flask db upgrade -d "$server_migrations"
 
 flask challenge import --all || true
+flask documentation import --all || true
 flask user create -u "$admin_user" -p "$admin_password" -m "$admin_email" --admin
 flask crontab add
 #endregion

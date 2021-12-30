@@ -32,3 +32,5 @@ COPY web /app
 
 # Include the challenges in the container
 COPY challenges /app/challenges
+# Include the documentation in the container
+COPY documentation /app/documentation
