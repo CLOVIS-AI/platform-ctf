@@ -54,9 +54,9 @@ class Config(object):
         self.ALLOW_LOGIN_THROUGH_LOCAL_FORM = os.environ.get("server_allows_direct_login") == "yes"
         self.ALLOW_CAS_INTEGRATION = os.environ.get("server_cas_integration") == "yes"
 
-        self.VCENTER_HOST = os.environ.get("terraform_vcenter_host")
-        self.VCENTER_USER = os.environ.get("terraform_vcenter_user")
-        self.VCENTER_PASSWORD = os.environ.get("terraform_vcenter_password")
+        self.VCENTER_HOST = os.environ.get("TF_VAR_vcenter_host")
+        self.VCENTER_USER = os.environ.get("TF_VAR_vcenter_user")
+        self.VCENTER_PASSWORD = os.environ.get("TF_VAR_vcenter_password")
 
 
 class ProductionConfig(Config):
