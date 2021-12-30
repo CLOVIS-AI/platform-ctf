@@ -64,25 +64,34 @@ export async function fetchFlagAPI(flag, step_id, onSuccess, onError) {
 export async function start_challenge() {
 	document.querySelector("#challenge-status").innerHTML = '<div class="alert alert-primary">The resources of the challenge are currently being provisioned &nbsp;<i class="fa fa-spinner fa-spin"></i></div>'
 
-	// Progress bar
-	document.querySelector("#progress-bar").hidden = false
+	// Time left
+	const timeLeftElement = document.querySelector("#time-left")
+	let timeLeft = parseInt(timeLeftElement.dataset.duration)
+	timeLeftElement.hidden = false
+	const timeLeftInterval = window.setInterval(() => {
+		if (timeLeft >= 0){
+			timeLeftElement.innerHTML = `Temps restant estimé : ${timeLeft}s`
+			timeLeft--
+		} else {
+			timeLeftElement.innerHTML = "Temps de provisionnement anormalement long. Merci de patienter."
+		}
+	}, 1000)
+
 	document.querySelector("#start-btn").disabled = true
 	const onSuccess = data => {
 		if (data.status === "started" && data.challenge === challenge_id) {
 			show_instance_status(data)
-			const progress_bar = document.querySelector("#progress-bar")
-			progress_bar.hidden = true
-			progress_bar.innerHTML = ""
 			handle_timer(data.expiration)
 			interval = setInterval(function () {
 				handle_timer(data.expiration)
 			}, 1000)
 		} else {
 			show_instance_status(data, false)
-			const progress_bar = document.querySelector("#progress-bar")
-			progress_bar.hidden = true
-			progress_bar.innerHTML = ""
+
 		}
+		timeLeftElement.hidden = true
+		timeLeftElement.innerHTML = ""
+		window.clearInterval(timeLeftInterval)
 	}
 
 	const onError = async response => {
@@ -93,13 +102,13 @@ export async function start_challenge() {
 			} else {
 				show_instance_status(data, false)
 				document.querySelector("#start-btn").disabled = false
-				const progress_bar = document.querySelector("#progress-bar")
-				progress_bar.hidden = true
-				progress_bar.innerHTML = ""
+				timeLeftElement.hidden = true
+				timeLeftElement.innerHTML = ""
 			}
 		} catch (e) {
 			console.error(e)
 		}
+		window.clearInterval(timeLeftInterval)
 	}
 
 	await fetchChallengeAPI("start", onSuccess, onError)

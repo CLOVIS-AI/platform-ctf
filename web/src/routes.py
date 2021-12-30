@@ -216,13 +216,13 @@ def challenge_static_file(challenge_id=None, static_file=None):
         abort(404)
 
     challenge_static_dir = os.path.join(
-        current_app.config["CHALLENGE_DIR"], challenge.short_name, "static2/"
+        current_app.config["CHALLENGE_DIR"], challenge.short_name, "static/"
     )
 
     if not os.path.isfile(os.path.join(challenge_static_dir, static_file)):
         abort(404)
 
-    return send_from_directory(directory=challenge_static_dir, filename=static_file)
+    return send_from_directory(directory=challenge_static_dir, path=static_file)
 
 
 @main_bp.route("/login", methods=["GET", "POST"])
