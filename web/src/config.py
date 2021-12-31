@@ -28,7 +28,7 @@ class Config(object):
 
         self.BASE_INSTANCE_DATA = os.environ.get("server_instances")
         self.CHALLENGE_DIR = os.environ.get("server_challenges")
-
+        self.DOCUMENTATION_DIR = os.environ.get("server_documentation")
         self.INSTANCE_EXPIRATION_TIME = int(os.environ.get("server_instance_expiration"))
         """
         Instance expiration time (seconds).
