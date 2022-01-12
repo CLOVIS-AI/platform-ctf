@@ -1,0 +1,9 @@
+---
+documentation:
+  name: Metasploit Cheat Sheet
+  short_name: metasploit-cheat-sheet
+  description:
+    Cheat Sheet pour l'utilisation de l'outil Metasploit
+  link:
+    https://github.com/security-cheatsheet/metasploit-cheat-sheet
+  category: Pentesting Framework
