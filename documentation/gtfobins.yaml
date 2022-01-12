@@ -1,0 +1,9 @@
+---
+documentation:
+  name: GTFOBins
+  short_name: gtfobins
+  description:
+    Liste de binaires qui peuvent être utilisés pour maintenir ou élever ses privilèges sur une machine mal configurée
+  link:
+    https://gtfobins.github.io/
+  category: Privilege Escalation

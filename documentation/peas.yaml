@@ -1,0 +1,9 @@
+---
+documentation:
+  name: Privilege Escalation Awesome Script
+  short_name: peas
+  description:
+    Script qui permet de scanner une machine pour trouver les différentes sources possibles d'élévation de privilèges
+  link:
+    https://github.com/carlospolop/PEASS-ng
+  category: Privilege Escalation
