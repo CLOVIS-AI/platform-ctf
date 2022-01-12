@@ -1,0 +1,9 @@
+---
+documentation:
+  name: Hacktricks
+  short_name: hacktricks
+  description:
+    Livre qui rassemble de nombreuses astuces et techniques utiles pour les CTFs et le pentesting
+  link:
+    https://book.hacktricks.xyz/
+  category: Pentesting Book
