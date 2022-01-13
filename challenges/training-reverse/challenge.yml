@@ -1,0 +1,95 @@
+---
+challenge:
+  name: Introduction au Reverse
+  short_name: training-reverse
+  author: bupton
+  description: |
+    <p> Dans cette section, vous allez pouvoir suivre un tutoriel qui va vous montrer les bases du reverse et comment utiliser le logiciel ghidra.
+     À l'issue de ce Challenge, vous allez pouvoir démarrer sans problèmes sur le challenges de catégorie Reverse. </p>
+  category: TRAINING
+
+resource:
+  type: file
+  args: binaires.zip
+
+
+sections:
+  - section:
+      title: Introduction
+      description: |
+        <p>
+        Le tutoriel que vous allez suivre est divisé en plusieurs parties. Dans un premier temps,
+        nous allons voir comment installer ghidra et analyser les binaire avec ce logiciel.
+        </p>
+        Le plan de ce cours est le suivant : <br/>
+        <ul>
+         <li>Introduction</li>
+         <li>Prise en main de ghidra</li>
+         <li>Analyse du premier binaire</li>
+         <li>Analyse du deuxième binaire</li>
+         <li>Analyse du troisième binaire</li>
+        </ul>
+        Pour valider cette section, cliquez sur le bouton ci-dessous.
+
+
+  - section:
+      title: Prise en main de ghidra
+      description: |
+        <p> 
+        Ghidra est un logiciel open source de reverse engineering. 
+        Pour installer ce logiciel, il suffit de le récupérer sur le site https://ghidra-sre.org/. 
+        Ce logiciel est utilisé pour ouvrir des binaires et retrouver une execution de code C qui correspond à ce binaire.
+
+
+        </p>
+        Pour valider cette section, cliquez sur le bouton ci-dessous.
+
+
+  - section:
+      title: Analyse du premier binaire
+      description: |
+        <p>
+        Ouvrez le dossier ghidra et et tapez <code> ./ghidraRun </code>.
+        Créez un nouveau projet puis cliquez sur le dragon. Ensuite, on glisse le binaire sur la fenêtre ghidra et on demande à ghidra d'analyser le binaire.
+        Vous verrez du code assembleur au milieu de l'écran, du code C à droite et des menus à gauche. Dans le Symbol Tree, on peut retrouver la liste de fonctions utilisés dans le binaire.
+        Choisissez la fonction main et regardez le code C. 
+        </p>
+
+    steps:
+      - description: trouvez le flag du challenge dans la variable.
+        validation_type: string
+        validation_arg: U_C_!ts_eazee
+        points: 1
+
+  - section:
+      title: Analyse du deuxième binaire
+      description: |
+        <p>
+        Maintenant que vous avez trouvé le premier flag, ouvrez le deuxième binaire avec ghidra. Cette fois quand vous allez regarder dans la fonction main, le code C ne montre pas le flag. Il faudra donc aller voir le code assembleur :'( .
+        </p>
+
+        <p>
+        Le code assembleur est séparé en plusieurs colonnes. La première représente l'adresse du code dans la mémoire. La deuxième représente le code hexadecimal des commandes. La troisième représente les instructions (<code> PUSH, MOV, SUB, LEA,... </code>) et la quatrième représente les paramètres. En lisant le code assembleur, on trouve <code> LEA RDI,[s_Hello_world_00102004] </code> qui met une variable dans le registre <code> RDI </code> et qui à la ligne d'après sera affichée. Pour retrouver la valeur pointée par la variable <code> s_Hello_world_00102004 </code>, il suffit de cliquer sur la variable et ghidra va nous envoyer vers la valeur.
+
+    steps:
+      - description: Le deuxième flag est pointé par la variable située juste en dessous
+        validation_type: string
+        validation_arg: MyF!r5tCPr0gram
+        points: 1
+
+  - section:
+      title: Analyse du troisième binaire
+      description: |
+        <p>
+        Maintenant que vous commencez à comprendre comment ça marche, essayez le troisième binaire. Cette fois la fonction main fait appelle à une autre fonction. En cliquant dessus dans ghidra, vous allez être renvoyé vers l'endroit où elle est définie.
+        </p>
+
+        <p>
+        Pour tester votre flag, vous pouvez lancer le binaire suivi de votre tentative.
+        </p>
+
+    steps:
+      - description: Bon courage
+        validation_type: string
+        validation_arg: 4oEWk@lW
+        points: 3
