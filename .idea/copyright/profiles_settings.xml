@@ -2,6 +2,7 @@
   <settings default="GPLv2">
     <module2copyright>
       <element module="All" copyright="GPLv2" />
+      <element module="Project Files" copyright="GPLv2" />
     </module2copyright>
   </settings>
 </component>
