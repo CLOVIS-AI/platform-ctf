@@ -12,7 +12,7 @@ CMD [ "/app/start.sh" ]
 # - gcc, make…: compile Python dependencies
 # - curl, OpenSSH…: communicate with the VMs and other machines
 RUN apk add --no-cache \
-	terraform bash \
+	terraform bash docker-cli \
     gcc make build-base libffi-dev musl-dev \
     curl openssh openssl openssl-dev \
     py3-paramiko python3-dev

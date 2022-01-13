@@ -1,0 +1,20 @@
+
+.training-platform:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/training-platform/training"
+
+training-platform/docker:
+  extends: [ .docker-build, .training-platform ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/training-platform/build/Dockerfile
+    docker_context: challenges/training-platform/build
+
+training-platform/docker:staging:
+  extends: [ .docker-rename-staging, .training-platform ]
+  needs: [ training-platform/docker ]
+
+training-platform/docker:production:
+  extends: [ .docker-rename-production, .training-platform ]
+  needs: [ training-platform/docker ]

@@ -1,0 +1,69 @@
+
+web/lint:
+  image: python:latest
+  stage: platform
+  needs: [ ]
+  script:
+    - make web/lint
+  only:
+    - merge_requests
+
+web/test:
+  image: python:latest
+  stage: platform
+  needs: [ ]
+  script:
+    - cp web/secret.example.properties web/secret.properties
+    - make web/test
+  only:
+    - merge_requests
+  artifacts:
+    when: always
+    reports:
+      junit: web/tests.xml
+
+web-ui/build:
+  image: node:alpine
+  stage: platform
+  needs: [ ]
+  script:
+    - cd web-ui
+    - yarn
+    - yarn build
+  only:
+    - merge_requests
+    - main
+  artifacts:
+    paths:
+      - web-ui/dist
+
+.web-docker:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/web"
+
+web/docker:
+  extends: [ .docker, .web-docker ]
+  stage: platform
+  needs: [ web-ui/build ]
+  dependencies: [ web-ui/build ]
+  script:
+    - mkdir -p web/src/static
+    - cp -r web-ui/dist/* web/src/static
+    - cp -r web-ui/images/ web/src/static/images
+    - docker pull $image:latest || true
+    - >
+      docker build
+      --pull
+      --cache-from $image:latest
+      --tag $image:$build_version
+      -f Dockerfile
+      .
+    - docker push $image:$build_version
+
+web/docker:staging:
+  extends: [ .docker-rename-staging, .web-docker ]
+  needs: [ web/docker ]
+
+web/docker:production:
+  extends: [ .docker-rename-production, .web-docker ]
+  needs: [ web/docker ]

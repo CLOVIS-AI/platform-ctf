@@ -1,96 +1,17 @@
 
+stages:
+  - generics
+  - challenges
+  - platform
+  - publish
+  - deploy
+
 variables:
-  WEB_IMAGE: "$CI_REGISTRY_IMAGE/web:build-$CI_PIPELINE_IID"
-  WEB_IMAGE_MAIN: "$CI_REGISTRY_IMAGE/web:latest"
+  build_version: $CI_PIPELINE_IID
 
-telegram:
-  image: registry.gitlab.com/clovis-ai/dotfiles:latest
-  needs: []
-  script:
-    - git changelog --format telegram-html --incoming >chlog
-    - announce-telegram chlog "$CHAT_IDS"
-  only:
-    - main
-  allow_failure: true
-
-web/lint:
-  image: python:latest
-  needs: []
-  script:
-    - make web/lint
-  only:
-    - merge_requests
-
-web/test:
-  image: python:latest
-  needs: [ ]
-  script:
-    - cp web/secret.example.properties web/secret.properties
-    - make web/test
-  only:
-    - merge_requests
-  artifacts:
-    when: always
-    reports:
-      junit: web/tests.xml
-
-web-ui/build:
-  image: node:alpine
-  needs: []
-  script:
-    - cd web-ui
-    - yarn
-    - yarn build
-  only:
-    - merge_requests
-    - main
-  artifacts:
-    paths:
-      - web-ui/dist
-
-.docker-build:
-  image: docker:19.03
-  services:
-    - docker:dind
-  before_script:
-    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-  tags:
-    - docker
-
-.docker-latest:
-  extends: .docker-build
-  variables:
-    GIT_STRATEGY: none
-
-web/docker:
-  extends: [ .docker-build ]
-  needs: [ web-ui/build ]
-  dependencies: [ web-ui/build ]
-  script:
-    - mkdir -p web/src/static
-    - cp -r web-ui/dist/* web/src/static
-    - cp -r web-ui/images/ web/src/static/images
-    - docker pull $WEB_IMAGE_MAIN || true
-    - >
-      docker build
-      --pull
-      --cache-from $WEB_IMAGE_MAIN
-      --tag $WEB_IMAGE
-      -f Dockerfile
-      .
-    - docker push $WEB_IMAGE
-  only:
-    - merge_requests
-    - main
-
-web/docker-latest:
-  extends: [ .docker-latest ]
-  variables:
-    GIT_STRATEGY: none
-  needs: [ web/docker ]
-  script:
-    - docker pull $WEB_IMAGE
-    - docker tag $WEB_IMAGE $WEB_IMAGE_MAIN
-    - docker push $WEB_IMAGE_MAIN
-  only:
-    - main
+include:
+  - local: '/automation/docker.templates.gitlab-ci.yml'
+  - local: '/generics/build.gitlab-ci.yml'
+  - local: '/challenges/training-platform/build.gitlab-ci.yml'
+  - local: '/automation/web.gitlab-ci.yml'
+  - local: '/automation/telegram.gitlab-ci.yml'

@@ -1,0 +1,57 @@
+
+.docker:
+  image: docker:19.03
+  services:
+    - docker:dind
+  before_script:
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+  tags:
+    - docker
+  only:
+    - merge_requests
+    - main
+    - tags
+
+.docker-build:
+  extends: [ .docker ]
+  script:
+    - docker pull "$image:latest" || true
+    - >
+      docker build
+      --pull
+      --cache-from "$image:latest"
+      --tag "$image:$build_version"
+      -f "$dockerfile"
+      "$docker_context"
+    - docker push "$image:$build_version"
+  only:
+    - merge_requests
+    - main
+    - tags
+
+.docker-empty:
+  extends: [ .docker ]
+  variables:
+    GIT_STRATEGY: none
+
+.docker-rename:
+  extends: [ .docker-empty ]
+  stage: publish
+  script:
+    - docker pull "$image:$build_version"
+    - docker tag "$image:$build_version" "$image:$new_version"
+    - docker push "$image:$new_version"
+
+.docker-rename-staging:
+  extends: [ .docker-rename ]
+  variables:
+    new_version: "staging"
+  only:
+    - main
+
+.docker-rename-production:
+  extends: [ .docker-rename ]
+  variables:
+    new_version: "latest"
+  only:
+    - tags

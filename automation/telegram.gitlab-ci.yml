@@ -1,0 +1,11 @@
+
+telegram:
+  image: registry.gitlab.com/clovis-ai/dotfiles:latest
+  stage: deploy
+  needs: []
+  script:
+    - git changelog --format telegram-html --incoming >chlog
+    - announce-telegram chlog "$CHAT_IDS"
+  only:
+    - main
+  allow_failure: true
