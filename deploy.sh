@@ -23,7 +23,7 @@
 #
 # Downloads the container from the GitLab registry and starts it.
 #
-# This script is meant to run from a crontab, to automatically update a server.
+# This script is meant to automatically update a server.
 # It is not meant for development.
 #
 # To use this script, you simply need:
@@ -35,8 +35,12 @@
 
 set -x  # bash verbose mode
 
+#region Platform restart
+
 compose-prod=docker-compose -f docker-compose.yml -f docker-compose.prod.yml
 
 git pull
 $(compose-prod) pull
 $(compose-prod) up -d
+
+#endregion
