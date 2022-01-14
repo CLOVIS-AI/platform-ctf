@@ -20,27 +20,12 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-#
-# Downloads the container from the GitLab registry and starts it.
-#
-# This script is meant to automatically update a server.
-# It is not meant for development.
-#
-# To use this script, you simply need:
-# - the script itself,
-# - the docker-compose.yml file,
-# - the docker-compose.prod.yml file,
-# - the web/secret.properties file.
-#
+# This script builds all the generic VMs from their configuration.
+# Running this script requires a valid vCenter configuration, see the secret.properties file.
 
-set -x  # bash verbose mode
+set -x  # display all commands
 
-#region Platform restart
-
-compose-prod=docker-compose -f docker-compose.yml -f docker-compose.prod.yml
-
-git pull
-$(compose-prod) pull
-$(compose-prod) up -d
-
-#endregion
+for file in generics/generic-*
+do
+	packer build -force "$file/build.pkr.hcl"
+done

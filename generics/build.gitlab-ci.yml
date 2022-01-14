@@ -1,0 +1,28 @@
+
+.generics:
+  stage: generics
+  needs: [ ]
+  script:
+    - set -o allexport; . ~/secret.properties; set +o allexport
+    - ./generics/build.sh
+
+generics:test:
+  extends: [ .generics ]
+  tags:
+    - test-server
+  only:
+    - merge_requests
+
+generics:staging:
+  extends: [ .generics ]
+  tags:
+    - staging-server
+  only:
+    - main
+
+generics:production:
+  extends: [ .generics ]
+  tags:
+    - production-server
+  only:
+    - tags

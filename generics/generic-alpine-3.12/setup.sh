@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 #
 # CTF Platform by RSR, educational platform to try cyber-security challenges
@@ -20,27 +20,23 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-#
-# Downloads the container from the GitLab registry and starts it.
-#
-# This script is meant to automatically update a server.
-# It is not meant for development.
-#
-# To use this script, you simply need:
-# - the script itself,
-# - the docker-compose.yml file,
-# - the docker-compose.prod.yml file,
-# - the web/secret.properties file.
-#
+set -ex
 
-set -x  # bash verbose mode
+echo http://dl-cdn.alpinelinux.org/alpine/v"$(</etc/alpine-release cut -d'.' -f1,2)"/main >>/etc/apk/repositories
+echo http://dl-cdn.alpinelinux.org/alpine/v"$(</etc/alpine-release cut -d'.' -f1,2)"/community >>/etc/apk/repositories
 
-#region Platform restart
+apk update
 
-compose-prod=docker-compose -f docker-compose.yml -f docker-compose.prod.yml
+apk add python2
+apk add libressl
+apk add open-vm-tools
+apk add open-vm-tools-guestinfo
+apk add open-vm-tools-deploypkg
+rc-update add open-vm-tools
+/etc/init.d/open-vm-tools start
 
-git pull
-$(compose-prod) pull
-$(compose-prod) up -d
+echo '#!/usr/bin/env sh' >>/usr/local/bin/shutdown
+echo 'poweroff' >>/usr/local/bin/shutdown
 
-#endregion
+sed -i "/#PermitRootLogin/c\PermitRootLogin yes" /etc/ssh/sshd_config
+/etc/init.d/sshd restart

@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #
 # CTF Platform by RSR, educational platform to try cyber-security challenges
 # Copyright (C) 2022 ENSEIRB-MATMECA, Bordeaux-INP, RSR formation since 2018
@@ -20,27 +18,34 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-#
-# Downloads the container from the GitLab registry and starts it.
-#
-# This script is meant to automatically update a server.
-# It is not meant for development.
-#
-# To use this script, you simply need:
-# - the script itself,
-# - the docker-compose.yml file,
-# - the docker-compose.prod.yml file,
-# - the web/secret.properties file.
-#
+# Use US layout with US variant
+KEYMAPOPTS="us us"
 
-set -x  # bash verbose mode
+# Set hostname to alpine
+HOSTNAMEOPTS="-n alpine"
 
-#region Platform restart
+# Contents of /etc/network/interfaces
+INTERFACESOPTS="auto lo
+iface lo inet loopback
 
-compose-prod=docker-compose -f docker-compose.yml -f docker-compose.prod.yml
+auto eth0
+iface eth0 inet dhcp
+"
 
-git pull
-$(compose-prod) pull
-$(compose-prod) up -d
+# Set timezone to UTC
+TIMEZONEOPTS="-z UTC"
 
-#endregion
+# set http/ftp proxy
+PROXYOPTS="none"
+
+# Add first mirror
+APKREPOSOPTS="-1"
+
+# Install Openssh
+SSHDOPTS="-c openssh"
+
+# Use openntpd
+NTPOPTS="-c openntpd"
+
+# Use /dev/sda as a system disk
+DISKOPTS="-m sys /dev/sda"
