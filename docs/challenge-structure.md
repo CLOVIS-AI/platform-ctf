@@ -4,15 +4,30 @@ L'objectif de ce document est de présenter le fonctionnement d'un challenge lor
 
 Les challenges sont stockés dans le dossier `challenges` de ce dépôt. Dans la suite, nous ferons l'amalgame entre les termes `Challenge`, `Scénario` et `Training`. En effet, ces trois termes se distinguent seulement par la façon dont ils sont affichés à l'utilisateur.
 
-## Structure de fichier
+## Compilation et génération des challenges
+
+La génération d'un challenge par la plateforme est composée de trois étapes :
+- Génération des génériques (VM uniquement)
+- Génération d'un modèle (si nécessaire)
+- Lancement du challenge
+
+Les génériques sont des machines virtuelles “propres” qui peuvent servir de base à plusieurs challenges (par exemple, une version spécifique de Debian ou Alpine).
+Pour en savoir plus, voir la [documentation des generics](../generics/README.md).
+
+Les modèles sont des machines virtuelles ou des conteneurs représentant toutes les données nécessaires pour un challenge.
+Typiquement, il va s'agir d'un environnement avec toutes les dépendances nécessaires, les logiciels ayant la faille souhaitée, etc.
+Quand aucun environnement n'est nécessaire, on peut utiliser cette phase pour compiler des fichiers, etc (par exemple, compiler un fichier C, qui sera ensuite fourni statiquement aux utilisateurs).
+
+Lors du lancement du challenge, on peut configurer plusieurs réseaux, ajouter un flag dynamique…
+
+## Structure des fichiers
 
 Chaque challenge doit suivre la structure suivante :
 ```text
 ├─ challenge.yml
+├─ build.gitlab-ci.yml
 ├─ static
 ├─ build
-│  ├─ build.sh
-│  └─ Dockerfile
 └─ instance
    └─ start.tf
 ```
@@ -21,6 +36,11 @@ Chaque challenge doit suivre la structure suivante :
 
 Le fichier `challenge.yml` contient la configuration globale du challenge.
 Sa documentation [est disponible ici](challenge-yml.md).
+
+### Le fichier `build.gitlab-ci.yml`
+
+Ce fichier permet de donner les étapes de création des modèles d'un challenge.
+Sa documentation [est disponible ici](challenge-gitlab-ci.md).
 
 ### Le dossier `static`
 
@@ -31,37 +51,30 @@ Ce dossier est facultatif.
 
 ### Le dossier `build`
 
-Fichiers nécessaires à la construction des ressources lors du lancement de la plateforme.
-Cela permet de préparer les ressources en avance pour qu'elles n'aient qu'à être lancées lorsque l'utilisateur appuie sur le bouton "Start".
+Par convention, ce fichier contient les informations nécessaires à la génération des modèles d'un challenge. Exemples :
+- dans le cas d'un challenge Docker, on pourra y mettre le `Dockerfile` ainsi que les fichiers qui sont copiés dans le conteneur.
+- dans le cas d'un challenge qui compile du C pour fabriquer un exécutable qui sera analysé par l'utilisateur, on peut y mettre les sources ainsi qu'un script les compilant.
+- dans le cas d'un challenge de type VM, on pourra y mettre la configuration de Terraform et Ansible pour générer les modèles. 
 
-Ce dossier doit contenir un script `build.sh` préparant les ressources du challenge. Il est appelé par la commande `flask challenge build` ([documentation](../web/src/commands/challenge_commands.md)).
-
-Par exemple, ce script peut créer une image Docker, qui sera ensuite lancée par Terraform :
-```shell
-#!/usr/bin/env bash
-
-challenge_name=training_platform
-
-# Se connecter à l'hôte SSH et y créer l'image
-docker -H "ssh://$ssh_docker_user@$ssh_docker_hostname:$ssh_docker_port" build -t $challenge_name "$server_challenges"/$challenge_name/build
-```
-Le script peut utiliser toutes les variables présentes dans `secret.properties` ([documentation](development.md), [liste des variables](../web/secret.example.properties)).
+Dans tous les cas, l'utilisation du contenu de ce dossier par la plateforme est configuré dans le fichier `build.gitlab-ci.yml` à la racine du challenge ([documentation](challenge-gitlab-ci.md)).
 
 Ce dossier est facultatif.
 
 ### Le dossier `instance`
 
-Les sources nécessaires à l'instanciation d'une ressource.
-Pendant cette instanciation, il est copié dans un répertoire temporaire avant que son contenu ne soit utilisé.
+Les informations nécessaires au lancement d'un challenge.
+Au lancement du challenge, il est copié dans un dossier temporaire pour chaque utilisateur.
 
-Dans le cas d'un challenge de type `terraform`, les commandes suivantes seront exécutées par la plateforme dans la copie temporaire du dossier :
+Les commandes suivantes sont exécutées par la plateforme :
 ```shell
 $ terraform init
 $ terraform plan
 $ terraform apply
 ```
 
-Si l'une des étapes du challenge est de type `dynamic`, un fichier contenant le flag doit être créé dans le sous-dossier `flags` de la copie temporaire.
+La configuration utilisée est le fichier `start.tf` dans ce dossier, qui est obligatoire pour tous les challenges pouvant être “lancés” (obligatoire pour les VMs ou Docker, inutile pour les challenges de type fichier).
+
+On peut utiliser cette configuration pour générer un flag différent pour chaque lancement du challenge, pour configurer des réseaux virtuels pour permettre à plusieurs VMs de communiquer, etc.
 
 ## Intégration à la plateforme
 
