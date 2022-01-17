@@ -2,9 +2,13 @@
 .generics:
   stage: generics
   needs: [ ]
+  parallel:
+    matrix:
+      - generic: [ generic-alpine-3.12 ]
   script:
     - set -o allexport; . ~/secret.properties; set +o allexport
-    - ./generics/build.sh
+    - cd "generics/$generic"
+    - packer build -force build.pkr.hcl
 
 generics:test:
   extends: [ .generics ]
