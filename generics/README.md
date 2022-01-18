@@ -8,6 +8,8 @@ Par exemple, tous les challenges nécessitant une installation d'Ubuntu peuvent 
 Chaque VM générique est créée grâce à l'outil `packer`.
 La configuration de chaque VM générique est placée dans son propre dossier au sein de celui-ci, et doit contenir un fichier `build.pkr.hcl` qui contient la configuration de `packer`. Tous les autres fichiers nécessaires peuvent être placés dans le dossier de la VM.
 
+Un script `prepare-build.sh`, s'il est présent au même niveau que le fichier `build.pkr.hcl`, sera exécuté avant le démarrage de la génération de la machine générique. Ceci permet, par exemple, de produire des fichiers nécessaires à cette génération, à partir de templates et des variables d'environnement disponibles.
+
 Le nom des VMs génériques doit être sous la forme `generic-os-version`, par exemple `generic-alpine-3.12` ou `generic-windows-server-2019`.
 
 Pour activer la génération d'un générique, il faut ajouter son dossier [dans la configuration de GitLab](build.gitlab-ci.yml) (`.generics:parallel:matrix:generic`).

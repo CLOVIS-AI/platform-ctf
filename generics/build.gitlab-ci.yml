@@ -4,10 +4,11 @@
   needs: [ ]
   parallel:
     matrix:
-      - generic: [ generic-alpine-3.12 ]
+      - generic: [ generic-alpine-3.12, generic-kali-2021.4 ]
   script:
     - set -o allexport; . ~/secret.properties; set +o allexport
     - cd "generics/$generic"
+    - test -e prepare-build.sh && ./prepare-build.sh
     - packer build -force build.pkr.hcl
 
 generics:test:
