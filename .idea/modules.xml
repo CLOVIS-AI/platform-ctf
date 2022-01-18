@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/challenges/training-platform/training-platform.iml" filepath="$PROJECT_DIR$/challenges/training-platform/training-platform.iml" />
       <module fileurl="file://$PROJECT_DIR$/web/web.iml" filepath="$PROJECT_DIR$/web/web.iml" />
       <module fileurl="file://$PROJECT_DIR$/web-ui/web-ui.iml" filepath="$PROJECT_DIR$/web-ui/web-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/challenges/zero-logon/zero-logon.iml" filepath="$PROJECT_DIR$/challenges/zero-logon/zero-logon.iml" />
     </modules>
   </component>
 </project>
