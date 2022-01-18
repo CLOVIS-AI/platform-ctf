@@ -18,12 +18,12 @@
                 </div>
                 <div id="{{ category }}" class="collapse show" aria-labelledby='{{ category }}-header'>
                     <div class="card-body">
-                        {% for documentation in data[category] %}
+                        {% for help in data[category] %}
                             <li class="list-group-item">
-                                {{ documentation.description }}
+                                {{ help.description }}
                                 <br>
-                                <a href='{{ documentation.link }}'>
-                                    {{ documentation.name }}
+                                <a href='{{ help.link }}'>
+                                    {{ help.name }}
                                 </a>
                             </li>
                         {% endfor %}

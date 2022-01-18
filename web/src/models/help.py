@@ -22,7 +22,7 @@ from sqlalchemy.types import Integer, String
 from ..extensions import db
 
 
-class Documentation(db.Model):
+class Help(db.Model):
     """Base Challenge class."""
 
     id = Column(Integer, primary_key=True)

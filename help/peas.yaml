@@ -1,5 +1,5 @@
 ---
-documentation:
+help:
   name: Privilege Escalation Awesome Script
   short_name: peas
   description:

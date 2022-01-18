@@ -26,7 +26,7 @@ from ..extensions import db
 
 class Challenge(db.Model):
     """
-    Scenarios, challenges, documentation pages are all modeled by this class.
+    Scenarios, challenges, help pages are all modeled by this class.
 
     A challenge is split into sections, themselves split into steps.
     Each section has a title, a description and one or more validation steps.
