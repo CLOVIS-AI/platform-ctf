@@ -12,12 +12,32 @@ provider "docker" {
 }
 
 resource "docker_container" "docker_image" {
-  image = "asterisk"
+  image = "registry.gitlab.com/rsr22/plateforme-ctf/asterisk/voip:${var.build_version}"
   name  = "docker_${var.instance_id}_asterisk"
   ports {
     internal = 5038
   }
+  upload {
+    file = "/home/flag.txt"
+    source = "${path.module}/flag.txt"
+  }
 }
+
+#
+# Génération du flag
+#
+resource "random_string" "flag" {
+  keepers = {instance_id = "${var.instance_id}"}
+  length = 16
+  special = false
+  min_upper = 4
+  min_lower = 4
+  min_numeric = 4
+  provisioner "local-exec" {
+    command = "echo ${random_string.flag.result} > ${path.module}/flag.txt"
+  }
+}
+
 
 variable "instance_id" {
   type = number
@@ -32,6 +52,10 @@ variable "dockerport" {
 }
 
 variable "dockeruser" {
+  type = string
+}
+
+variable "build_version" {
   type = string
 }
 

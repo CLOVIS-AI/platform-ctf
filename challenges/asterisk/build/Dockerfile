@@ -14,7 +14,6 @@ RUN make && make install samples
 
 WORKDIR /home
 COPY manager.conf /etc/asterisk/manager.conf
-COPY flag.txt .
 COPY run.sh /
 
 
