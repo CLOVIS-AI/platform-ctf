@@ -19,7 +19,7 @@ resource "docker_container" "docker_image" {
   }
   upload {
     file = "/home/flag.txt"
-    source = "${path.module}/flag.txt"
+    content = random_string.flag.result
   }
 }
 
