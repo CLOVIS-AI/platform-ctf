@@ -1,0 +1,20 @@
+
+.asterisk:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/asterisk/voip"
+
+asterisk/docker:
+  extends: [ .docker-build, .asterisk ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/asterisk/build/Dockerfile
+    docker_context: challenges/asterisk/build
+
+asterisk/docker:staging:
+  extends: [ .docker-rename-staging, .asterisk ]
+  needs: [ asterisk/docker ]
+
+asterisk/docker:production:
+  extends: [ .docker-rename-production, .asterisk ]
+  needs: [ asterisk/docker ]

@@ -1,0 +1,27 @@
+---
+challenge:
+  name: Exploit VoiP
+  short_name: asterisk
+  author: Encarre
+  description: |
+    <p>Ce challenge porte sur l'exploitation d'une CVE du logiciel Asterisk, un logiciel serveur de voix sur IP</p>
+  category: CHALLENGE
+
+resource:
+  type: terraform
+  args: |
+    La partie instantiable de ce TP est disponible à l'adresse
+    <a href='https://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>https://ctf.rsr.enseirb-matmeca.fr:{port}</a>
+  start_duration: 10
+  is_vpn_needed: yes
+
+sections:
+  - section:
+      title: Exploitation de vulnérabilité sur serveur VoiP
+      description: |
+        Pour valider ce challenge, retrouvez le flag dans /home de la machine hébergeant le serveur Asterisk.
+    steps:
+    - description: Quel est le flag stocké sur le serveur VoiP ?
+      validation_type: dynamic
+      validation_arg: flag.txt
+      points: 1000
