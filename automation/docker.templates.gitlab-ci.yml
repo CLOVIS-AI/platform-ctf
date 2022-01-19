@@ -16,10 +16,12 @@
   extends: [ .docker ]
   script:
     - docker pull "$image:latest" || true
+    - docker pull "$image:staging" || true
     - >
       docker build
       --pull
       --cache-from "$image:latest"
+      --cache-from "$image:staging"
       --tag "$image:$build_version"
       -f "$dockerfile"
       "$docker_context"
