@@ -1,6 +1,6 @@
 
 .docker:
-  image: docker:19.03
+  image: docker:20.10
   services:
     - docker:dind
   before_script:
