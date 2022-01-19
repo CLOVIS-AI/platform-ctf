@@ -37,9 +37,11 @@ stop:test:
     - set -o allexport; . ~/secret.properties; set +o allexport
     - cd automation/test
     - terraform init
-    - terraform destroy -input=false
+    - terraform destroy -auto-approve -input=false
   tags:
     - test-server
+  only:
+    - merge_requests
   environment:
     name: review/$CI_PIPELINE_IID
     action: stop
