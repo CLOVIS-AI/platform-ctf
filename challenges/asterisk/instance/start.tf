@@ -19,7 +19,7 @@ resource "docker_container" "docker_image" {
   }
   upload {
     file = "/home/flag.txt"
-    source = "${path.module}/flag.txt"
+    content = random_string.flag.result
   }
 }
 
@@ -34,7 +34,7 @@ resource "random_string" "flag" {
   min_lower = 4
   min_numeric = 4
   provisioner "local-exec" {
-    command = "echo ${random_string.flag.result} > ${path.module}/flag.txt"
+    command = "mkdir -p ${path.module}/flags; echo ${random_string.flag.result} > ${path.module}/flags/flag.txt"
   }
 }
 
