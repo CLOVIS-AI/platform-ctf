@@ -6,7 +6,7 @@ start:test:
     TF_VAR_build_version: $build_version
   script:
     # Load the secret variables into a Terraform set(string), so it can be injected in Docker's 'env' key
-    - export TF_VAR_secrets="[$(<~/secret.properties sed 's/#.*//g;s/"//g' | tr -s '\n' ", " | sed 's/,/","/g;s/^",//;s/,"$//'),"'"'"build_version=$build_version"'"'"]"
+    - export TF_VAR_secrets="[$(<~/secret.properties sed 's/#.*//g;s/"//g' | tr -s '\n' ", " | sed 's/,/","/g;s/^",//;s/,"$//'),"'"'"build_version=$build_version"'"'", "'"'"TF_VAR_build_version=$build_version"'"'"]"
     # Load the secret variables in Bash for the job to use
     - set -o allexport; . ~/secret.properties; set +o allexport
     - cd automation/test
