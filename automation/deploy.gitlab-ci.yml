@@ -6,7 +6,7 @@ start:test:
     TF_VAR_build_version: $build_version
   script:
     # Load the secret variables into a Terraform set(string), so it can be injected in Docker's 'env' key
-    - export TF_VAR_secrets="[$(<~/secret.properties sed 's/#.*//g;s/"//g' | tr -s '\n' ", " | sed 's/,/","/g;s/^",//;s/,"$//'),"'"'"build_version=$build_version"'"'"]"
+    - export TF_VAR_secrets="[$(<~/secret.properties sed 's/#.*//g;s/"//g' | tr -s '\n' ", " | sed 's/,/","/g;s/^",//;s/,"$//'),"'"'"build_version=$build_version"'"'", "'"'"TF_VAR_build_version=$build_version"'"'"]"
     # Load the secret variables in Bash for the job to use
     - set -o allexport; . ~/secret.properties; set +o allexport
     - cd automation/test
@@ -15,7 +15,7 @@ start:test:
     # Find 'port' in the output, remove the ANSI color escape (https://stackoverflow.com/a/18000433/5666171)
     - port=$(<terraform-output.txt grep 'port =' | sed 's/port = //' | sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//')
     - echo "I have detected port $port"
-    - echo "WEB_URL=http://ctf.rsr.enseirb-matmeca.fr:$port/" >>../../.env
+    - echo "WEB_URL=$testing_url:$port/" >>../../.env
   only:
     - merge_requests
   tags:
