@@ -15,7 +15,7 @@ start:test:
     # Find 'port' in the output, remove the ANSI color escape (https://stackoverflow.com/a/18000433/5666171)
     - port=$(<terraform-output.txt grep 'port =' | sed 's/port = //' | sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//')
     - echo "I have detected port $port"
-    - echo "WEB_URL=http://ctf.rsr.enseirb-matmeca.fr:$port/" >>../../.env
+    - echo "WEB_URL=$testing_url:$port/" >>../../.env
   only:
     - merge_requests
   tags:
