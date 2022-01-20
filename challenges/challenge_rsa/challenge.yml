@@ -1,0 +1,20 @@
+---
+challenge:
+  name: Challenge RSA
+  short_name: challenge_rsa
+  author: bupton
+  description: |
+    <p> Ivan a essayé d'envoyer un même message à deux personnes avec deux clefs différentes. Malheureusement, il l'a mal fait.  </p>
+    Déchiffrez ce message.
+  category: Cryptographie
+
+resource:
+  type: file
+  args: rsa_ressources.zip
+
+
+steps:
+  - description: Entrez le flag ici
+    validation_type: string
+    validation_arg: Cryp7ogr4ph!eLeF3u
+    points: 20
