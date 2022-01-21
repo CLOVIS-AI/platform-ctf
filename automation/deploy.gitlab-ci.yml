@@ -1,9 +1,12 @@
 
-.start:
+.start-or-stop:
   stage: deploy
-  needs: [ web/docker ]
   variables:
     TF_VAR_build_version: $build_version
+
+.start:
+  extends: [ .start-or-stop ]
+  needs: [ web/docker ]
 
 .load-environment: &load-environment
   # Load the secret variables into a Terraform set(string), so it can be injected in Docker's 'env' key
@@ -36,7 +39,7 @@ start:test:
     on_stop: "stop:test"
 
 stop:test:
-  extends: [ .start ]
+  extends: [ .start-or-stop ]
   script:
     - *load-environment
     - cd automation/test
