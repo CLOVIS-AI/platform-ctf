@@ -1,0 +1,19 @@
+---
+challenge:
+  name: Type Juggling
+  short_name: type-juggling
+  author: Aeinot & CLOVIS
+  description: |
+    Connectez-vous à ce site web en tant qu'administrateur.
+  category: Web
+
+resource:
+  type: terraform
+  args: "Le challenge est disponible à l'adresse <a href='http://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>http://ctf.rsr.enseirb-matmeca.fr:{port}</a>"
+  start_duration: 9
+
+steps:
+  - description: Quel est le flag?
+    validation_type: dynamic
+    validation_arg: flag.txt
+    points: 30
