@@ -1,4 +1,10 @@
 
+.start:
+  stage: deploy
+  needs: [ web/docker ]
+  variables:
+    TF_VAR_build_version: $build_version
+
 .load-environment: &load-environment
   # Load the secret variables into a Terraform set(string), so it can be injected in Docker's 'env' key
   - export TF_VAR_secrets="[$(<~/secret.properties sed 's/#.*//g;s/"//g' | tr -s '\n' ", " | sed 's/,/","/g;s/^",//;s/,"$//'),"'"'"build_version=$build_version"'"'", "'"'"TF_VAR_build_version=$build_version"'"'"]"
@@ -6,10 +12,7 @@
   - set -o allexport; . ~/secret.properties; set +o allexport
 
 start:test:
-  stage: deploy
-  needs: [ web/docker ]
-  variables:
-    TF_VAR_build_version: $build_version
+  extends: [ .start ]
   script:
     - *load-environment
     - cd automation/test
@@ -33,9 +36,7 @@ start:test:
     on_stop: "stop:test"
 
 stop:test:
-  stage: deploy
-  variables:
-    TF_VAR_build_version: $build_version
+  extends: [ .start ]
   script:
     - *load-environment
     - cd automation/test
@@ -49,21 +50,34 @@ stop:test:
     name: review/$CI_PIPELINE_IID
     action: stop
 
-restart:staging:
-  stage: deploy
-  needs: [ web/docker ]
-  variables:
-    TF_VAR_build_version: $build_version
-    TF_VAR_platform_port: 81
+.restart:
+  extends: [ .start ]
   script:
     - *load-environment
     - cd automation/main
     - terraform init
     - terraform apply -auto-approve -input=false
+
+restart:staging:
+  extends: [ .restart ]
+  variables:
+    TF_VAR_platform_port: 81
   only:
-    - merge_requests  # TODO only main
+    - main
   tags:
     - staging-server
   environment:
     name: staging
     url: "$staging_url:$TF_VAR_platform_port/"
+
+restart:production:
+  extends: [ .restart ]
+  variables:
+    TF_VAR_platform_port: 80
+  only:
+    - tags
+  tags:
+    - production-server
+  environment:
+    name: production
+    url: "$production_url:$TF_VAR_platform_port/"
