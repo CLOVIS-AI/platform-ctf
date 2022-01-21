@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/challenges/asterisk/asterisk.iml" filepath="$PROJECT_DIR$/challenges/asterisk/asterisk.iml" />
       <module fileurl="file://$PROJECT_DIR$/root.iml" filepath="$PROJECT_DIR$/root.iml" />
       <module fileurl="file://$PROJECT_DIR$/challenges/training-platform/training-platform.iml" filepath="$PROJECT_DIR$/challenges/training-platform/training-platform.iml" />
       <module fileurl="file://$PROJECT_DIR$/web/web.iml" filepath="$PROJECT_DIR$/web/web.iml" />
