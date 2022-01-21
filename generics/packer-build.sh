@@ -41,6 +41,6 @@ if [[ -z $existing ]]; then
 	packer build -force $build_file
 	echo "$current_generic,$version,$build_version" >>"$cache_file"
 else
-	# This version has already been recorded as version '$existing', clone it
-	cd .. ; terraform init ; terraform apply -auto-approve -input=false -var="original_build_version=$existing" -var="new_build_version=$build_version" -var="generic_name=$current_generic"
+	# This version has already been recorded as version '$existing'
+	echo "$current_generic has not been modified since the last build, using version $existing (version $version of Packer file)"
 fi
