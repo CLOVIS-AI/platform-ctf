@@ -33,6 +33,7 @@ web-ui/build:
   only:
     - merge_requests
     - main
+    - tags
   artifacts:
     paths:
       - web-ui/dist
