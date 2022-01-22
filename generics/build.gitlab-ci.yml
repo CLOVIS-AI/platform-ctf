@@ -8,8 +8,7 @@
   script:
     - set -o allexport; . ~/secret.properties; set +o allexport
     - cd "generics/$generic"
-    - test -e prepare-build.sh && ./prepare-build.sh
-    - packer build -force build.pkr.hcl
+    - ../packer-build.sh
 
 generics:test:
   extends: [ .generics ]
