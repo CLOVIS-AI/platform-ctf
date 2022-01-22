@@ -29,16 +29,21 @@ variable "secrets" {
   type = set(string)
 }
 
+variable "platform_port" {
+  type = number
+}
+
 provider "docker" {
   host = "ssh://${var.deployment_user}@${var.deployment_host}:${var.deployment_port}"
 }
 
 resource "docker_container" "docker_image" {
   image = "registry.gitlab.com/rsr22/plateforme-ctf/web:${var.build_version}"
-  name  = "docker_web_interface_${var.build_version}_test"
+  name  = "docker_web_interface_${var.build_version}_main"
   env = var.secrets
   ports {
     internal = 8000
+    external = var.platform_port
   }
   volumes {
     container_path = "/app/data"
@@ -48,8 +53,4 @@ resource "docker_container" "docker_image" {
     container_path = "/app/logs"
     volume_name = "ctf-logs-${var.build_version}"
   }
-}
-
-output "port" {
-  value = docker_container.docker_image.ports[0].external
 }
