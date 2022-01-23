@@ -1,0 +1,35 @@
+---
+challenge:
+  name: RTMP Interception
+  short_name: rtmp-interception
+  author: bgeirbdu17
+  description: |
+    <p>Nous avons réussi à récupérer le flux vidéo d'une caméra de surveillence ! Comme preuve, nous avons enregistré une
+    image de ce flux. Cependant, il semblerait qu'il nous manque une information importante. Aidez-nous à récupérer
+    cette information en récupérant le flux RTMP de la caméra de surveillance.</p>
+    <div class="text-center">
+      <img src="static/vlcsnap-2022-01-23-15h57m48s088.png" class="img-fluid rounded mx-auto d-block"><br>
+    </div>
+
+  category: CHALLENGE
+
+resource:
+  type: terraform
+  args: |
+    Une machine Kali qui se trouve sur le même réseau que la caméra est disponible en ssh à l'adresse
+    ctf.rsr.enseirb-matmeca.fr:{port22_kali}. Les identifiants sont <b>kali</b>/<b>kali</b>.
+  start_duration: 10
+
+sections:
+  - section:
+      title: Récupération du flux RTMP
+      description: |
+        <p>Lisez le flux vidéo de la caméra pour obtenir le flag du challenge. </p>
+        <button onclick="alert('Indice 1 : L\'image fournie contient des informations intéressantes.')" type="submit"> Indice 1 </button>
+        <button onclick="alert('Indice 2 : Un tunnel ssh peut être utile à rediriger un flux.')" type="submit"> Indice 2 </button>
+
+    steps:
+      - description: Retrouvez l'information manquée sur le flux vidéo de la caméra de surveillance (en majuscules, de la forme FLAG:XXX).
+        validation_type: string
+        validation_arg: FLAG:WELLD0NE
+        points: 100
