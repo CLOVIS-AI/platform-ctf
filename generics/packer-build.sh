@@ -38,8 +38,7 @@ existing="$(<"$cache_file" grep "$current_generic,$version" | cut -d ',' -f 3)"
 if [[ -z $existing ]]; then
 	# This version has not been recorded yet, build it
 	test -f $prebuild_file && $prebuild_file
-	packer build -force $build_file
-	echo "$current_generic,$version,$build_version" >>"$cache_file"
+	packer build -force $build_file && echo "$current_generic,$version,$build_version" >>"$cache_file"
 else
 	# This version has already been recorded as version '$existing'
 	echo "$current_generic has not been modified since the last build, using version $existing (version $version of Packer file)"
