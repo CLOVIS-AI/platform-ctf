@@ -1,0 +1,119 @@
+---
+challenge:
+  name: La conquete de l'EIRB
+  short_name: conquete-de-l-eirb
+  author: Erak, LePlanCity & Kobh4x
+  description: |
+    <p> <u> 14h - Kodiak Pub</u> <br>
+        Vous recevez un appel d'un de vos informateurs. <br>
+        Apparemment l'un de ces clients, un certain PF, serait prêt à payer très cher pour un code secret caché sur un serveur inconnu. <br>
+        Il refuse de vous dire à quoi sert ce code, mais il est prêt à faire 50-50 avec vous. <br>
+        La cible ? Le réseau de son école. </p>
+    <p> Il a réussi à mettre en place une machine sur le réseau, afin que vous aussi vous puissiez y avoir accès </p>
+    <p> Vous pouvez vous y connecter en ssh, en utilisant les credentials classique d'une Kali. </p>
+    
+    <p> Vous êtes maintenant dans le réseau. Votre informateur sait que le code secret est caché dans le serveur de l'une des assos de l'école <br>
+        Par chance, l'une des machines dispose d'une page web regroupant l'ensemble des sites des clubs de l'école. Allez explorer ça !
+    </p
+    
+    <p>
+       <b> ATTENTION 1 : le scan de réseau est exceptionnelement autorisé dans ce scénario. </b>
+       <br>
+       <b> ATTENTION 2 : Pour accéder aux différents sites des différentes machines, un tunneling SSH est nécessaire. (Internet est ton ami) </b>
+    </p>
+  
+  
+
+  category: SCENARIO
+
+resource:
+  type: terraform
+  args: |
+    Connectez vous en ssh à cette machine : <a href='https://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>https://ctf.rsr.enseirb-matmeca.fr:{port}</a>
+  start_duration: 10
+  is_vpn_needed: no
+
+sections:
+  - section:
+      title: Club Oeno - I - Niveau Facile
+      description: |
+        <p>
+        Commencez par ce club. Un club d'oeonologie* .. rien de bien méchant en l'apparence, surtout que le site semble encore en construction. <br>
+        Cela devrait être un jeu d'enfant ! Trouvez des indices ! </p>
+        <font size=-20>(*C'est comme un bar mais en moins bien.)</font>
+    steps:
+      - description: user.txt
+        validation_type: dynamic
+        validation_arg: flag_cqteirb_oeno_user.txt
+        points: 25
+  - section:
+      title: Club Oeno - II - Niveau Facile
+      description: |
+        <p>
+        Vous voilà sur la machine. Rien de particulier en vue. <br>
+        Peut-être que le président n'a pas toutes les informations après tout...
+        </p>
+    steps:
+      - description: root.txt
+        validation_type: dynamic
+        validation_arg: flag_cqteirb_oeno_root.txt
+        points: 50
+
+  - section:
+      title: PixEirb - I - Niveau Intermédiaire
+      description: |
+        <p>
+        Bon, c'est un échec. Le club Oeno n'a rien donné. Explorez un second club. <br>
+        Tiens ils ont un club de photographie ! Peut-être aurez-vous plus de chances avec celui-ci.
+        </p>
+    steps:
+      - description: user.txt
+        validation_type: dynamic
+        validation_arg: flag_cqteirb_pixeirb_user.txt
+        points: 100
+  - section:
+      title: PixEirb - II - Niveau Intermédiaire
+      description: |
+        <p>
+        Une machine de plus compromise ! Continuez votre exploration, le code n'est surement pas loin !
+        </p>
+    steps:
+      - description: root.txt
+        validation_type: dynamic
+        validation_arg: flag_cqteirb_pixeirb_root.txt
+        points: 200
+
+  - section:
+      title: Eirbware - Niveau Avancé
+      description: |
+        <p>
+         Second échec. Vous commencez à vous demander si votre informateur ne s'est pas moqué de vous.. et puis c'est qui ce PF ?! <br>
+         Faites-vous un café et reprenez. </p>
+        
+         <p>
+         Bon il ne reste plus qu'une association. Eirbware. Un club de réparations informatiques. <br>
+         Leur infrastructure doit surement être un peu plus difficile à pénétrer. Mais ça ne devrait pas vous faire peur. </p>
+
+    steps:
+      - description: root.txt
+        validation_type: dynamic
+        validation_arg: flag_cqteirb-eirbware.txt
+        points: 250
+
+  - section:
+      title: Le code secret ! - Niveau Difficile
+      description: |
+        <p>
+        La machine Eirbware est maintenant compromise. Mais cette machine semble différente des autres. <br>
+        En effet, les membres de cette association sont chargés de l'administration des réseaux de l'école. <br>
+        Peut-être ont-ils accès à d'autres réseaux avec d'autres serveurs ?<br>
+        </p>
+        <p>
+        C'est confirmé par notre informateur. Le code secret est dans le /home de ce mystérieux serveur. <br>
+        Vite, trouvez le code secret et tirez-vous d'ici!
+        </p>
+    steps:
+      - description: flag.txt
+        validation_type: dynamic
+        validation_arg: flag_cqteirb-asterisk.txt
+        points: 400

@@ -16,6 +16,7 @@ include:
   - local: '/challenges/training-reverse/build.gitlab-ci.yml'
   - local: '/challenges/asterisk/build.gitlab-ci.yml'
   - local: '/challenges/camsafe/build.gitlab-ci.yml'
+  - local: '/challenges/conquete-de-l-eirb/build.gitlab-ci.yml'
   - local: '/challenges/rtmp-interception/build.gitlab-ci.yml'
   - local: '/challenges/type-juggling/build.gitlab-ci.yml'
   - local: '/challenges/js_manipulation/build.gitlab-ci.yml'
@@ -24,4 +25,3 @@ include:
   - local: '/automation/web.gitlab-ci.yml'
   - local: '/automation/telegram.gitlab-ci.yml'
   - local: '/automation/deploy.gitlab-ci.yml'
-

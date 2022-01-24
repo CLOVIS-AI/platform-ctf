@@ -1,0 +1,143 @@
+#!/bin/bash
+
+Options="--include=.local --include=.local/bin --exclude=.local/* --exclude=Téléchargements --exclude=Downloads --exclude=Images --exclude=Vidéos --exclude=Videos --exclude=Musique --exclude=Bureau --exclude=Desktop --exclude=snap --exclude=Modèls --exclude=\.*/ --exclude=*.out --exclude=*.o --exclude=*~ --exclude=*#* --exclude=*cache* --exclude=*.class --exclude=*.toc --exclude=*.aux --exclude=*.log --exclude=.bash_history --exclude=.wget-hsts"
+
+
+
+
+#################### Do not edit below this line ####################
+
+enter_login() {
+	echo "What is your enseirb login?"
+	read Login
+	if [ "$Login" = "" ]
+	then
+		echo -e "\033[31mError\033[0m: Your login cannot be empty"
+		enter_login
+	fi
+}
+enter_login
+
+enter_root() {
+	echo "Enter the root path you would like for your enseirb files:"
+	read Synchro_root
+	if [ "$Synchro_root" = "" ]
+	then
+		Synchro_root="~"
+	fi
+	Synchro_root=$(realpath $(eval echo "$Synchro_root"))
+	if [ ! -d "$Synchro_root" ]
+	then
+		mkdir -p "$Synchro_root" 2> /dev/null
+		if [ $? = 1 ]
+		then
+			echo -e "\033[31mError\033[0m: Unable to create the directory $Synchro_root"
+			enter_root
+		fi
+	fi
+}
+enter_root
+
+echo -e "#!/bin/bash\n\nLogin=\"$Login\"\n\nSynchro_root=\"$Synchro_root\"\n\nOptions=\"$Options\" \n\n#################### Do not edit below this line ####################\n\n#Script (This line is needed!!!!!)" > /tmp/.update && cat $0 | sed '0,/^#Script/d' >> /tmp/.update
+if [ ! -d ~/.local/bin ]
+then
+	mkdir -p ~/.local/bin 2> /dev/null
+fi
+mv /tmp/.update ~/.local/bin/update 
+chmod +x ~/.local/bin/update
+echo $PATH | grep "$(realpath ~)/\.local/bin"
+if [ $? = 1 ]
+then 
+	echo "export PATH=$PATH:$(realpath ~)/.local/bin" >> ~/.bashrc
+	source ~/.bashrc
+fi
+echo -e "Your command is ready! Use:\n\t\033[34mupdate\033[0m [path1 path2 ...]\nIf you do not enter any arguments, every files in the specified root path will be synchronised"
+exit 0
+
+#Script (This line is needed!!!!!)
+
+Version=0.0.7
+
+url="https://eirbware.eirb.fr/assets/setup-update"
+distantVersion=$(wget "$url" -O /tmp/.upd4te &> /dev/null && cat /tmp/.upd4te | grep '^Version=' | head -n 1 | sed 's/Version=//g')
+compareVersion=$(echo -e "$Version\n$distantVersion" | sort -rV | head -n 1)
+if [ "$compareVersion" != "$Version" ]
+then
+	echo "An update is avaible, do you want to update? (y/n)"
+	read answer
+	case $answer in
+		y | yes)
+			cat $0 | sed '/^#Script/q' > /tmp/.update && cat /tmp/.upd4te | sed '0,/^#Script/d' >> /tmp/.update
+			mv /tmp/.update $0 
+			chmod +x $0
+			echo "The script has been updated!"
+			exit 0;;
+		*) echo "Update aborted!";;
+	esac	
+fi
+
+if ([ "$(hostname)" = 'ssh' ] || [ "$(hostname)" = 'travail64' ] || [ "$(hostname)" = 'oracle' ])
+then 
+	echo -e "Please use \033[34mupdate\033[0m on your personal computer (\033[31mnot on ssh\033[0m)"
+	exit 1
+fi
+
+absolute_path() {
+	realpath $(echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")")
+}
+
+sync() {
+	if $([ "$1" = "/" ] || [ "$1" = "" ])
+	then
+		LocalPath="$Synchro_root"
+	else
+		LocalPath=$(absolute_path "$1") 
+		echo $LocalPath | grep "^$Synchro_root" &> /dev/null
+		if [ $? = 1 ]
+		then
+			echo -e "\033[31mError\033[0m: You are trying to synchronise files outside of your synchronisation root folder"
+			exit 1
+		fi
+	fi
+	if [ -d $LocalPath ]
+	then
+		LocalPath="$LocalPath/"
+	fi
+	DistantPath=$(echo $LocalPath | sed "s|^$Synchro_root/||g")
+}
+
+# Exclude all git projects
+exclude_git() { 
+	if [ "$(which locate)" != "" ]
+	then 
+		git=$(locate -r "\.git$" 2> /dev/null | sed -E "s|^$1(.*)\/\.git|\1|g")
+		for x in $git
+		do
+			Options="$Options --exclude=$x"
+		done
+	fi
+}
+
+while :
+do
+	sync "$1"
+	exclude_git "$LocalPath"
+	#echo $DistantPath
+	#echo $LocalPath  
+	rsync -PuaH $Options $Login@ssh.enseirb.fr:$DistantPath $LocalPath 2> /dev/null
+	rsync -PuaH $Options $LocalPath $Login@ssh.enseirb.fr:$DistantPath 2> /dev/null
+	if [ $# -le 1 ]
+	then
+		exit 0
+	fi 
+	shift
+done
+
+
+
+
+
+
+
+ 
+ 
