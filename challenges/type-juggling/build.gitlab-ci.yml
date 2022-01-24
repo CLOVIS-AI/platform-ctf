@@ -1,0 +1,20 @@
+
+.type-juggling:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/type-juggling/php"
+
+type-juggling/docker:
+  extends: [ .docker-build, .type-juggling ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/type-juggling/build/Dockerfile
+    docker_context: challenges/type-juggling/build
+
+type-juggling/docker:staging:
+  extends: [ .docker-rename-staging, .type-juggling ]
+  needs: [ type-juggling/docker ]
+
+type-juggling/docker:production:
+  extends: [ .docker-rename-production, .type-juggling ]
+  needs: [ type-juggling/docker ]

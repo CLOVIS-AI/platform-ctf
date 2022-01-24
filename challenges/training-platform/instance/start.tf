@@ -12,7 +12,7 @@ provider "docker" {
 }
 
 resource "docker_container" "docker_image" {
-  image = "training_platform"
+  image = "registry.gitlab.com/rsr22/plateforme-ctf/training-platform/training:${var.build_version}"
   name  = "docker_${var.instance_id}_training_platform"
   ports {
     internal = 80
@@ -32,6 +32,10 @@ variable "dockerport" {
 }
 
 variable "dockeruser" {
+  type = string
+}
+
+variable "build_version" {
   type = string
 }
 

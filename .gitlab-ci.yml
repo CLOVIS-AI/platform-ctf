@@ -14,6 +14,7 @@ include:
   - local: '/generics/build.gitlab-ci.yml'
   - local: '/challenges/training-platform/build.gitlab-ci.yml'
   - local: '/challenges/asterisk/build.gitlab-ci.yml'
+  - local: '/challenges/type-juggling/build.gitlab-ci.yml'
   - local: '/automation/web.gitlab-ci.yml'
   - local: '/automation/telegram.gitlab-ci.yml'
   - local: '/automation/deploy.gitlab-ci.yml'

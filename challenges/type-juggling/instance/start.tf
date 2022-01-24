@@ -11,23 +11,11 @@ provider "docker" {
   host = "ssh://${var.dockeruser}@${var.dockerhost}:${var.dockerport}"
 }
 
-resource "docker_container" "docker_image" {
-  image = "registry.gitlab.com/rsr22/plateforme-ctf/asterisk/voip:${var.build_version}"
-  name  = "docker_${var.instance_id}_asterisk"
-  ports {
-    internal = 5038
-  }
-  upload {
-    file = "/home/flag.txt"
-    content = random_string.flag.result
-  }
-}
-
 #
 # Génération du flag
 #
 resource "random_string" "flag" {
-  keepers = {instance_id = var.instance_id}
+  keepers = {instance_id = var.instance_id }
   length = 16
   special = false
   min_upper = 4
@@ -38,6 +26,18 @@ resource "random_string" "flag" {
   }
 }
 
+# Create a container
+resource "docker_container" "docker_image" {
+  image = "registry.gitlab.com/rsr22/plateforme-ctf/type-juggling/php:${var.build_version}"
+  name  = "docker_${var.instance_id}_type_juggling"
+  ports {
+    internal = 80
+  }
+  upload {
+    file = "/var/www/html/conf.php"
+    content = "<?php\n\n$FLAG = '${random_string.flag.result}';\n"
+  }
+}
 
 variable "instance_id" {
   type = number
