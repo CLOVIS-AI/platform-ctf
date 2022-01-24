@@ -1,0 +1,26 @@
+<html>
+    <head>
+	<script type="text/javascript">
+	    function anonymous(x) {
+    		var y = '';
+    		for (var i = 0; i < x.length; i += 2) y += String.fromCharCode(parseInt(x.substr(i, 2), 16));
+		return y;
+	    }
+
+
+	    function login(){
+		pass=prompt("Entrez le mot de passe");
+		value="6457356C63324E686347556C4D6A676C4D6A4A5464484A70626D63755A6E4A7662554E6F59584A446232526C4A5449314D6A67354E7955794E544A444F54676C4D6A5579517A45774E5355794E544A444D5445324A5449314D6B4D784D44516C4D6A5579517A6B334A5449314D6B4D784D54516C4D6A5579517A45774D4355794E544A444D5441784A5449314D6B4D784D54516C4D6A55794F5355794D6955794F513D3D";
+		password = eval(eval(unescape(unescape(atob(anonymous(value))))))
+		if ( pass == password ) {
+			alert("Bon mot de passe, vous pouvez valider le challenge avec ce mot de passe.");  }
+		else {
+			alert("Mauvais mot de passe !");
+		}
+	    }
+	</script>
+    </head>
+   <body onload="login();">
+
+    </body>
+</html>

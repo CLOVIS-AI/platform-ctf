@@ -1,0 +1,27 @@
+---
+challenge:
+  name: JS Manipulation
+  short_name: js_manipulation
+  author: ZayrroX & Antonin
+  description: |
+    Apprendre les bases de javascript.
+  category: Web
+
+resource:
+  type: terraform
+  args: "Le challenge est disponible à l'adresse <a href='http://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>http://ctf.rsr.enseirb-matmeca.fr:{port}</a>"
+  start_duration: 5
+
+steps:
+  - description: Quel est le flag du challenge 1 ?
+    validation_type: string
+    validation_arg: jsiseasy
+    points: 5
+  - description: Quel est le flag du challenge 2 ?
+    validation_type: string
+    validation_arg: abitharder
+    points: 10
+  - description: Quel est le flag du challenge 3 ?
+    validation_type: string
+    validation_arg: quiteanexpert
+    points: 15
