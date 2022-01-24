@@ -1,0 +1,19 @@
+.js_manipulation:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/js_manipulation"
+
+js_manipulation/docker:
+  extends: [ .docker-build, .js_manipulation ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/js_manipulation/build/site/Dockerfile
+    docker_context: challenges/js_manipulation/build/site
+
+js_manipulation/docker:staging:
+  extends: [ .docker-rename-staging, .js_manipulation ]
+  needs: [ js_manipulation/docker ]
+
+js_manipulation/docker:production:
+  extends: [ .docker-rename-production, .js_manipulation ]
+  needs: [ js_manipulation/docker ]
