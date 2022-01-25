@@ -1,0 +1,40 @@
+.reverse:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/training-reverse"
+
+training-reverse/docker:
+  extends: [ .docker-build, .reverse ]
+  needs: [ ]
+  stage: challenges
+  variables:
+    dockerfile: challenges/training-reverse/build/Dockerfile
+    docker_context: challenges/training-reverse/build
+  
+training-reverse/docker:staging:
+  extends: [ .docker-rename-staging, .reverse ]
+  needs: [ training-reverse/docker ]
+
+training-reverse/docker:production:
+  extends: [ .docker-rename-production, .reverse ]
+  needs: [ training-reverse/docker ]
+
+training-reverse/docker/gcc:
+  image: $image:$build_version
+  extends: [ .reverse ]
+  needs: [ training-reverse/docker ]
+  stage: challenges
+  script:
+    - cd challenges/training-reverse/code
+    - gcc binaire1.c -o binaire1
+    - gcc binaire2.c -o binaire2
+    - gcc binaire3.c -o binaire3
+    - zip binaires.zip binaire1 binaire2 binaire3
+    - mkdir -p ../static
+    - mv binaires.zip ../static
+  artifacts:
+    paths:
+      - challenges/training-reverse/static/binaires.zip
+  only:
+    - merge_requests
+    - main
+    - tags
