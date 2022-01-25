@@ -14,10 +14,6 @@ provider "docker" {
 # create a network containing the rtmp-interception instance and a kali instance
 resource "docker_network" "docker_rtmp_interception_network" {
   name = "docker_${var.instance_id}_rtmp_interception_network"
-  driver = "bridge"
-  ipam_config {
-    subnet = "10.17.17.0/24"
-  }
 }
 
 resource "docker_container" "docker_camera_image" {
