@@ -1,6 +1,6 @@
 
 web/lint:
-  image: python:latest
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:latest
   stage: platform
   needs: [ ]
   script:
@@ -9,7 +9,7 @@ web/lint:
     - merge_requests
 
 web/test:
-  image: python:latest
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:latest
   stage: platform
   needs: [ ]
   script:
@@ -23,7 +23,7 @@ web/test:
       junit: web/tests.xml
 
 web-ui/build:
-  image: node:alpine
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:alpine
   stage: platform
   needs: [ ]
   script:
