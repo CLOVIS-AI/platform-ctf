@@ -1,0 +1,20 @@
+
+.sql_injection:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/sql_injection"
+
+sql_injection/docker:
+  extends: [ .docker-build, .sql_injection ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/sql_injection/build/Dockerfile
+    docker_context: challenges/sql_injection/build
+
+sql_injection/docker:staging:
+  extends: [ .docker-rename-staging, .sql_injection ]
+  needs: [ sql_injection/docker ]
+
+sql_injection/docker:production:
+  extends: [ .docker-rename-production, .sql_injection ]
+  needs: [ sql_injection/docker ]

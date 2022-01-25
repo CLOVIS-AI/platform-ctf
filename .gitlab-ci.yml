@@ -17,7 +17,7 @@ include:
   - local: '/challenges/asterisk/build.gitlab-ci.yml'
   - local: '/challenges/type-juggling/build.gitlab-ci.yml'
   - local: '/challenges/js_manipulation/build.gitlab-ci.yml'
+  - local: '/challenges/sql_injection/build.gitlab-ci.yml'
   - local: '/automation/web.gitlab-ci.yml'
   - local: '/automation/telegram.gitlab-ci.yml'
   - local: '/automation/deploy.gitlab-ci.yml'
-
