@@ -1,10 +1,11 @@
-
 .docker:
-  image: docker:20.10
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:20.10
   services:
-    - docker:dind
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:dind
+      alias: docker
   before_script:
     - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+    - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
   tags:
     - docker
   only:
@@ -20,6 +21,7 @@
     - >
       docker build
       --pull
+      --build-arg GITLAB_PROXY=${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}
       --cache-from "$image:latest"
       --cache-from "$image:staging"
       --tag "$image:$build_version"

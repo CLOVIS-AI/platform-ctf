@@ -1,4 +1,5 @@
-FROM ubuntu:14.04
+ARG GITLAB_PROXY
+FROM $GITLAB_PROXY/ubuntu:14.04
 
 RUN apt update && apt upgrade -y \
 	&& apt install -y wget aptitude make perl libwww-perl sox mpg123

@@ -1,4 +1,5 @@
-FROM python:alpine
+ARG GITLAB_PROXY
+FROM $GITLAB_PROXY/python:alpine
 
 WORKDIR /app
 
