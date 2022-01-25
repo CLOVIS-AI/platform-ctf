@@ -1,0 +1,40 @@
+.rtmp-interception:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/rtmp-interception"
+
+rtmp-interception/docker:
+  extends: [ .docker-build, .rtmp-interception ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/rtmp-interception/build/Dockerfile
+    docker_context: challenges/rtmp-interception/build
+
+rtmp-interception/docker:staging:
+  extends: [ .docker-rename-staging, .rtmp-interception ]
+  needs: [ rtmp-interception/docker ]
+
+rtmp-interception/docker:production:
+  extends: [ .docker-rename-production, .rtmp-interception ]
+  needs: [ rtmp-interception/docker ]
+
+
+.rtmp-interception-kali:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/rtmp-interception-kali"
+
+rtmp-interception-kali/docker:
+  extends: [ .docker-build, .rtmp-interception-kali ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/rtmp-interception/build/kali/Dockerfile
+    docker_context: challenges/rtmp-interception/build/kali
+
+rtmp-interception-kali/docker:staging:
+  extends: [ .docker-rename-staging, .rtmp-interception-kali ]
+  needs: [ rtmp-interception-kali/docker ]
+
+rtmp-interception-kali/docker:production:
+  extends: [ .docker-rename-production, .rtmp-interception-kali ]
+  needs: [ rtmp-interception-kali/docker ]

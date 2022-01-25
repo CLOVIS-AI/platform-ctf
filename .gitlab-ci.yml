@@ -15,6 +15,7 @@ include:
   - local: '/challenges/training-platform/build.gitlab-ci.yml'
   - local: '/challenges/training-reverse/build.gitlab-ci.yml'
   - local: '/challenges/asterisk/build.gitlab-ci.yml'
+  - local: '/challenges/rtmp-interception/build.gitlab-ci.yml'
   - local: '/challenges/type-juggling/build.gitlab-ci.yml'
   - local: '/challenges/js_manipulation/build.gitlab-ci.yml'
   - local: '/challenges/sql_injection/build.gitlab-ci.yml'
