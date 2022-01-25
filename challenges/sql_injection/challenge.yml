@@ -1,0 +1,28 @@
+
+challenge:
+  name: Reverse shell SQL (Docker) 
+  short_name: sql_injection
+  author: ZayrroX
+  description: |
+    Ce site web sembe vulnérable à plusieurs failles SQL. 
+    Le port 1234 est ouvert et l'utilisation du vpn facilite le reverse shell.
+    <br/>
+    <strong>Objectif:</strong> Afficher le contenu du fichier flag.txt disponible dans /home.
+    <br>
+    <button onclick="alert('Indice 1 : INTO OUTFILE')" type="submit"> Indice 1 </button>
+    <button onclick="alert('Indice 2 : /phpinfo.php')" type="submit"> Indice 2 </button>
+    <button onclick="alert('Indice 3 : /var/www/challenge-rsr/tmp/')" type="submit"> Indice 3 </button>
+  category: Web
+
+resource:
+  type: terraform
+  args: |
+    Le site web est disponible ici: <a href='http://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>http://ctf.rsr.enseirb-matmeca.fr:{port}</a> !
+  start_duration: 7
+  is_vpn_needed: yes
+
+steps:
+  - description: Quel est le flag ?
+    validation_type: dynamic
+    validation_arg: flag.txt
+    points: 30
