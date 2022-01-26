@@ -1,0 +1,49 @@
+---
+challenge:
+  name: Can you hack the lamp ?
+  short_name: connected-lamp
+  author: TILATTI Julie - ZIANI Asmae
+  description: |
+    <p>(27-01-2022) Vous êtes invités chez votre ami Bob et sa femme Alice pour l'anniversaire de leur fils de 9 ans. Ayant l'accès à leur réseau local, tu fais une analyse du réseau pour voir si tu peux trouver des failles exploitables.</p>
+  category: SCENARIO
+
+resource:
+  type: terraform
+  args: |
+    Le challenge est disponible en ssh à l'adresse: ctf.rsr.enseirb-matmeca.fr, sur le port {port22_kali}. user: kali, password: kali
+  start_duration: 60
+  is_vpn_needed: no
+
+sections:
+  - section:
+      title: Un peu de social engineering
+      description: |
+        <p>Trouvez le mot de passe de l'interface de gestion des lampes connectées de Bob et Alice</p>
+    steps:
+      - description: |
+          Le flag est le mot de passe du compte admin
+        validation_type: string
+        validation_arg: alicebob2013
+        points: 20
+
+  - section:
+      title: Découvrir l'interface
+      description: |
+        <p>Découvrez les fonctionnalités de l'interface</p>
+    steps:
+      - description: |
+          Le flag est le nom de la lampe connectée
+        validation_type: string
+        validation_arg: lampe cuisine
+        points: 20
+
+  - section:
+      title: Accéder aux fichiers de Bob
+      description: |
+        <p>Bob a fait l'erreur de déployer cet outil directement sur son ordi personnel</p>
+    steps:
+      - description: |
+          Utilisez l'interface pour trouver les fichiers importants de Bob
+        validation_type: dynamic
+        validation_arg: flag.txt
+        points: 20

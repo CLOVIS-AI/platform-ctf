@@ -1,0 +1,35 @@
+{
+    "bridge": {
+        "name": "Homebridge de Bob",
+        "username": "0E:3F:32:B7:BF:4D",
+        "port": 51950,
+        "pin": "525-31-727"
+    },
+    "accessories": [
+        {
+            "lightbulbGetOn": {
+                "url": "http://10.0.0.100/api/v1/led?power",
+                "method": "GET",
+                "pattern": "power: 1"
+            },
+            "lightbulbSetOn": {
+                "url": "http://10.0.0.100/api/v1/led?power=1",
+                "method": "POST"
+            },
+            "lightbulbSetOff": {
+                "url": "http://10.0.0.100/api/v1/led?power=0",
+                "method": "POST"
+            },
+            "name": "lampe cuisine",
+            "updateInterval": 50,
+            "accessory": "HTTP-IoT"
+        }
+    ],
+    "platforms": [
+        {
+            "name": "Config",
+            "port": 8581,
+            "platform": "config"
+        }
+    ]
+}
