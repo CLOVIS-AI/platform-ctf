@@ -45,8 +45,8 @@ web-ui/build:
 web/docker:
   extends: [ .docker, .web-docker ]
   stage: platform
-  needs: [ web-ui/build, training-reverse/docker/gcc ]
-  dependencies: [ web-ui/build, training-reverse/docker/gcc ]
+  needs: [ web-ui/build, training-reverse/docker/gcc, camsafe/sig/docker/build ]
+  dependencies: [ web-ui/build, training-reverse/docker/gcc, camsafe/sig/docker/build ]
   script:
     - mkdir -p web/src/static
     - cp -r web-ui/dist/* web/src/static

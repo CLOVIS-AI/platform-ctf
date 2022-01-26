@@ -1,0 +1,5 @@
+ARG build_version
+FROM registry.gitlab.com/rsr22/plateforme-ctf/camsafe/cambase:$build_version
+RUN apt install -y python3 && apt install -y nmap && mkdir -p /var/www/html/uploads && chown www-data /var/www/html/uploads && chgrp www-data /var/www/html/uploads
+COPY ./web/index.php ./web/about.php ./web/background.jpg ./web/fileupload.php ./web/header.css ./web/header.html ./web/join_us.php /var/www/html/
+CMD ip addr flush dev eth0 && ip addr add 10.0.0.2/24 dev eth0 && ip route add default via 10.0.0.254 && apache2-foreground

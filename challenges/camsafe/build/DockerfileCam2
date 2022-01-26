@@ -1,0 +1,18 @@
+ARG build_version
+FROM registry.gitlab.com/rsr22/plateforme-ctf/camsafe/cambase:$build_version
+RUN apt -y install binutils &&\
+	apt -y install gcc &&\
+    apt -y install cron &&\
+    apt -y install libc6-dev &&\
+    apt -y install strace &&\
+	apt -y install openssh-server && adduser --gecos "" --disabled-password camsafe && echo 'camsafe:CamSafeM@ster' | chpasswd
+COPY ./cam2/ssh_config /etc/ssh/
+COPY ./cam2/000-default.conf /etc/apache2/sites-available/
+COPY ./cam2/.htpasswd /etc/apache2/
+COPY ./cam2/start_cron.c /etc/init.d
+COPY ./cam2/saved_record.webm /var/www/html/saved/record.webm
+COPY ./cam2/record.webm ./cam2/index.php ./cam2/video_controls.js /var/www/html/
+RUN chown -R www-data /var/www/html && chgrp -R www-data /var/www/html && chmod o-r /var/www/html/saved/record.webm && chown www-data /etc/apache2/.htpasswd && chgrp www-data /etc/apache2/.htpasswd && chmod o-r /etc/apache2/.htpasswd && gcc /etc/init.d/start_cron.c -ldl -o /etc/init.d/start_cron && rm -f /etc/init.d/start_cron.c && chmod 0755 /etc/init.d/start_cron && chmod u+s /etc/init.d/start_cron
+CMD ip addr flush dev eth0 && ip addr add 192.168.0.5/24 dev eth0 && ip route add default via 192.168.0.254 && service ssh restart && service apache2 restart && chmod o-r /root/flag.txt && mkfifo /tmp/fifo && /bin/bash < /tmp/fifo
+
+

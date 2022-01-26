@@ -1,0 +1,13 @@
+ARG build_version
+FROM registry.gitlab.com/rsr22/plateforme-ctf/camsafe/cambase:$build_version
+RUN   apt -y install cron &&\
+      apt -y install openssh-server && adduser --gecos "" --disabled-password camsafe && echo 'camsafe:CamSafeM@ster' | chpasswd
+COPY ./cam1/ssh_config /etc/ssh/
+COPY ./cam1/backup.sh /root/
+COPY ./cam1/000-default.conf /etc/apache2/sites-available/
+COPY ./cam1/.htpasswd /etc/apache2/
+COPY ./cam1/saved_record.webm /var/www/html/saved/record.webm
+COPY ./cam1/record.webm ./cam1/index.php ./cam1/video_controls.js /var/www/html/
+RUN chown -R www-data /var/www/html && chgrp -R www-data /var/www/html && chmod o-r /var/www/html/saved/record.webm && chown www-data /etc/apache2/.htpasswd && chgrp www-data /etc/apache2/.htpasswd && chmod o-r /etc/apache2/.htpasswd && chgrp camsafe /var/www/html && chmod +x /root && chmod u+x /root/backup.sh && echo "* * * * * root /root/backup.sh" >> /etc/crontab
+CMD ip addr flush dev eth0 && ip addr add 192.168.0.4/24 dev eth0 && ip route add default via 192.168.0.254 && service ssh restart && service apache2 restart && service cron restart && chmod o-r /root/flag.txt && mkfifo /tmp/fifo && /bin/bash < /tmp/fifo
+

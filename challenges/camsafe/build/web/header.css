@@ -1,0 +1,60 @@
+body,
+html {
+    height: 100%;
+    font-family: "Inconsolata", sans-serif;
+}
+
+.bgimg {
+    background-position: center;
+    background-size: cover;
+    background-image: url("/background.jpg");
+    min-height: 60%;
+}
+
+.menu {
+    display: none;
+}
+
+input[type=file] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+input[type=file] + label, input[type=submit] {
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    background-color: black;
+    display: inline-block;
+    padding: 2px 8px;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+input[type=file]:focus + label,
+input[type=file] + label:hover,
+input[type=submit]:hover {
+    background-color: white;
+    color: black;
+    border-color: black;
+    cursor: pointer;
+}
+
+input[type=file]:focus + label,
+input[type=submit]:focus {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.center {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	margin: auto;
+}
+
+

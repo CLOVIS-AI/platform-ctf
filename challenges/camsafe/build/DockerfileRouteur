@@ -1,0 +1,8 @@
+ARG GITLAB_PROXY
+FROM $GITLAB_PROXY/openwrtorg/rootfs:x86-64-openwrt-21.02
+RUN rm Dockerfile && mkdir -p /var/lock && opkg update && opkg install curl && opkg install nmap
+COPY ./routeur/dropbear ./routeur/firewall ./routeur/network /etc/config/
+COPY ./routeur/firewall.user /etc/
+COPY ./routeur/90-enable-password-ssh /etc/uci-defaults/
+
+CMD ip route > /ip; cat /etc/config/network | sed "s/{ip}/$(ip route | grep eth0 | awk '{print $7}' | tail -n 1)/" > /etc/config/network; /sbin/init

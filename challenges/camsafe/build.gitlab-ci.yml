@@ -1,0 +1,195 @@
+.sig:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/sig"
+
+.cambase:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/cambase"
+
+.web:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/web"
+    
+.routeur:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/routeur"
+    
+.camserv:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/camserv"
+    
+.cam0:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/cam0"
+    
+.cam1:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/cam1"
+
+.cam2:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/camsafe/cam2"
+
+camsafe/cambase/docker:
+  extends: [ .docker-build, .cambase ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileCambase
+    docker_context: challenges/camsafe/build
+        
+camsafe/web/docker:
+  extends: [ .docker-build, .web ]
+  stage: challenges
+  needs: [ camsafe/cambase/docker ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileWeb
+    docker_context: challenges/camsafe/build
+    
+camsafe/routeur/docker:
+  extends: [ .docker-build, .routeur ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileRouteur
+    docker_context: challenges/camsafe/build
+
+camsafe/camserv/docker:
+  extends: [ .docker-build, .camserv ]
+  stage: challenges
+  needs: [ camsafe/cambase/docker ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileCamserv
+    docker_context: challenges/camsafe/build
+
+camsafe/cam0/docker:
+  extends: [ .docker-build, .cam0 ]
+  stage: challenges
+  needs: [ camsafe/cambase/docker ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileCam0
+    docker_context: challenges/camsafe/build
+    
+camsafe/cam1/docker:
+  extends: [ .docker-build, .cam1 ]
+  stage: challenges
+  needs: [ camsafe/cambase/docker ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileCam1
+    docker_context: challenges/camsafe/build
+
+camsafe/cam2/docker:
+  extends: [ .docker-build, .cam2 ]
+  stage: challenges
+  needs: [ camsafe/cambase/docker ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileCam2
+    docker_context: challenges/camsafe/build
+
+camsafe/sig/docker:
+  extends: [ .docker-build, .sig ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/camsafe/build/DockerfileSig
+    docker_context: challenges/camsafe/build
+
+
+camsafe/cambase/docker:staging:
+  extends: [ .docker-rename-staging, .cambase ]
+  needs: [ camsafe/cambase/docker ]
+  
+camsafe/web/docker:staging:
+  extends: [ .docker-rename-staging, .web ]
+  needs: [ camsafe/web/docker ]
+ 
+camsafe/routeur/docker:staging:
+  extends: [ .docker-rename-staging, .routeur ]
+  needs: [ camsafe/routeur/docker ]
+
+camsafe/camserv/docker:staging:
+  extends: [ .docker-rename-staging, .camserv ]
+  needs: [ camsafe/camserv/docker ]
+
+camsafe/cam0/docker:staging:
+  extends: [ .docker-rename-staging, .cam0 ]
+  needs: [ camsafe/cam0/docker ]
+
+camsafe/cam1/docker:staging:
+  extends: [ .docker-rename-staging, .cam1 ]
+  needs: [ camsafe/cam1/docker ]
+  
+camsafe/cam2/docker:staging:
+  extends: [ .docker-rename-staging, .cam2 ]
+  needs: [ camsafe/cam2/docker ]
+
+camsafe/sig/docker:staging:
+  extends: [ .docker-rename-staging, .sig ]
+  needs: [ camsafe/sig/docker ]
+
+
+camsafe/cambase/docker:production:
+  extends: [ .docker-rename-production, .cambase ]
+  needs: [ camsafe/cambase/docker ]
+  
+camsafe/web/docker:production:
+  extends: [ .docker-rename-production, .web ]
+  needs: [ camsafe/web/docker ]
+ 
+camsafe/routeur/docker:production:
+  extends: [ .docker-rename-production, .routeur ]
+  needs: [ camsafe/routeur/docker ]
+
+camsafe/camserv/docker:production:
+  extends: [ .docker-rename-production, .camserv ]
+  needs: [ camsafe/camserv/docker ]
+
+camsafe/cam0/docker:production:
+  extends: [ .docker-rename-production, .cam0 ]
+  needs: [ camsafe/cam0/docker ]
+
+camsafe/cam1/docker:production:
+  extends: [ .docker-rename-production, .cam1 ]
+  needs: [ camsafe/cam1/docker ]
+  
+camsafe/cam2/docker:production:
+  extends: [ .docker-rename-production, .cam2 ]
+  needs: [ camsafe/cam2/docker ]
+
+camsafe/sig/docker:production:
+  extends: [ .docker-rename-production, .sig ]
+  needs: [ camsafe/sig/docker ]
+
+camsafe/sig/docker/build:
+  image: $image:$build_version
+  extends: [ .sig ]
+  needs: [ camsafe/sig/docker ]
+  stage: challenges
+  script:
+    - cd challenges/camsafe/static
+    - mkdir -p sysupgrade/fs
+    - cd sysupgrade/fs
+    - wget https://downloads.openwrt.org/releases/21.02.0/targets/x86/64/openwrt-21.02.0-x86-64-rootfs.tar.gz
+    - tar -xvf openwrt-21.02.0-x86-64-rootfs.tar.gz
+    - rm -f openwrt-21.02.0-x86-64-rootfs.tar.gz
+    - cp ../../../build/routeur/dropbear ../../../build/routeur/network ../../../build/routeur/firewall etc/config/
+    - cp ../../../build/routeur/firewall.user etc/
+    - cp ../../../build/routeur/90-enable-password-ssh etc/uci-defaults/
+    - cd ..
+    - mksquashfs fs root
+    - rm -rf fs
+    - wget https://downloads.openwrt.org/releases/21.02.0/targets/x86/64/openwrt-21.02.0-x86-64-generic-kernel.bin
+    - mv openwrt-21.02.0-x86-64-generic-kernel.bin kernel
+    - cd ..
+    - tar -cvf CamSafeOS sysupgrade
+    - rm -rf sysupgrade
+    - gpg --batch --yes --gen-key ../build/sig/gen-key
+    - gpg --pinentry-mode loopback --yes --passphrase 'CamS@feBoy$!' -o CamSafeOS.sig --sign CamSafeOS
+    - rm -f CamSafeOS
+  artifacts:
+    paths:
+      - challenges/camsafe/static/CamSafeOS.sig
+  only:
+    - merge_requests
+    - main
+    - tags

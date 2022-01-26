@@ -1,0 +1,10 @@
+ARG build_version
+FROM registry.gitlab.com/rsr22/plateforme-ctf/camsafe/cambase:$build_version
+RUN apt -y install less && apt -y install openssh-server && adduser --gecos "" --disabled-password camsafe && echo "camsafe ALL = /usr/bin/less" >> /etc/sudoers && echo 'camsafe:CamSafeM@ster' | chpasswd
+COPY ./cam0/ssh_config /etc/ssh/
+COPY ./cam0/000-default.conf /etc/apache2/sites-available/
+COPY ./cam0/.htpasswd /etc/apache2/
+COPY ./cam0/saved_record.webm /var/www/html/saved/record.webm
+COPY ./cam0/record.webm ./cam0/index.php ./cam0/video_controls.js /var/www/html/
+RUN chown -R www-data /var/www/html && chgrp -R www-data /var/www/html && chmod o-r /var/www/html/saved/record.webm && chown www-data /etc/apache2/.htpasswd && chgrp www-data /etc/apache2/.htpasswd && chmod o-r /etc/apache2/.htpasswd
+CMD ip addr flush dev eth0 && ip addr add 192.168.0.3/24 dev eth0 && ip route add default via 192.168.0.254 && service ssh restart && service apache2 restart && chmod o-r /root/flag.txt && mkfifo /tmp/fifo && /bin/bash < /tmp/fifo
