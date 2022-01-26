@@ -55,6 +55,7 @@ class TerraformClient:
                     or name.startswith("clonesw_" + str(self.instance_id) + "_")
                     or name.startswith("clonepg_" + str(self.instance_id) + "_")
                     or name.startswith("docker_" + str(self.instance_id) + "_")
+                    or name.startswith("registry.gitlab.com/")
             ):
                 raise TerraformError("Resource name are not valid")
 
