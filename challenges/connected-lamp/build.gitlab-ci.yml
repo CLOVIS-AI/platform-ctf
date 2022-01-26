@@ -1,0 +1,19 @@
+.connected-lamp:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/connected-lamp"
+
+connected-lamp/docker:
+  extends: [ .docker-build, .connected-lamp ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/connected-lamp/build/Dockerfile
+    docker_context: challenges/connected-lamp/build
+
+connected-lamp:staging:
+  extends: [ .docker-rename-staging, .connected-lamp ]
+  needs: [ connected-lamp/docker ]
+
+connected-lamp/docker:production:
+  extends: [ .docker-rename-production, .connected-lamp ]
+  needs: [ connected-lamp/docker ]
