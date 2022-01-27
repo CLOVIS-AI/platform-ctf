@@ -1,0 +1,104 @@
+
+.cqteirb-oeno:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/cqteirb-oeno"
+
+cqteirb-oeno/docker:
+  extends: [ .docker-build, .cqteirb-oeno ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/conquete-de-l-eirb/build/oeno/Dockerfile
+    docker_context: challenges/conquete-de-l-eirb/build/oeno
+
+cqteirb-oeno/docker:staging:
+  extends: [ .docker-rename-staging, .cqteirb-oeno ]
+  needs: [ cqteirb-oeno/docker ]
+
+cqteirb-oeno/docker:production:
+  extends: [ .docker-rename-production, .cqteirb-oeno ]
+  needs: [ cqteirb-oeno/docker ]
+
+
+.cqteirb-pixeirb:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/cqteirb-pixeirb"
+
+cqteirb-pixeirb/docker:
+  extends: [ .docker-build, .cqteirb-pixeirb ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/conquete-de-l-eirb/build/pixeirb/Dockerfile
+    docker_context: challenges/conquete-de-l-eirb/build/pixeirb
+
+cqteirb-pixeirb/docker:staging:
+  extends: [ .docker-rename-staging, .cqteirb-pixeirb ]
+  needs: [ cqteirb-pixeirb/docker ]
+
+cqteirb-pixeirb/docker:production:
+  extends: [ .docker-rename-production, .cqteirb-pixeirb ]
+  needs: [ cqteirb-pixeirb/docker ]
+
+
+.cqteirb-eirbware:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/cqteirb-eirbware"
+
+cqteirb-eirbware/docker:
+  extends: [ .docker-build, .cqteirb-eirbware ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/conquete-de-l-eirb/build/eirbware/Dockerfile
+    docker_context: challenges/conquete-de-l-eirb/build/eirbware
+
+cqteirb-eirbware/docker:staging:
+  extends: [ .docker-rename-staging, .cqteirb-eirbware ]
+  needs: [ cqteirb-eirbware/docker ]
+
+cqteirb-eirbware/docker:production:
+  extends: [ .docker-rename-production, .cqteirb-eirbware ]
+  needs: [ cqteirb-eirbware/docker ]
+
+
+.cqteirb-asterisk:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/cqteirb-asterisk"
+
+cqteirb-asterisk/docker:
+  extends: [ .docker-build, .cqteirb-asterisk ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/conquete-de-l-eirb/build/asterisk/Dockerfile
+    docker_context: challenges/conquete-de-l-eirb/build/asterisk
+
+cqteirb-asterisk/docker:staging:
+  extends: [ .docker-rename-staging, .cqteirb-asterisk ]
+  needs: [ cqteirb-asterisk/docker ]
+
+cqteirb-asterisk/docker:production:
+  extends: [ .docker-rename-production, .cqteirb-asterisk ]
+  needs: [ cqteirb-asterisk/docker ]
+
+
+.cqteirb-eirb_fr:
+  variables:
+    image: "$CI_REGISTRY_IMAGE/cqteirb-eirb_fr"
+
+cqteirb-eirb_fr/docker:
+  extends: [ .docker-build, .cqteirb-eirb_fr ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/conquete-de-l-eirb/build/eirb_fr/Dockerfile
+    docker_context: challenges/conquete-de-l-eirb/build/eirb_fr
+
+cqteirb-eirb_fr/docker:staging:
+  extends: [ .docker-rename-staging, .cqteirb-eirb_fr ]
+  needs: [ cqteirb-eirb_fr/docker ]
+
+cqteirb-eirb_fr/docker:production:
+  extends: [ .docker-rename-production, .cqteirb-eirb_fr ]
+  needs: [ cqteirb-eirb_fr/docker ]

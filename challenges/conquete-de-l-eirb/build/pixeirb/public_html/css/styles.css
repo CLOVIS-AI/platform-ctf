@@ -1,0 +1,928 @@
+/*
+====================================================
+
+* 	[Master Stylesheet]
+
+	Theme Name :
+	Version    :
+	Author     :
+	Author URI :
+
+====================================================
+
+	TOC
+
+	1. PRIMARY STYLES
+	2. COMMONS FOR PAGE DESIGN
+	3. HEADER
+	4. INTRO SECTION
+	5. PORTFOLIO SECTION
+	6. ABOUT SECTION
+	7. CONTACT SECTION
+	8. ADMIN SECTION
+	9. COUNTER SECTION
+	10. GALLERY
+	11. FOOTER
+
+====================================================
+
+
+/* ---------------------------------
+1. PRIMARY STYLES
+--------------------------------- */
+
+html {
+    font-size: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    touch-action: manipulation;
+}
+
+
+body {
+    font-size: 15px;
+    font-family: 'Poppins', serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    word-wrap: break-word;
+    line-height: 1;
+    margin: 0 50px;
+    padding: 60px 0 16px 0;
+    min-height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: calc(100% - 100px);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    color: #333;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, ul, span, li, img, inpot, button {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.5;
+    font-weight: inherit;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Poppins', cursive;
+    margin-bottom: 10px;
+}
+
+p {
+    line-height: 1.6;
+    font-size: 1.05em;
+    font-weight: 400;
+    color: #777;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+h2 {
+    font-size: 2.2em;
+}
+
+h3 {
+    font-size: 1.8em;
+}
+
+h4 {
+    font-size: 1.3em;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+h6 {
+    font-size: .9em;
+    letter-spacing: 1px;
+}
+
+a, button {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    line-height: 1;
+    -webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+}
+
+a:focus, a:active, a:hover,
+button:focus, button:active, button:hover,
+.active,
+a b.light-color:hover {
+    text-decoration: none;
+    color: #c9302c;
+}
+
+b {
+    font-weight: 600;
+}
+
+img {
+    width: 100%;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+}
+
+span {
+    display: inline-block;
+}
+
+button {
+    outline: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.icon {
+    font-size: 1.1em;
+    display: inline-block;
+    line-height: inherit;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    line-height: inherit;
+}
+
+b.max-bold {
+    font-weight: 700;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+/* ---------------------------------
+2. COMMONS FOR PAGE DESIGN
+--------------------------------- */
+
+.display-table {
+    display: table;
+    height: 100%;
+}
+
+.display-table-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.color-black {
+    color: #000;
+}
+
+.color-red {
+    color: #c9302c;
+}
+
+.margin-tb-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.margin-b-5 {
+    margin-bottom: 5px;
+}
+
+.margin-b-10 {
+    margin-bottom: 10px;
+}
+
+.margin-b-30 {
+    margin-bottom: 30px;
+}
+
+.form-button {
+    font-family: 'Poppins';
+    cursor: pointer;
+    box-shadow: 2px 2px 10px gray;
+    padding: 5px 15px 5px 15px;
+    float: right;
+}
+
+.submit {
+    width: 100%;
+    display: inline-block;
+}
+
+.main-section {
+    margin-top: 25px;
+    height: 100%;
+    position: relative;
+}
+
+.main-section .head-section {
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.main-section .grid-sizer {
+    padding: 7px;
+    width: 20%;
+}
+
+.main-section .grid-sizer a {
+    display: block;
+}
+
+.main-section .p-grid-isotope {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.modal {
+    z-index: 100000;
+}
+
+.modal-dialog {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: auto;
+}
+
+#alertRemoval {
+    position: fixed;
+    bottom: 5px;
+    display: none;
+    z-index: 100000;
+    width: 96%;
+}
+
+.jumbotron {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: transparent;
+}
+
+.album-name {
+    font-size: 3em;
+}
+
+.badge {
+    margin-top: 10px;
+}
+
+.album-badge {
+    font-size: 13px;
+    border: 1px solid rgba(201, 48, 44, 0.75);
+    background-color: white;
+    color: rgba(201, 48, 44, 0.75);
+}
+
+.album-badge-ghost {
+    background-color: rgba(201, 48, 44, 0.5);
+    color: white;
+}
+
+.badge-img {
+    width: 30px;
+    border-radius: 50%;
+}
+
+.album-desc:first-letter {
+    float: left;
+    line-height: 1em;
+    position: relative;
+    font-size: 300%;
+    padding: 0;
+    margin: 0 3px;
+    color: #c9302c;
+    text-shadow: 3px 3px 5px gray;
+}
+
+.download-album {
+    margin-top: 10px;
+}
+
+ion-icon {
+    vertical-align: middle;
+}
+
+.card-deck .card {
+    margin-bottom: 0;
+}
+
+.album-thumb {
+    padding-bottom: 15px;
+}
+
+.albums-list {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.accordion .bg-danger .card-title,
+.accordion .bg-danger .card-text,
+.accordion .bg-danger .text-muted,
+.head-section .bg-danger .album-name,
+.head-section .bg-danger p {
+    color: white !important;
+}
+
+/* ---------------------------------
+3. HEADER
+--------------------------------- */
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    text-align: center;
+    z-index: 1000;
+}
+
+header:after {
+    content: '';
+    clear: both;
+}
+
+header .logo {
+    float: left;
+    height: 40px;
+    margin: 10px 0;
+}
+
+header .logo img {
+    height: 100%;
+    width: auto;
+}
+
+
+header .main-menu {
+    float: right;
+}
+
+header ul.main-menu > li > a {
+    height: 100%;
+    line-height: 60px;
+    padding: 0 10px;
+}
+
+
+header .right-area {
+    float: right;
+    height: 100%;
+    line-height: 60px;
+    margin-left: 20px;
+}
+
+
+/* HAMBURGER ICON */
+
+.menu-nav-icon {
+    display: inline-block;
+    font-size: 30px;
+    line-height: 40px;
+    margin: 10px 0;
+    display: none;
+    cursor: pointer;
+}
+
+
+/* DROPDOWN MENU STYLING */
+
+header .main-menu li.drop-down {
+    position: relative;
+    text-align: left;
+}
+
+header .main-menu li.drop-down > ul.drop-down-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    min-width: 180px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .3);
+    background: #fff;
+}
+
+header .main-menu li.drop-down:last-of-type > ul.drop-down-menu {
+    left: auto;
+    right: 0;
+}
+
+header .main-menu a.disabled {
+    pointer-events: none;
+    color: #999;
+}
+
+header .main-menu li.drop-down > ul.drop-down-menu li {
+    display: block;
+    border-top: 1px solid #ddd;
+}
+
+header .main-menu li.drop-down > ul.drop-down-menu li > a {
+    display: block;
+    padding: 17px 20px;
+}
+
+header .main-menu li i {
+    margin-left: 10px;
+}
+
+
+/* DROPDOWN HOVER */
+
+header .main-menu li.drop-down a.mouseover + ul.drop-down-menu {
+    display: block;
+    animation: full-opacity-anim .2s forwards;
+}
+
+
+@keyframes full-opacity-anim {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* ---------------------------------
+4. SLIDER
+--------------------------------- */
+
+.slider-section {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.bg-img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-size: cover;
+}
+
+.rev_slider_wrapper.fullscreen-container {
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    left: auto !important;
+}
+
+.forcefullwidth_wrapper_tp_banner {
+    height: 100% !important;
+}
+
+.tp-bullet {
+    border-radius: 50px;
+}
+
+.tp-leftarrow,
+.tp-rightarrow {
+    border-radius: 50px;
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+}
+
+
+.visit-btn {
+    min-width: 150px !important;
+}
+
+/* ---------------------------------
+6. ABOUT SECTION
+--------------------------------- */
+
+.about-section, .about-team {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-team {
+    margin-top: 20px;
+}
+
+.about-text p {
+    text-align: justify;
+}
+
+.member {
+    padding: 15px;
+}
+
+.members .card {
+    box-shadow: 1px 4px 8px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: none;
+    width: 220px;
+    height: 292.2px;
+}
+
+.members .card-header {
+    padding: .25rem;
+    border: none;
+}
+
+.members .card-title {
+    margin-bottom: 0;
+    font-weight: bolder;
+    font-size: 18px;
+    color: black;
+}
+
+.members .card-img-top {
+    width: 90%;
+    margin: auto;
+}
+
+.members .card-body {
+    padding: .25rem;
+}
+
+.members .name {
+    color: black;
+}
+
+/* ---------------------------------
+7. CONTACT SECTION
+--------------------------------- */
+
+.contact-text {
+    text-align: center;
+    margin: 25px 40px 30px 40px;
+}
+
+.mid-section {
+    width: 50%;
+    height: 410px;
+    float: left;
+}
+
+.mid-section iframe {
+    width: 100%;
+    height: 100%;
+}
+
+#contact-form {
+    margin: 0 20px 0 20px;
+}
+
+#contact-form .form-section {
+    margin-bottom: 20px;
+}
+
+#contact-form .form-section label {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+#contact-form .form-section .full-size-input {
+    width: 100%;
+}
+
+/* ---------------------------------
+8. ADMIN SECTION
+--------------------------------- */
+
+/******* FORMS *******/
+
+.admin-section {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+.admin-section p {
+    margin-bottom: 25px;
+    font-size: 1.5em;
+}
+
+.admin-subsection {
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.admin-form {
+    margin: 0 20px 0 20px;
+}
+
+.admin-form .form-section {
+    margin-bottom: 20px;
+}
+
+.admin-form .form-section label {
+    display: inline-block;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: right;
+    width: 20%;
+    margin-right: 5%;
+}
+
+.admin-form .form-section .form-control, .admin-form .form-section .form-control-file, .admin-form .form-section .form-other {
+    width: 65%;
+}
+
+.admin-form .form-check-input {
+    position: relative;
+    margin-left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.admin-form .photographers {
+    width: 65%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -5px;
+}
+
+.admin-form .photographers .col {
+    margin: 0 5px;
+}
+
+#col-available {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#search, #photographers {
+    width: 100%;
+}
+
+#list-photographers {
+    padding-left: 15px;
+    padding-top: 4px;
+}
+
+.admin-form .photographers .col li {
+    list-style: initial;
+    display: list-item;
+}
+
+.team-members-ordering {
+    height: auto;
+}
+
+.manage-team-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#thumbnail-photo {
+    width: 45%;
+    margin-left: 25%;
+
+}
+
+.delete-photos-btn {
+    margin-right: 15px;
+}
+
+/***** ACCORDION *****/
+
+.link-alike {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    line-height: 1;
+    -webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+    margin: 0;
+    padding: 0;
+    font-weight: bolder;
+    background-color: transparent;
+    font-size: 15px;
+    font-family: 'Poppins', serif;
+    cursor: pointer;
+    border-width: 0;
+}
+
+.link-alike:hover, .link-alike:active, .link-alike:focus {
+    text-decoration: none;
+    color: #c9302c;
+    border-width: 0;
+}
+
+.col-lg .accordion .card-header label {
+    margin-bottom: 0;
+}
+
+.col-lg .accordion .card-body {
+    margin-bottom: 1.5em;
+}
+
+/****** ALBUM'S PHOTOS CARDS ******/
+
+.modify-album-photos-buttons {
+    float: right;
+    margin-right: 8%;
+}
+
+.modify-album-photos-buttons .form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    top: 0.35rem;
+}
+
+.modify-album-photos-trash {
+    float: right;
+    margin-left: 75px;
+}
+
+
+/***** REMOVE REQUESTS CARDS *****/
+
+.remove-requests .card {
+    margin-bottom: 15px;
+}
+
+.remove-requests .card-header p {
+    font-size: 1.3rem;
+    margin-bottom: 0;
+    float: left;
+}
+
+.remove-requests .card-text {
+    padding-top: 10px;
+    float: left;
+}
+
+.remove-requests .card-text p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.remove-requests .card .card-photo {
+    float: right;
+}
+
+.remove-requests .card .btn {
+    margin-left: 10px;
+}
+
+/* Style the Image Used to Trigger the Modal */
+.remove-request-photo {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.remove-request-photo:hover {
+    opacity: 0.7;
+}
+
+/* The Modal (background) */
+#modal-remove-request {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+#modal-remove-request .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 800px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#modal-remove-request #caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+#modal-remove-request .modal-content, #caption {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+/* The Close Button */
+#modal-remove-request .close {
+    position: absolute;
+    top: 55px;
+    right: 45px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#modal-remove-request .close:hover,
+#modal-remove-request .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px) {
+    #modal-remove-request .modal-content {
+        width: 100%;
+    }
+}
+
+
+/* ---------------------------------
+10. GALLERY
+--------------------------------- */
+.link-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.album-thumbnail {
+    object-fit: cover;
+    width: 100%;
+    height: 250px;
+}
+
+.remove-request-form {
+    padding: 15px 15px 0 15px;
+}
+
+.remove-request-form label {
+    padding-right: 10px;
+}
+
+.remove-request-form .form-section button {
+    float: right;
+    margin-right: 5px;
+}
+
+.admin-toolbar {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+/* ---------------------------------
+11. FOOTER
+--------------------------------- */
+
+footer {
+    margin-top: auto;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+footer .copyright {
+    font-size: .95em;
+}
+
+footer .social-icons > li > a {
+    line-height: 36px;
+}
+
+footer .social-icons ion-icon {
+    font-size: 24px;
+    margin-left: 16px;
+}

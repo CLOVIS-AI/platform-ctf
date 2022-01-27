@@ -1,0 +1,337 @@
+:root {
+    font-size: 22px;
+    --text-color: white;
+    --background-color: black;
+}
+
+body {
+    font-family: 'clarendon', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    background: -moz-linear-gradient(45deg, var(--background-color) 0%, var(--background-color) 50%, var(--banner-color) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, var(--background-color)), color-stop(50%, var(--background-color)), color-stop(100%, var(--banner-color))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(45deg, var(--background-color) 0%, var(--background-color) 50%, var(--banner-color) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(45deg, var(--background-color) 0%, var(--background-color) 50%, var(--banner-color) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(45deg, var(--background-color) 0%, var(--background-color) 50%, var(--banner-color) 100%); /* ie10+ */
+    background: linear-gradient(45deg, var(--background-color) 0%, var(--background-color) 50%, var(--banner-color) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFF00', endColorstr='#000000', GradientType=1); /* ie6-9 */
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+main {
+    min-height: calc(100vh - 23rem);
+}
+
+.path {
+    stroke-dasharray: 100000;
+    stroke-dashoffset: 100000;
+    fill-opacity: 0;
+    -webkit-animation: draw 5s ease-in forwards;
+    -moz-animation: draw 5s ease-in forwards;
+    -o-animation: draw 5s ease-in forwards;
+    -ms-transition: draw 5s ease-in forwards;
+    animation: draw 5s ease-in forwards;
+}
+
+@-webkit-keyframes draw {
+    80% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
+    to {
+        fill-opacity: 1;
+    }
+}
+
+@-moz-keyframes draw {
+    80% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
+    to {
+        fill-opacity: 1;
+    }
+}
+
+@-o-keyframes draw {
+    80% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
+    to {
+        fill-opacity: 1;
+    }
+}
+
+@-ms-keyframes draw {
+    80% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
+    to {
+        fill-opacity: 1;
+    }
+}
+
+@keyframes draw {
+    80% {
+        stroke-dashoffset: 0;
+        fill-opacity: 0;
+    }
+    to {
+        fill-opacity: 1;
+    }
+}
+
+.logo-svg {
+    margin-top: 0;
+    height: auto;
+    background-color: white;
+    transform: translate3d(0, 0, 0);
+}
+
+.presentation {
+    text-align: center;
+    width: 45vw;
+    margin-top: 2%;
+}
+
+.location {
+    margin-top: 15%;
+    float: left;
+    text-align: center;
+    width: 50%;
+}
+
+.plan {
+    width: 40%;
+    margin-left: 5%;
+}
+
+.tuto li {
+    margin-bottom: 5%;
+}
+
+.tuto-svg {
+    width: 12%;
+    height: 12%;
+    background-color: var(--banner-color);
+    border-radius: 10%;
+}
+
+.tuto-svg:hover {
+    background-color: var(--banner-secondary-color);
+}
+
+.cover {
+    width: 100%;
+}
+
+.tuto-img {
+    max-width: 80%;
+    height: auto;
+}
+
+.new {
+    color: red;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.fill-white {
+    background-color: white;
+}
+
+.fill {
+    background-color: var(--background-color);
+}
+
+.download {
+    color: var(--banner-color);
+}
+
+.center {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.6rem;
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    display: inline;
+    font-size: 1.5rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+p {
+    margin-left: 2%;
+    margin-right: 2%;
+    white-space: pre-wrap;
+}
+
+.padding {
+    padding-left: 2%;
+}
+
+.arrow {
+    width: 1rem;
+    display: inline;
+}
+
+.arrow img:hover {
+    cursor: pointer;
+}
+
+.arrow h3:hover {
+    cursor: pointer;
+}
+
+.arrow li {
+    line-height: 2rem;
+}
+
+.arrow ul li {
+    list-style: circle;
+    white-space: pre-wrap;
+    margin-left: 2rem;
+    margin-right: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.arrow ul p {
+    margin-left: 1rem;
+}
+
+#arrow1, #arrow2, #arrow3, #arrow4, #arrow5, #arrow6 {
+    transform: rotate(0deg);
+    -webkit-transition: var(--transition-speed);
+    -moz-transition: var(--transition-speed);
+    -o-transition: var(--transition-speed);
+    transition: var(--transition-speed);
+}
+
+#hide1, #hide2, #hide3, #hide4, #hide5, #hide6 {
+    display: none;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.command {
+    background-color: var(--banner-color);
+    color: var(--background-color);
+    padding-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 0;
+}
+
+.hint {
+    background-color: var(--banner-color);
+    color: var(--background-color);
+    border-radius: 10rem;
+    padding-left: 1rem;
+    width: 28rem;
+    margin-left: 2%;
+    margin-top: 2%;
+    display: none;
+}
+
+.footer {
+    color: var(--options-secondary-color);
+    text-align: center;
+    margin-top: 3rem;
+    background-color: var(--banner-secondary-color);
+    padding-left: 4rem;
+}
+
+.reseaux {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.reseaux li {
+    display: inline;
+}
+
+.footer-img {
+    width: 3rem;
+}
+
+.footer-logo {
+    width: 10rem;
+}
+
+.copyright-info {
+    margin-top: 1%;
+    font-size: 0.8rem;
+}
+
+@font-face {
+    font-family: 'clarendon';
+    src: url('../font/CLAR67W.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media screen and (max-width: 800px) {
+    :root {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .logo-svg {
+        margin-top: 0;
+    }
+
+    .presentation {
+        width: auto;
+    }
+
+    .location {
+        float: none;
+        width: 95%;
+        margin-top: 5%;
+    }
+
+    .plan {
+        width: 90%;
+    }
+
+    .tuto-svg {
+        width: 20%;
+        height: 20%;
+    }
+
+    .tuto-img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .arrow {
+        width: 1rem;
+    }
+
+    .footer {
+        padding-left: 0;
+    }
+}

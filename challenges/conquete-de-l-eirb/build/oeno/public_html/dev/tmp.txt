@@ -1,0 +1,7 @@
+Salut Prez
+
+J'ai écris les credentials dans un fichier creds.txt, que j'ai placé juste avant la racine du site web.
+
+Le fichier n'est pas accessible, mais il faudra changer ça quand le site sera terminé.
+
+LePlanCity
