@@ -1,7 +1,7 @@
 ---
 challenge:
   name: Introduction à la plateforme RSR
-  short_name: training_platform
+  short_name: training-platform
   author: Aeinot
   description: |
     <p>Ce module d'introduction a pour objectif de présenter les différents concepts de la plateforme RSR. Il vous est
