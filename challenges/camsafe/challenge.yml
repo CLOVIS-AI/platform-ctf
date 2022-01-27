@@ -1,0 +1,165 @@
+---
+challenge:
+  name: CamSafe
+  short_name: camsafe
+  author: Sébastien & Emma & Thomas
+  description: |
+    <p>Dans ce scénario, CamSafe représente une entreprise de caméras de surveillance très sécurisées. 
+     Votre but est de réussir à infiltrer le serveur web afin d'avoir accès au réseau des caméras de surveillance.</p>
+  category: SCENARIO
+
+resource:
+  type: terraform
+  args: |
+    Le site internet de l'entreprise est disponible à l'addresse <a href='https://ctf.rsr.enseirb-matmeca.fr:{port80}' target='_blank'>https://ctf.rsr.enseirb-matmeca.fr:{port80}</a> 
+    Les ports {port22} et {port7777} sont également redirigés vers le conteneur docker servant de routeur. Ces ports correspondent respectivement aux ports internes 22 et 7777. 
+    Ces informations vous seront utiles dans la suite du challenge.
+  start_duration: 7
+  is_vpn_needed: yes
+
+sections:
+  - section:
+      title: Infiltrer le serveur web 
+      description: |
+        <p>Vous avez accès au site web de l'entreprise CamSafe. Votre but est de trouver la faille afin d'obtenir un accès au serveur web.</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez accès au serveur web.
+        validation_type: dynamic
+        validation_arg: flag_web.txt
+        points: 15
+
+  - section:
+      title: Connexion au routeur
+      description: |
+        <p>Vous avez accès au serveur web de CamSafe. Votre but est de faire une reconnaissance du réseau. Vous trouverez à ce <a href='./static/CamSafeOS.sig' target='_blank'>lien</a>, comme on pourrait le trouver sur le web, un fichier contenant la mise à jour installée sur le routeur du réseau. 
+         A vous de trouver à partir de ce fichier des informations vous permettant d'accéder au routeur. </p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez accès au routeur.
+        validation_type: dynamic
+        validation_arg: flag_routeur.txt
+        points: 40
+
+  - section:
+      title: Connexion au LAN et redirections
+      description: |
+        <p>Vous avez accès au routeur de CamSafe. Votre but est là aussi de faire une reconnaissance du réseau. 
+         Il faut maintenant trouver comment effectuer des redirections afin d'avoir accès au LAN du réseau. </p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez accès au LAN.
+        validation_type: dynamic
+        validation_arg: flag_camserv.txt
+        points: 50
+
+  - section:
+      title: Connexion à la première caméra
+      description: |
+        <p>Vous avez accès à l'interface web CamServ qui permet de visualier différentes caméra de surveillance. Votre but est d'accéder à la première caméra.</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez accès à la première caméra.
+        validation_type: dynamic
+        validation_arg: flag_cam0.txt
+        points: 10
+
+  - section:
+      title: Accès root sur la première caméra
+      description: |
+        <p>Votre but est maintenant d'obtenir un accès root sur la première caméra.</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez un accès root (dans le dossier /root).
+        validation_type: dynamic
+        validation_arg: flag_cam0_root.txt
+        points: 15
+
+  - section:
+      title: Accès à la vidéo sauvegardée
+      description: |
+        <p>Le but est maintenant d'obtenir l'acces administrateur à l'interface web de la caméra</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez sur l'enregistrement de la partie administrateur de l'interface web.
+        validation_type: string
+        validation_arg: KLdGBr8t
+        points: 15
+
+  - section:
+      title: Connexion à la deuxième caméra
+      description: |
+        <p>Comme précédemment, votre but est maintenant d'accéder à la deuxième caméra.</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez accès à la deuxième caméra.
+        validation_type: dynamic
+        validation_arg: flag_cam1.txt
+        points: 10
+
+  - section:
+      title: Accès root sur la deuxième caméra
+      description: |
+        <p>Le but est maintenant d'obtenir un accès root sur la deuxième caméra</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez un accès root à la caméra.
+        validation_type: dynamic
+        validation_arg: flag_cam1_root.txt
+        points: 30
+
+  - section:
+      title: Accès à la vidéo sauvegardée
+      description: |
+        <p>Le but est maintenant d'obtenir l'acces administrateur à l'interface web de la caméra</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez sur l'enregistrement de la partie administrateur de l'interface web.
+        validation_type: string
+        validation_arg: A!$8aM5
+        points: 15
+
+  - section:
+      title: Connexion à la troisième caméra
+      description: |
+        <p>Comme précédemment, votre but est maintenant d'accéder à la troisième caméra.</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez accès à la troisième caméra.
+        validation_type: dynamic
+        validation_arg: flag_cam2.txt
+        points: 10
+
+  - section:
+      title: Accès root sur la troisième caméra
+      description: |
+        <p>Le but est maintenant d'obtenir un accès root sur la toisième caméra</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez lorsque vous aurez un accès root à la caméra.
+        validation_type: dynamic
+        validation_arg: flag_cam2_root.txt
+        points: 45
+
+  - section:
+      title: Accès à la vidéo sauvegardée
+      description: |
+        <p>Le but est maintenant d'obtenir l'acces administrateur à l'interface web de la caméra</p>
+
+    steps:
+      - description: |
+          Veuillez rentrer le flag que vous trouverez sur l'enregistrement de la partie administrateur de l'interface web.
+        validation_type: string
+        validation_arg: RYH9M6n
+        points: 15

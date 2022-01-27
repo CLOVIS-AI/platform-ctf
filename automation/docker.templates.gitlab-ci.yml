@@ -25,6 +25,7 @@
       --cache-from "$image:latest"
       --cache-from "$image:staging"
       --tag "$image:$build_version"
+      --build-arg build_version=$build_version
       -f "$dockerfile"
       "$docker_context"
     - docker push "$image:$build_version"

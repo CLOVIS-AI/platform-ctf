@@ -1,0 +1,4 @@
+ARG GITLAB_PROXY
+FROM $GITLAB_PROXY/ubuntu:22.04
+RUN apt update && apt install -y wget && apt install -y squashfs-tools && apt install -y gpg #&& mkdir -p /sysupgrade/fs && cd /sysupgrade/fs && wget https://downloads.openwrt.org/releases/21.02.0/targets/x86/64/openwrt-21.02.0-x86-64-rootfs.tar.gz && tar -xvf openwrt-21.02.0-x86-64-rootfs.tar.gz && rm -f openwrt-21.02.0-x86-64-rootfs.tar.gz && cd .. && wget https://downloads.openwrt.org/releases/21.02.0/targets/x86/64/openwrt-21.02.0-x86-64-generic-kernel.bin && mv openwrt-21.02.0-x86-64-generic-kernel.bin kernel
+CMD /bin/bash
