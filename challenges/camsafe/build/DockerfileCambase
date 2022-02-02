@@ -1,3 +1,3 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/php:8.0-apache
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/php:8.0-apache
 RUN apt update && apt install -y iproute2 && apt -y install vim && apt -y install nano && apt -y install sudo && apt -y install openssh-server && echo 'root:N0thingToS33HereC@mS@fe' | chpasswd

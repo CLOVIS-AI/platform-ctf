@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/python:alpine
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/python:alpine
 
 WORKDIR /app
 

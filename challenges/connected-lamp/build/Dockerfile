@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/oznu/s6-node:16.13.2-amd64
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/oznu/s6-node:16.13.2-amd64
 
 RUN apk add --no-cache git python2 python3 make g++ avahi-compat-libdns_sd avahi-dev dbus \
     iputils sudo nano \

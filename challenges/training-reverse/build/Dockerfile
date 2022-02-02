@@ -1,3 +1,3 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/archlinux:latest
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/archlinux:latest
 RUN pacman -Syuu gcc zip --noconfirm
