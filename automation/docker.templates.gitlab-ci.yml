@@ -21,7 +21,7 @@
     - >
       docker build
       --pull
-      --build-arg GITLAB_PROXY=${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}
+      --build-arg DOCKER_PROXY=${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}
       --cache-from "$image:latest"
       --cache-from "$image:staging"
       --tag "$image:$build_version"

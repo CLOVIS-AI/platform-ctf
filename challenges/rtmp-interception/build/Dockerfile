@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/ubuntu:latest
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/ubuntu:latest
 
 ARG nginx_version=1.17.6
 ARG files="files"

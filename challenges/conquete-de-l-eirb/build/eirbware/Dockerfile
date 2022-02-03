@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/pensiero/apache-php:php7.4
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/pensiero/apache-php:php7.4
 
 RUN apt-get update && apt-get install -y openssh-server vsftpd iproute2 telnet netcat
 

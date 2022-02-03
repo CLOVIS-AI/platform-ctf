@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/kalilinux/kali-rolling:latest
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/kalilinux/kali-rolling:latest
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt update && apt -y install nmap iproute2 net-tools ssh wget nano

@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/openwrtorg/rootfs:x86-64-openwrt-21.02
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/openwrtorg/rootfs:x86-64-openwrt-21.02
 RUN rm Dockerfile && mkdir -p /var/lock && opkg update && opkg install curl && opkg install nmap
 COPY ./routeur/dropbear ./routeur/firewall ./routeur/network /etc/config/
 COPY ./routeur/firewall.user /etc/

@@ -59,7 +59,7 @@ web/src/static/images: $(images_dist)
 
 web_sources=$(shell find web/src -type f)
 web/venv/docker: web/requirements.txt web/app.py web/start.sh web/venv/bin/activate web/src/static web/src/static/images Dockerfile $(web_sources)
-	docker build -t ctf-platform:latest .
+	docker build --build-arg DOCKER_PROXY=registry.hub.docker.com/library -t ctf-platform:latest .
 	touch web/venv/docker
 
 .PHONY: start

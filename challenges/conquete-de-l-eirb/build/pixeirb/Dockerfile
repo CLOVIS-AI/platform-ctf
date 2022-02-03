@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/orsolin/docker-php-5.3-apache
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/orsolin/docker-php-5.3-apache
 
 # Update & package install
 RUN apt update && apt install -y sudo python

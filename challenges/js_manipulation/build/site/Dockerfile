@@ -1,5 +1,5 @@
-ARG GITLAB_PROXY
-FROM $GITLAB_PROXY/php:7.4-apache
+ARG DOCKER_PROXY
+FROM $DOCKER_PROXY/php:7.4-apache
 
 #Fichiers site web
 WORKDIR /var/www/html/
