@@ -64,7 +64,7 @@ stop:test:
 restart:staging:
   extends: [ .restart ]
   variables:
-    TF_VAR_platform_port: 81
+    TF_VAR_platform_port: 80
   only:
     - main
   tags:
