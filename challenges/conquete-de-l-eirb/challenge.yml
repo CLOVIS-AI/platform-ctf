@@ -29,7 +29,7 @@ challenge:
 resource:
   type: terraform
   args: |
-    Connectez vous en ssh à cette machine : <a href='https://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>https://ctf.rsr.enseirb-matmeca.fr:{port}</a>
+    Connectez vous en ssh à cette machine : <a href='http://staging.ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>http://staging.ctf.rsr.enseirb-matmeca.fr:{port}</a>
   start_duration: 10
   is_vpn_needed: no
 

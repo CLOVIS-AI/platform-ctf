@@ -17,7 +17,7 @@ resource:
   type: terraform
   args: |
     Une machine Kali qui se trouve sur le même réseau que la caméra est disponible en ssh à l'adresse
-    ctf.rsr.enseirb-matmeca.fr:{port22_kali}. Les identifiants sont <b>kali</b>/<b>kali</b>.
+    http://staging.ctf.rsr.enseirb-matmeca.fr:{port22_kali}. Les identifiants sont <b>kali</b>/<b>kali</b>.
   start_duration: 10
 
 sections:
