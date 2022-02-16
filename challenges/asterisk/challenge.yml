@@ -11,7 +11,7 @@ resource:
   type: terraform
   args: |
     La partie instantiable de ce TP est disponible à l'adresse
-    <a href='https://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>https://ctf.rsr.enseirb-matmeca.fr:{port}</a>
+    <a href='http://staging.ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>http://staging.ctf.rsr.enseirb-matmeca.fr:{port}</a>
   start_duration: 10
   is_vpn_needed: yes
 

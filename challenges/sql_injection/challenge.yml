@@ -17,7 +17,7 @@ challenge:
 resource:
   type: terraform
   args: |
-    Le site web est disponible ici: <a href='http://ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>http://ctf.rsr.enseirb-matmeca.fr:{port}</a> !
+    Le site web est disponible ici: <a href='http://staging.ctf.rsr.enseirb-matmeca.fr:{port}' target='_blank'>http://staging.ctf.rsr.enseirb-matmeca.fr:{port}</a> !
   start_duration: 7
   is_vpn_needed: yes
 

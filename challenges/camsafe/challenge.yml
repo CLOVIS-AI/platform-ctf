@@ -11,8 +11,8 @@ challenge:
 resource:
   type: terraform
   args: |
-    Le site internet de l'entreprise est disponible à l'addresse <a href='https://ctf.rsr.enseirb-matmeca.fr:{port80}' target='_blank'>https://ctf.rsr.enseirb-matmeca.fr:{port80}</a> 
-    Les ports {port22} et {port7777} sont également redirigés vers le conteneur docker servant de routeur. Ces ports correspondent respectivement aux ports internes 22 et 7777. 
+    Le site internet de l'entreprise est disponible à l'addresse <a href='http://staging.ctf.rsr.enseirb-matmeca.fr:{port80}' target='_blank'>http://staging.ctf.rsr.enseirb-matmeca.fr:{port80}</a>
+    Les ports {port22} et {port7777} sont également redirigés vers le conteneur docker servant de routeur. Ces ports correspondent respectivement aux ports internes 22 et 7777.
     Ces informations vous seront utiles dans la suite du challenge.
   start_duration: 7
   is_vpn_needed: yes
